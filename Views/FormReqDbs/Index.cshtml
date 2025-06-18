@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+@model IEnumerable<FormRequest.Models.FormReqDb>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,45 +15,20 @@
             <th>
                 @Html.DisplayNameFor(model => model.RequestDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Site)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
+          
+           
             <th>
                 @Html.DisplayNameFor(model => model.ResponsibleOfficer)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactPhone)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.EquipmentType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProblemDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SerialNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.From)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.To)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MovementDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsApproved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsInvalid)
-            </th>
+            
+            
             <th></th>
         </tr>
     </thead>
@@ -63,45 +38,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RequestDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Site)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
+            
+            
             <td>
                 @Html.DisplayFor(modelItem => item.ResponsibleOfficer)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactPhone)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.EquipmentType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProblemDescription)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.From)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.To)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MovementDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsInvalid)
-            </td>
+            
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
@@ -111,3 +61,4 @@
 }
     </tbody>
 </table>
+
