@@ -30,20 +30,8 @@ namespace FormRequest.Models
         public string ProblemDescription { get; set; }
 
         public string SerialNumber { get; set; }
-
-        // Registry Section
-        public string From { get; set; }
-
-        public string To { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime MovementDate { get; set; }
-
-        public string Remarks { get; set; }
-
-        public bool IsApproved { get; set; }
-        public bool IsInvalid { get; set; }
-
-        public bool ? Verification { get; set; }
+        public bool? Verification { get; set; }
+        public string status  { get; set; }
+        public List<Registry> Registries { get; set; } = new List<Registry>();
     }
 }

@@ -269,6 +269,7 @@ C:\Farei1\FormRequest\obj\Debug\net8.0\FormRequest.MvcApplicationPartsAssemblyIn
 C:\Farei1\FormRequest\obj\Debug\net8.0\FormRequest.MvcApplicationPartsAssemblyInfo.cache
 C:\Farei1\FormRequest\obj\Debug\net8.0\FormRequest.RazorAssemblyInfo.cache
 C:\Farei1\FormRequest\obj\Debug\net8.0\FormRequest.RazorAssemblyInfo.cs
+C:\Farei1\FormRequest\obj\Debug\net8.0\FormRequest.sourcelink.json
 C:\Farei1\FormRequest\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Farei1\FormRequest\obj\Debug\net8.0\scopedcss\bundle\FormRequest.styles.css
 C:\Farei1\FormRequest\obj\Debug\net8.0\scopedcss\projectbundle\FormRequest.bundle.scp.css

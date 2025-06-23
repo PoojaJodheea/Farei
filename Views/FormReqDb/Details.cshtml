@@ -1,0 +1,66 @@
+﻿@model FormRequest.ViewModel.RegistryViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FormReqDb</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.RequestDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Site)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Site)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Department)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Department)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ContactPhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.EquipmentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.EquipmentType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ProblemDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.SerialNumber)
+        </dd
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FormReqDb.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

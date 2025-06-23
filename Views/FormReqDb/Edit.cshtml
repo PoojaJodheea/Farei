@@ -53,36 +53,7 @@
                 <input asp-for="SerialNumber" class="form-control" />
                 <span asp-validation-for="SerialNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="From" class="control-label"></label>
-                <input asp-for="From" class="form-control" />
-                <span asp-validation-for="From" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="To" class="control-label"></label>
-                <input asp-for="To" class="form-control" />
-                <span asp-validation-for="To" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MovementDate" class="control-label"></label>
-                <input asp-for="MovementDate" class="form-control" />
-                <span asp-validation-for="MovementDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Remarks" class="control-label"></label>
-                <input asp-for="Remarks" class="form-control" />
-                <span asp-validation-for="Remarks" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsApproved" class="control-label"></label>
-                <input asp-for="IsApproved" class="form-control" />
-                <span asp-validation-for="IsApproved" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsInvalid" class="control-label"></label>
-                <input asp-for="IsInvalid" class="form-control" />
-                <span asp-validation-for="IsInvalid" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -95,5 +66,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

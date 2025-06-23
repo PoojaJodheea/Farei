@@ -57,30 +57,7 @@
     </table>
     <button type="button" class="btn btn-secondary mb-3">Add Equipment</button>
 
-    <h4>Registry Section</h4>
-    <table class="table table-bordered">
-        <thead class="table-light">
-            <tr>
-                <th>From</th>
-                <th>To</th>
-                <th>Date</th>
-                <th>Remarks</th>
-                <th>Approved</th>
-                <th>Invalid</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input asp-for="From" class="form-control" /></td>
-                <td><input asp-for="To" class="form-control" /></td>
-                <td><input asp-for="MovementDate" type="date" class="form-control" /></td>
-                <td><textarea asp-for="Remarks" class="form-control"></textarea></td>
-                <td class="text-center">@Html.CheckBoxFor(m => m.IsApproved)</td>
-                <td class="text-center">@Html.CheckBoxFor(m => m.IsInvalid)</td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-secondary mb-3">Add Registry Entry</button>
+    
 
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
