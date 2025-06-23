@@ -1,0 +1,125 @@
+﻿@using FormRequest.ViewModel
+@model RegistryViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FormReqDb</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.RequestDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Site)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Site)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Department)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Department)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ContactPhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.EquipmentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.EquipmentType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.ProblemDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.SerialNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.FormReqDb.Id">Edit</a> |
+  
+</div>
+
+<h3>Add Registry Entry</h3>
+
+<form asp-action="SubmitRegistry" method="post">
+    @Html.AntiForgeryToken()
+
+    <input asp-for="Registry.FormReqDbId" type="hidden" />
+
+    <div>
+        <label asp-for="Registry.From"></label>
+        <input asp-for="Registry.From" class="form-control" />
+        <span asp-validation-for="Registry.From" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Registry.To"></label>
+        <input asp-for="Registry.To" class="form-control" />
+        <span asp-validation-for="Registry.To" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Registry.MovementDate"></label>
+        <input asp-for="Registry.MovementDate" type="date" class="form-control" />
+        <span asp-validation-for="Registry.MovementDate" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Registry.Remarks"></label>
+        <textarea asp-for="Registry.Remarks" class="form-control"></textarea>
+        <span asp-validation-for="Registry.Remarks" class="text-danger"></span>
+    </div>
+
+    <div>
+        <input asp-for="Registry.IsValid" class="form-check-input" />
+        <label asp-for="Registry.IsValid" class="form-check-label"></label>
+    </div>
+
+    <div>
+        <input asp-for="Registry.IsOnSite" class="form-check-input" />
+        <label asp-for="Registry.IsOnSite" class="form-check-label"></label>
+    </div>
+
+    <div>
+        <input asp-for="Registry.IsInTransit" class="form-check-input" />
+        <label asp-for="Registry.IsInTransit" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+
+
+<div class="mt-3">
+    <a asp-action="Registry" class="btn btn-secondary">Back to List</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

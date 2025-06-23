@@ -1,6 +1,7 @@
 ﻿using FormRequest.Data;
 using FormRequest.Models;
 using FormRequest.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -111,46 +112,76 @@ namespace FormRequest.Controllers
             return RedirectToAction(nameof(Index));
         }
         //registry
-        [HttpGet]
-        
-        public async Task<IActionResult> Registry()
-        {
-            var viewModels = await _context.FormReqDb
-                .Include(f => f.Registries)
-                .Select(f => new RegistryViewModel
-                {
-                    FormReqDb = f,
-                    RegistryList = f.Registries
-                })
-                .ToListAsync();
 
-            return View(viewModels);
+
+        public IActionResult Registry()
+        {
+            var requests = _context.FormReqDb.ToList();
+            return View(requests); // Passes list of FormReqDb to view
+        }
+
+        public IActionResult RegistryDetails(int id)
+        {
+            var formReq = _context.FormReqDb
+                .Include(f => f.Registries)
+                .FirstOrDefault(x => x.Id == id);
+
+            if (formReq == null) return NotFound();
+
+            var viewModel = new RegistryViewModel
+            {
+                FormReqDb = formReq,
+                Registry = new Registry
+                {
+                    FormReqDbId = id,
+                    
+                },
+                RegistryList = formReq.Registries.ToList()
+            };
+
+            return View(viewModel);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitRegistry(Registry registry)
+        public IActionResult SubmitRegistry(RegistryViewModel viewModel)
         {
-            if (ModelState.IsValid && registry.FormReqDbId != 0)
+            try
             {
-                _context.Registry.Add(registry);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Registry));
+                _context.Registry.Add(viewModel.Registry);
+                _context.SaveChanges();
+                Console.WriteLine("Registry saved successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DB error: " + ex.Message);
             }
 
-            // On failure, reload data and return view
-            var viewModels = await _context.FormReqDb
-                .Include(f => f.Registries)
-                .Select(f => new RegistryViewModel
-                {
-                    FormReqDb = f,
-                    RegistryList = f.Registries
-                })
-                .ToListAsync();
-
-            return View("Registry", viewModels);
+            return RedirectToAction("Registry");
         }
+
+        public IActionResult OnSite()
+        {
+            var forms = _context.FormReqDb
+                .Include(f => f.Registries)
+                .Where(f => f.Registries.Any(r => r.IsOnSite))
+                .ToList();
+            return View("Registry", forms);
+        }
+
+        public IActionResult InTransit()
+        {
+            var forms = _context.FormReqDb
+                .Include(f => f.Registries)
+                .Where(f => f.Registries.Any(r => r.IsInTransit))
+                .ToList();
+            return View("Registry", forms);
+        }
+
+
+
+
 
 
 

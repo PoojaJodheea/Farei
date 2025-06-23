@@ -20,8 +20,9 @@ namespace FormRequest.Models
         public bool IsValid { get; set; }
         public bool IsOnSite { get; set; }      
         public bool IsInTransit { get; set; }   
-        public int FormReqDbId { get; set; } // Foreign key
-        public FormReqDb FormReqDb { get; set; } // Navigation
+        public int FormReqDbId { get; set; }
+        public FormReqDb FormReqDb  { get; set; } // Foreign key
+
 
     }
 }
