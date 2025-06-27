@@ -1,5 +1,5 @@
 ﻿@using FormRequest.ViewModel
-@model RegistryViewModel
+@model RequestViewModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -60,35 +60,31 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FormReqDb.Id">Edit</a> |
-  
-</div>
 
-<h3>Add Registry Entry</h3>
+<h2> Registry Section</h2>
 
 <form asp-action="SubmitRegistry" method="post">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <strong>Validation Errors:</strong>
+            <ul>
+                @foreach (var modelState in ViewData.ModelState)
+                {
+                    foreach (var error in modelState.Value.Errors)
+                    {
+                        <li><strong>@modelState.Key:</strong> @error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
     @Html.AntiForgeryToken()
 
-    <input asp-for="Registry.FormReqDbId" type="hidden" />
+    <input type="hidden" asp-for="Registry.FormReqDbId" value="@Model?.FormReqDb.Id" />
 
-    <div>
-        <label asp-for="Registry.From"></label>
-        <input asp-for="Registry.From" class="form-control" />
-        <span asp-validation-for="Registry.From" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Registry.To"></label>
-        <input asp-for="Registry.To" class="form-control" />
-        <span asp-validation-for="Registry.To" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Registry.MovementDate"></label>
-        <input asp-for="Registry.MovementDate" type="date" class="form-control" />
-        <span asp-validation-for="Registry.MovementDate" class="text-danger"></span>
-    </div>
+    
 
     <div>
         <label asp-for="Registry.Remarks"></label>
@@ -96,20 +92,40 @@
         <span asp-validation-for="Registry.Remarks" class="text-danger"></span>
     </div>
 
-    <div>
-        <input asp-for="Registry.IsValid" class="form-check-input" />
-        <label asp-for="Registry.IsValid" class="form-check-label"></label>
-    </div>
+    
 
     <div>
         <input asp-for="Registry.IsOnSite" class="form-check-input" />
         <label asp-for="Registry.IsOnSite" class="form-check-label"></label>
     </div>
 
+
     <div>
-        <input asp-for="Registry.IsInTransit" class="form-check-input" />
+        <input asp-for="Registry.IsInTransit" class="form-check-input" id="IsInTransit" />
         <label asp-for="Registry.IsInTransit" class="form-check-label"></label>
     </div>
+
+    <div id="transitFields" style="display:none;">
+        <div>
+            <label asp-for="Registry.Driver"></label>
+            <input asp-for="Registry.Driver" class="form-control" />
+            <span asp-validation-for="Registry.Driver" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Registry.From"></label>
+            <input asp-for="Registry.From" class="form-control" />
+           
+        </div>
+
+        <div>
+            <label asp-for="Registry.To"></label>
+            <input asp-for="Registry.To" class="form-control" />
+            
+        </div>
+    </div>
+
+
 
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
 </form>
@@ -118,8 +134,27 @@
 <div class="mt-3">
     <a asp-action="Registry" class="btn btn-secondary">Back to List</a>
 </div>
+
+
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        function toggleTransitFields() {
+            const checkbox = document.getElementById("IsInTransit");
+            const fields = document.getElementById("transitFields");
+            fields.style.display = checkbox.checked ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleTransitFields(); // Show/hide on load
+            document.getElementById("IsInTransit").addEventListener("change", toggleTransitFields);
+        });
+    </script>
+
+
 }
+
+

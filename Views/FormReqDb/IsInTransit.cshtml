@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+@{
+    ViewData["Title"] = "In Transit ";
+}
+
+<h2>In Transit Requests</h2>
+
+<div class="mb-3">
+    <a asp-action="Registry" class="btn btn-secondary">All Requests</a>
+    <a asp-action="OnSite" class="btn btn-success">On-Site</a>
+    <a asp-action="InTransit" class="btn btn-warning">In Transit</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Driver</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Equipment Type</th>
+            <th>Serial Number</th>
+            <th>Details</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var form in Model)
+        {
+            var registry = form.Registries.FirstOrDefault(r => r.IsInTransit);
+            if (registry != null)
+            {
+                <tr>
+                    <td>@registry.Driver</td>
+                    <td>@registry.From</td>
+                    <td>@registry.To</td>
+                    <td>@form.EquipmentType</td>
+                    <td>@form.SerialNumber</td>
+                    <td>
+                        <a asp-action="RegistryDetails" asp-route-id="@form.Id" class="btn btn-outline-primary btn-sm">
+                            Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

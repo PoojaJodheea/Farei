@@ -16,7 +16,7 @@ namespace FormRequest.Controllers
             _context = context;
         }
 
-        // === Home page ===
+        
         public async Task<IActionResult> Index()
         {
             var forms = await _context.FormReqDb.ToListAsync();
@@ -33,7 +33,7 @@ namespace FormRequest.Controllers
 
             if (form == null) return NotFound();
 
-            var viewModel = new RegistryViewModel
+            var viewModel = new RequestViewModel
             {
                 FormReqDb = form,
                 RegistryList = form.Registries.ToList() 
@@ -49,18 +49,18 @@ namespace FormRequest.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FormReqDb formReqDb)
+        public async Task<IActionResult> Create(FormReqDb model)
         {
             if (ModelState.IsValid)
             {
-                formReqDb.RequestDate = DateTime.Now;
-                _context.FormReqDb.Add(formReqDb);
+                _context.FormReqDb.Add(model);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
 
-            return View(formReqDb);
+            return View(model); 
         }
+
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -116,9 +116,19 @@ namespace FormRequest.Controllers
 
         public IActionResult Registry()
         {
-            var requests = _context.FormReqDb.ToList();
-            return View(requests); // Passes list of FormReqDb to view
+            var requests = _context.FormReqDb
+                .Include(f => f.Registries)
+                .Where(f =>
+                    !f.Registries.Any(r =>
+                        r.IsValid && (r.IsOnSite || r.IsInTransit)
+                    )
+                )
+                .ToList();
+
+            return View(requests);
         }
+
+
 
         public IActionResult RegistryDetails(int id)
         {
@@ -128,7 +138,7 @@ namespace FormRequest.Controllers
 
             if (formReq == null) return NotFound();
 
-            var viewModel = new RegistryViewModel
+            var viewModel = new RequestViewModel
             {
                 FormReqDb = formReq,
                 Registry = new Registry
@@ -136,50 +146,89 @@ namespace FormRequest.Controllers
                     FormReqDbId = id,
                     
                 },
-                RegistryList = formReq.Registries.ToList()
+             RegistryList = formReq.Registries.ToList()
             };
 
             return View(viewModel);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitRegistry(RegistryViewModel viewModel)
+        public IActionResult SubmitRegistry(RequestViewModel model)
         {
-            try
+            ModelState.Remove("Registry.FormReqDb");
+
+            if (!ModelState.IsValid)
             {
-                _context.Registry.Add(viewModel.Registry);
-                _context.SaveChanges();
-                Console.WriteLine("Registry saved successfully");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("DB error: " + ex.Message);
+                model.FormReqDb = _context.FormReqDb
+
+                    .Include(f => f.Registries)
+                    .FirstOrDefault(f => f.Id == model.Registry.FormReqDbId);
+
+                model.RegistryList = model.FormReqDb?.Registries.ToList();
+               
+
+                return View("RegistryDetails", model);
             }
 
-            return RedirectToAction("Registry");
+            //Adding registry
+            model.Registry.MovementDate = DateTime.Now.Date;//local date only
+            _context.Registry.Add(model.Registry);
+            _context.SaveChanges();
+         
+            return RedirectToAction("RegistryDetails", new { id = model.Registry.FormReqDbId });
         }
 
+      
         public IActionResult OnSite()
         {
             var forms = _context.FormReqDb
                 .Include(f => f.Registries)
-                .Where(f => f.Registries.Any(r => r.IsOnSite))
+                .Where(f => f.Registries.Any(r => ( r.IsOnSite)))
                 .ToList();
-            return View("Registry", forms);
+            return View("IsOnSite", forms);
         }
 
         public IActionResult InTransit()
         {
             var forms = _context.FormReqDb
                 .Include(f => f.Registries)
-                .Where(f => f.Registries.Any(r => r.IsInTransit))
+                .Where(f => f.Registries.Any(r => ( r.IsInTransit)))
                 .ToList();
-            return View("Registry", forms);
+            return View("IsInTransit", forms);
+        }
+        //acknowlege movement was successful
+        [HttpPost]
+        public IActionResult AcknowledgeRequest(int id)
+        {
+            var registry = _context.Registry.FirstOrDefault(r => r.RegistryId == id);
+            if (registry != null)
+            {
+                registry.IsValid = true;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("IsOnSite");
         }
 
 
+
+        //Delete request after acknowlegdement
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteRegistry(int registryId)
+        {
+            var registry = _context.Registry.FirstOrDefault(r => r.RegistryId == registryId);
+
+            if (registry != null)
+            {
+                _context.Registry.Remove(registry);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("IsOnSite");
+        }
 
 
 

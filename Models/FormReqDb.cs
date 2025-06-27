@@ -31,7 +31,9 @@ namespace FormRequest.Models
 
         public string SerialNumber { get; set; }
         public bool? Verification { get; set; }
-        public string status  { get; set; }
+        public string? status  { get; set; }
+
+        public string? Supervisor { get; set; }
         public List<Registry> Registries { get; set; } = new List<Registry>();
     }
 }
