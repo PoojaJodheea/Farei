@@ -1,4 +1,5 @@
-﻿using FormRequest.Data;
+﻿using AspNetCoreGeneratedDocument;
+using FormRequest.Data;
 using FormRequest.Models;
 using FormRequest.ViewModel;
 using Microsoft.AspNetCore.Identity;
@@ -118,11 +119,7 @@ namespace FormRequest.Controllers
         {
             var requests = _context.FormReqDb
                 .Include(f => f.Registries)
-                .Where(f =>
-                    !f.Registries.Any(r =>
-                        r.IsValid && (r.IsOnSite || r.IsInTransit)
-                    )
-                )
+                .Where(f => !f.Registries.Any(r => r.IsValid && (r.IsOnSite || r.IsInTransit)))
                 .ToList();
 
             return View(requests);
@@ -173,8 +170,11 @@ namespace FormRequest.Controllers
 
             //Adding registry
             model.Registry.MovementDate = DateTime.Now.Date;//local date only
-            _context.Registry.Add(model.Registry);
-            _context.SaveChanges();
+            model.Registry.IsValid = true;
+          _context.Registry.Add(model.Registry);
+           
+          _context.SaveChanges();
+          
          
             return RedirectToAction("RegistryDetails", new { id = model.Registry.FormReqDbId });
         }
@@ -197,19 +197,6 @@ namespace FormRequest.Controllers
                 .ToList();
             return View("IsInTransit", forms);
         }
-        //acknowlege movement was successful
-        [HttpPost]
-        public IActionResult AcknowledgeRequest(int id)
-        {
-            var registry = _context.Registry.FirstOrDefault(r => r.RegistryId == id);
-            if (registry != null)
-            {
-                registry.IsValid = true;
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("IsOnSite");
-        }
 
 
 
@@ -227,12 +214,98 @@ namespace FormRequest.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("IsOnSite");
+            
+            return RedirectToAction("OnSite");
+        }
+
+
+        public IActionResult Repaired()
+        {
+
+            var repairedForms = _context.FormReqDb
+                .Include(f => f.Registries)
+              
+                .ToList();
+
+            return View("Repaired", repairedForms);
+        }
+
+
+        public IActionResult NewComponent()
+        {
+            var newComponents = _context.FormReqDb
+                 
+                .Include(f => f.Registries)
+                .ToList();
+
+            var viewModelList = newComponents.Select(f => new RequestViewModel
+            {
+                FormReqDb = f,
+                Registry = f.Registries.FirstOrDefault() ?? new Registry()
+                {
+                    MovementDate = DateTime.Now.Date
+                }
+
+            }).ToList();
+
+            return View("NewComponent", viewModelList);
+        }
+
+
+        public IActionResult ThirdParty()
+        {
+            var models = _context.FormReqDb
+                .Include(f => f.Registries)
+                .Select(f => new RequestViewModel
+                {
+                    FormReqDb = f,
+                    ThirdParty = _context.ThirdParties.FirstOrDefault(tp => tp.FormReqDbId == f.Id)
+                })
+                .ToList();
+
+            return View(models);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitThirdPartyForm(ThirdParty model)
+        {
+            var existing = _context.ThirdParties
+                .FirstOrDefault(tp => tp.FormReqDbId == model.FormReqDbId);
+
+            if (existing != null)
+            {
+                existing.CompanyName = model.CompanyName;
+                existing.CompanyContact = model.CompanyContact;
+                existing.DateSent = model.DateSent;
+                existing.ThirdPartyRemarks = model.ThirdPartyRemarks;
+
+                _context.Update(existing);
+            }
+            else
+            {
+                model.FormReqDb = null;
+
+                _context.ThirdParties.Add(model);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("ThirdParty");
         }
 
 
 
 
 
+
+
+
     }
+
+
+
+
+
 }

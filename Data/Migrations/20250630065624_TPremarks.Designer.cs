@@ -4,6 +4,7 @@ using FormRequest.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormRequest.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250630065624_TPremarks")]
+    partial class TPremarks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,39 +122,6 @@ namespace FormRequest.Data.Migrations
                     b.HasIndex("FormReqDbId");
 
                     b.ToTable("Registry");
-                });
-
-            modelBuilder.Entity("FormRequest.Models.ThirdParty", b =>
-                {
-                    b.Property<int>("ThirdPartyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThirdPartyId"));
-
-                    b.Property<string>("CompanyContact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateSent")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FormReqDbId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ThirdPartyRemarks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ThirdPartyId");
-
-                    b.HasIndex("FormReqDbId");
-
-                    b.ToTable("ThirdParties");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -360,17 +330,6 @@ namespace FormRequest.Data.Migrations
                 {
                     b.HasOne("FormRequest.Models.FormReqDb", "FormReqDb")
                         .WithMany("Registries")
-                        .HasForeignKey("FormReqDbId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FormReqDb");
-                });
-
-            modelBuilder.Entity("FormRequest.Models.ThirdParty", b =>
-                {
-                    b.HasOne("FormRequest.Models.FormReqDb", "FormReqDb")
-                        .WithMany()
                         .HasForeignKey("FormReqDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

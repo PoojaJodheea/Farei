@@ -1,0 +1,98 @@
+﻿@model IEnumerable<FormRequest.ViewModel.RequestViewModel>
+
+@{
+    ViewData["Title"] = "Third Party Repairs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Third Party Repairs</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date sent</th>
+            <th>Equipment</th>
+            <th>Serial No.</th>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Remarks</th>
+            <th>Acknowlegdement Form</th>
+            <th>Details</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var f = item.FormReqDb;
+            var t = item.ThirdParty;
+
+            <tr>
+                <td>@(t?.DateSent.ToString("yyyy-MM-dd"))</td>
+                <td>@f.EquipmentType</td>
+                <td>@f.SerialNumber</td>
+                <td>@t?.CompanyName</td>
+                <td>@t?.CompanyContact</td>
+               
+                <td>@t?.ThirdPartyRemarks</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="toggleForm(@f.Id)">
+                        ➕ Fill
+                    </button>
+                </td>
+                
+                    <td>
+                        <a asp-action="Details" asp-route-id="@f.Id" class="btn btn-outline-primary btn-sm">
+                            Details
+                        </a>
+                    </td>
+
+            </tr>
+
+            <tr id="form-row-@f.Id" style="display:none;">
+                <td colspan="8">
+                    <form asp-action="SubmitThirdPartyForm" method="post" class="row g-3">
+                     @Html.AntiForgeryToken()
+                      <input type="hidden" name="FormReqDbId" value="@f.Id" />
+
+                         <div class="col-md-3">
+                            <input name="CompanyName" class="form-control" placeholder="Company Name"
+               v             alue="@t?.CompanyName" required />
+                         </div>
+                         <div class="col-md-3">
+                           <input name="CompanyContact" class="form-control" placeholder="Contact Number"
+                            value="@t?.CompanyContact" required />
+                         </div>
+                         <div class="col-md-3">
+                           <input name="DateSent" type="date" class="form-control"
+                             value="@(t?.DateSent.ToString("yyyy-MM-dd"))" required />
+                         </div>
+                        <div class="col-md-12">
+                           <textarea name="ThirdPartyRemarks" class="form-control" placeholder="Remarks">@t?.ThirdPartyRemarks</textarea>
+                        </div>
+                         <div class="col-md-12 text-end">
+                           <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                         </div>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        function toggleForm(id) {
+            var formRow = document.getElementById("form-row-" + id);
+            if (formRow.style.display === "none") {
+                formRow.style.display = "table-row";
+            } else {
+                formRow.style.display = "none";
+            }
+        }
+    </script>
+}
+
+

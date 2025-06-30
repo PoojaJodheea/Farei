@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Farei1\\FormRequest\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\thirdparty.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\thirdparty.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\repaired.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\repaired.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ThirdParty.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\ThirdParty.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\ThirdParty.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\ThirdParty.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\ThirdParty.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAAcwC4AAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-30T09:05:16.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Repaired.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Repaired.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\Repaired.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Repaired.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\Repaired.cshtml",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAkwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-30T06:06:12.174Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAIwB4AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-27T07:39:00Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

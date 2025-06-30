@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormRequest.Models
 {
@@ -34,6 +36,8 @@ namespace FormRequest.Models
         public string? status  { get; set; }
 
         public string? Supervisor { get; set; }
+        public string? Technician { get; set; }
+       
         public List<Registry> Registries { get; set; } = new List<Registry>();
     }
 }

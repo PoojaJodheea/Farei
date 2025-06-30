@@ -10,6 +10,7 @@ namespace FormRequest.ViewModel
 
         public Registry Registry { get; set; } = new Registry();
         public List<Registry> RegistryList { get; set; } = new List<Registry>();
+        public ThirdParty? ThirdParty { get; set; }
 
 
     }

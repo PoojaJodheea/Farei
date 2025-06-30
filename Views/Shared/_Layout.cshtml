@@ -22,9 +22,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                       
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-controller="FormReqDb" asp-action="Repaired">Repaired</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="FormReqDb" asp-action="NewComponent">New Component</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="FormReqDb" asp-action="ThirdParty">Third Party</a>
+                        </li>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

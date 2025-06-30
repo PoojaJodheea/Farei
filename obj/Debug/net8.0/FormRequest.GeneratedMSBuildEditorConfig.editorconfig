@@ -64,12 +64,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXElzT25TaXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Farei1/FormRequest/Views/FormReqDb/NewComponent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXE5ld0NvbXBvbmVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Farei1/FormRequest/Views/FormReqDb/Registry.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFJlZ2lzdHJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Farei1/FormRequest/Views/FormReqDb/RegistryDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFJlZ2lzdHJ5RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/Repaired.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFJlcGFpcmVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/ThirdParty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFRoaXJkUGFydHkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Farei1/FormRequest/Views/Home/Index.cshtml]

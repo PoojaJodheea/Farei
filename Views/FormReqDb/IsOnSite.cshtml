@@ -22,7 +22,6 @@
             <th>Serial No.</th>
             <th>Problem Decription</th>
             <th>Remarks</th>
-            <th>Acknowledgement</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -47,24 +46,13 @@
                     <td>@item.SerialNumber</td>
                     <td>@item.ProblemDescription</td>
                     <td>@OnSiteRegistry.Remarks</td>
+                  
                     <td>
-                        @if (!OnSiteRegistry.IsValid)
-                        {
-                            <form asp-action="AcknowledgeRequest" method="post">
-                                <input type="hidden" name="id" value="@OnSiteRegistry.RegistryId" />
-                                <button class="btn btn-sm btn-success" type="submit">✔ Acknowledge</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <span class="text-muted">✔ Acknowledged</span>
-                        }
-                    </td>
-                    <td>
-                        <form method="post" asp-action="DeleteRegistry" onsubmit="return confirmDelete(@(OnSiteRegistry.IsValid.ToString().ToLower()))">
-                            <input type="hidden" name="id" value="@OnSiteRegistry.RegistryId" />
+                        <form asp-action="DeleteRegistry" asp-route-registryId="@OnSiteRegistry.RegistryId" method="post" onsubmit="return confirm('Are you sure you want to delete this entry?');" style="display:inline;">
+                            @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-danger btn-sm">🗑 Delete</button>
                         </form>
+                        >
 
 
                     </td>
@@ -76,17 +64,9 @@
 </table>
 
 
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-        function confirmDelete(isValid) {
-            if (!isValid) {
-                return confirm("⚠️ You haven’t acknowledged this request. Are you sure you want to delete it?");
-            }
-            return confirm("Are you sure you want to delete this request?");
-        }
-    </script>
+    
 
 }
