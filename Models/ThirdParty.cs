@@ -14,6 +14,8 @@ namespace FormRequest.Models
         [DataType(DataType.Date)]
         public DateTime DateSent { get; set; }
         public string ThirdPartyRemarks { get; set; }
+        public string? AttachmentPath { get; set; }
+
 
     }
 }

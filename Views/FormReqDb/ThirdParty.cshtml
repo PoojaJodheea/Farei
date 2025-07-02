@@ -1,4 +1,7 @@
-﻿@model IEnumerable<FormRequest.ViewModel.RequestViewModel>
+﻿
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<FormRequest.ViewModel.RequestViewModel>
+
 
 @{
     ViewData["Title"] = "Third Party Repairs";
@@ -7,18 +10,32 @@
 
 <h2>Third Party Repairs</h2>
 
+<!--search + filter by date-->
+<form method="get" class="d-flex justify-content-end align-items-center mb-3 gap-2">
+    <input name="SearchKey" value="@Context.Request.Query["SearchKey"]" class="form-control w-auto" placeholder="Search..." />
+
+    <select name="SortOrder" class="form-select w-auto" onchange="this.form.submit()">
+
+    <option value="">Sort by Date</option>
+    <option value="desc" selected="@(Context.Request.Query["SortOrder"] == "desc")">Newest First ↓</option>
+    <option value="asc" selected="@(Context.Request.Query["SortOrder"] == "asc")">Oldest First ↑</option>
+</select>
+
+</form>
+
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Date sent</th>
+            <th>Date Sent</th>
             <th>Equipment</th>
             <th>Serial No.</th>
             <th>Company</th>
             <th>Contact</th>
             <th>Remarks</th>
-            <th>Acknowlegdement Form</th>
+            <th>Quotation</th>
+            <th>Acknowledgement Form</th>
             <th>Details</th>
-
         </tr>
     </thead>
     <tbody>
@@ -33,54 +50,74 @@
                 <td>@f.SerialNumber</td>
                 <td>@t?.CompanyName</td>
                 <td>@t?.CompanyContact</td>
-               
                 <td>@t?.ThirdPartyRemarks</td>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(t?.AttachmentPath))
+                    {
+                        <a href="@Url.Content("~/" + t.AttachmentPath)" target="_blank" class="btn btn-sm btn-outline-info">
+                            View Quotation
+                        </a>
+                    }
+                </td>
+
                 <td>
                     <button class="btn btn-sm btn-outline-primary" onclick="toggleForm(@f.Id)">
                         ➕ Fill
                     </button>
                 </td>
-                
-                    <td>
-                        <a asp-action="Details" asp-route-id="@f.Id" class="btn btn-outline-primary btn-sm">
-                            Details
-                        </a>
-                    </td>
 
+                <td>
+                    <a asp-action="Details" asp-route-id="@f.Id" class="btn btn-outline-primary btn-sm">
+                        Details
+                    </a>
+                </td>
             </tr>
 
             <tr id="form-row-@f.Id" style="display:none;">
-                <td colspan="8">
-                    <form asp-action="SubmitThirdPartyForm" method="post" class="row g-3">
-                     @Html.AntiForgeryToken()
-                      <input type="hidden" name="FormReqDbId" value="@f.Id" />
+                <td colspan="9">
+                    <form asp-action="SubmitThirdPartyForm" method="post" enctype="multipart/form-data" class="row g-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="FormReqDbId" value="@f.Id" />
 
-                         <div class="col-md-3">
+                        <div class="col-md-3">
                             <input name="CompanyName" class="form-control" placeholder="Company Name"
-               v             alue="@t?.CompanyName" required />
-                         </div>
-                         <div class="col-md-3">
-                           <input name="CompanyContact" class="form-control" placeholder="Contact Number"
-                            value="@t?.CompanyContact" required />
-                         </div>
-                         <div class="col-md-3">
-                           <input name="DateSent" type="date" class="form-control"
-                             value="@(t?.DateSent.ToString("yyyy-MM-dd"))" required />
-                         </div>
-                        <div class="col-md-12">
-                           <textarea name="ThirdPartyRemarks" class="form-control" placeholder="Remarks">@t?.ThirdPartyRemarks</textarea>
+                                   value="@t?.CompanyName" required />
                         </div>
-                         <div class="col-md-12 text-end">
-                           <button type="submit" class="btn btn-success btn-sm">Submit</button>
-                         </div>
-                    </form>
+                        <div class="col-md-3">
+                            <input name="CompanyContact" class="form-control" placeholder="Contact Number"
+                                   value="@t?.CompanyContact" required />
+                        </div>
+                        <div class="col-md-3">
+                            <input name="DateSent" type="date" class="form-control"
+                                   value="@(t?.DateSent.ToString("yyyy-MM-dd"))" required />
+                        </div>
+                        <div class="col-md-12 position-relative">
 
+                          <label for="Attachment" class="form-label">Remarks & Quotation</label>
+
+                          <textarea name="ThirdPartyRemarks" class="form-control pe-5" placeholder="Type a remark...">@t?.ThirdPartyRemarks</textarea>
+
+    <!-- Paperclip icon -->
+    <label for="Attachment" class="position-absolute end-0 top-0 me-3 mt-4" style="cursor: pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="gray" class="bi bi-paperclip" viewBox="0 0 16 16">
+            <path d="M6.354 5.5H9.5a.5.5 0 0 0 0-1H6.354a1.5 1.5 0 1 0 0 3h4.292a2.5 2.5 0 1 1 0 5H5a3.5 3.5 0 0 1 0-7h4.5a.5.5 0 0 0 0-1H5a4.5 4.5 0 0 0 0 9h5.646a3.5 3.5 0 1 0 0-7H6.354z"/>
+        </svg>
+    </label>
+
+    <!-- Hidden file input triggered by label -->
+    <input type="file" id="Attachment" name="Attachment" accept=".pdf,.jpg,.jpeg,.png" class="d-none" />
+</div>
+
+                        <div class="col-md-12 text-end">
+                            <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                        </div>
+                    </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
 
 @section Scripts {
     <script>

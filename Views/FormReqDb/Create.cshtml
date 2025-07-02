@@ -1,5 +1,4 @@
-﻿@model FormRequest.Models.FormReqDb
-
+﻿@model FormRequest.Models.FormReqDb 
 @{
     ViewData["Title"] = "Repair/Servicing Request Form";
 }
@@ -54,7 +53,12 @@
         <tbody>
             <tr>
                 <td><input asp-for="EquipmentType" class="form-control" /></td>
-                <td><input asp-for="SerialNumber" class="form-control" /></td>
+               <td>
+                   <select asp-for="SerialNumber" class="form-control" id="SerialNumber">
+                    <option value="">-- Select Serial Number --</option>
+                   </select>
+               </td>
+
                 <td><input asp-for="ProblemDescription" class="form-control" /></td>
             </tr>
         </tbody>
@@ -70,7 +74,38 @@
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function fetchSerialNumbers() {
+            var site = $('#Site').val();
+            var department = $('#Department').val();
+            var equipmentType = $('input[name="EquipmentType"]').val(); // assuming it's a text input
+
+            if (site && department && equipmentType) {
+                $.ajax({
+                    url: '@Url.Action("GetSerialNumbers", "FormReqDb")', 
+                    data: {
+                        site: site,
+                        department: department,
+                        equipmentType: equipmentType
+                    },
+                    success: function (data) {
+                        var serialDropdown = $('#SerialNumber');
+                        serialDropdown.empty();
+                        serialDropdown.append($('<option>', { value: '', text: '-- Select Serial Number --' }));
+                        $.each(data, function (i, val) {
+                            serialDropdown.append($('<option>', { value: val, text: val }));
+                        });
+                    }
+                });
+            }
+        }
+
+        // Trigger when any of the 3 inputs change
+        $('#Site, #Department, input[name="EquipmentType"]').on('change keyup', function () {
+            fetchSerialNumbers();
+        });
+    </script>
 }

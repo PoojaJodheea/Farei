@@ -37,7 +37,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=FormReqDb}/{action=NewComponent" + "}/{id?}");
+    pattern: "{controller=FormReqDb}/{action=Repaired" + "}/{id?}");
 app.MapRazorPages();
 
 app.Run();

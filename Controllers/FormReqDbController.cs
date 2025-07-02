@@ -43,14 +43,14 @@ namespace FormRequest.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Create()
+        public IActionResult Create()  //display new form
         {
             return View(new FormReqDb());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FormReqDb model)
+        public async Task<IActionResult> Create(FormReqDb model) 
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +71,21 @@ namespace FormRequest.Controllers
             if (form == null) return NotFound();
 
             return View(form);
+
         }
+        [HttpGet]
+        public JsonResult GetSerialNumbers(string site, string department, string equipmentType) //displays list of SN according to conditions
+        {
+            var serials = _context.FormReqDb
+                .Where(e => e.Site == site && e.Department == department && e.EquipmentType == equipmentType)
+                .Select(e => e.SerialNumber)
+                .Distinct()
+                .ToList();
+
+            return Json(serials);
+        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -112,9 +126,9 @@ namespace FormRequest.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        //registry
+       
 
-
+        //REGISTRY SECTION
         public IActionResult Registry()
         {
             var requests = _context.FormReqDb
@@ -180,6 +194,7 @@ namespace FormRequest.Controllers
         }
 
       
+
         public IActionResult OnSite()
         {
             var forms = _context.FormReqDb
@@ -219,7 +234,9 @@ namespace FormRequest.Controllers
         }
 
 
-        public IActionResult Repaired()
+        //ITO PAGE
+
+        public IActionResult Repaired() //loads repaired request 
         {
 
             var repairedForms = _context.FormReqDb
@@ -252,46 +269,82 @@ namespace FormRequest.Controllers
         }
 
 
-        public IActionResult ThirdParty()
+
+
+        public IActionResult ThirdParty(SearchFilter filter, string? SortOrder)
         {
-            var models = _context.FormReqDb
+            var query = _context.FormReqDb
                 .Include(f => f.Registries)
                 .Select(f => new RequestViewModel
                 {
                     FormReqDb = f,
                     ThirdParty = _context.ThirdParties.FirstOrDefault(tp => tp.FormReqDbId == f.Id)
                 })
-                .ToList();
+                .AsQueryable();
 
-            return View(models);
+            if (!string.IsNullOrEmpty(filter.SearchKey))
+            {
+                query = query.Where(x =>
+                    x.FormReqDb.ResponsibleOfficer.Contains(filter.SearchKey) ||
+                    
+                    x.FormReqDb.SerialNumber.Contains(filter.SearchKey));
+            }
+
+            if (!string.IsNullOrEmpty(SortOrder))
+            {
+                if (SortOrder == "asc")
+                {
+                    query = query.OrderBy(x => x.ThirdParty.DateSent);
+                }
+                else if (SortOrder == "desc")
+                {
+                    query = query.OrderByDescending(x => x.ThirdParty.DateSent);
+                }
+            }
+
+            return View(query.ToList());
         }
-
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitThirdPartyForm(ThirdParty model)
+        public async Task<IActionResult> SubmitThirdPartyForm(ThirdParty model, IFormFile? Attachment) //IFormFile->optional attachment
         {
-            var existing = _context.ThirdParties
-                .FirstOrDefault(tp => tp.FormReqDbId == model.FormReqDbId);
+            string? filePath = null;
 
-            if (existing != null)
+            if (Attachment != null && Attachment.Length > 0)  //
             {
-                existing.CompanyName = model.CompanyName;
-                existing.CompanyContact = model.CompanyContact;
-                existing.DateSent = model.DateSent;
-                existing.ThirdPartyRemarks = model.ThirdPartyRemarks;
+                var uploadsFolder = Path.Combine("wwwroot", "uploads");
+                Directory.CreateDirectory(uploadsFolder);
 
+                var fileName = Guid.NewGuid() + Path.GetExtension(Attachment.FileName);//creates a filename
+                var fullPath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await Attachment.CopyToAsync(stream);
+                }
+
+                filePath = Path.Combine("uploads", fileName); // stores file path for db
+            }
+
+            var existing = _context.ThirdParties
+                .FirstOrDefault(tp => tp.FormReqDbId == model.FormReqDbId);  //existing fields from form
+
+            if (existing != null)//if records exist->remark+attachment can be updated 
+            {
+                existing.ThirdPartyRemarks = model.ThirdPartyRemarks;
+                if (filePath != null) existing.AttachmentPath = filePath;
                 _context.Update(existing);
             }
             else
             {
-                model.FormReqDb = null;
-
+                model.FormReqDb = null; //new entry->insert new record
+                if (filePath != null) model.AttachmentPath = filePath;
                 _context.ThirdParties.Add(model);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("ThirdParty");
         }
 
