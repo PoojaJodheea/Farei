@@ -6,7 +6,7 @@
 <h2>Repair/Servicing Request Form</h2>
 <hr />
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" asp-controller="FormReqDb" method="post">
     <h4>Request Details</h4>
     <div class="row mb-3">
         <div class="col-md-3">
@@ -39,7 +39,7 @@
     <div class="form-group mb-4">
         <label asp-for="Supervisor">Supervisor:</label>
         <input asp-for="Supervisor" class="form-control" />
-    </div
+    </div>
 
     <h4>Equipment Section</h4>
     <table class="table table-bordered">
@@ -56,6 +56,7 @@
                <td>
                    <select asp-for="SerialNumber" class="form-control" id="SerialNumber">
                     <option value="">-- Select Serial Number --</option>
+                        <span asp-validation-for="SerialNumber" class="text-danger"></span>
                    </select>
                </td>
 
@@ -65,11 +66,13 @@
     </table>
     <button type="button" class="btn btn-secondary mb-3">Add Equipment</button>
 
+    <input type="hidden" id="IsDraft" name="IsDraft" value="false" />
     
 
     <div class="form-group">
-        <input type="submit" value="Submit" class="btn btn-primary" />
-        <input type="reset" value="Cancel" class="btn btn-outline-secondary" />
+       <button type="submit" class="btn btn-primary">Submit</button>
+   
+    <input type="reset" value="Cancel" class="btn btn-outline-secondary" />
     </div>
 </form>
 
@@ -108,4 +111,6 @@
             fetchSerialNumbers();
         });
     </script>
+
+
 }

@@ -37,7 +37,9 @@ namespace FormRequest.Models
 
         public string? Supervisor { get; set; }
         public string? Technician { get; set; }
-       
+        public bool IsDraft { get; set; } = true;
+        public bool IsClosed { get; set; } = false;
+        public string? UserFeedback { get; set; }
         public List<Registry> Registries { get; set; } = new List<Registry>();
     }
 }

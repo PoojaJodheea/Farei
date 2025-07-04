@@ -17,7 +17,6 @@ namespace FormRequest.Controllers
             _context = context;
         }
 
-        
         public async Task<IActionResult> Index()
         {
             var forms = await _context.FormReqDb.ToListAsync();
@@ -42,7 +41,6 @@ namespace FormRequest.Controllers
 
             return View(viewModel);
         }
-
         public IActionResult Create()  //display new form
         {
             return View(new FormReqDb());
@@ -50,7 +48,8 @@ namespace FormRequest.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FormReqDb model) 
+     
+            public async Task<IActionResult> Create(FormReqDb model)
         {
             if (ModelState.IsValid)
             {
@@ -59,9 +58,9 @@ namespace FormRequest.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(model); 
+            return View(model);
         }
-
+        
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -85,8 +84,6 @@ namespace FormRequest.Controllers
             return Json(serials);
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, FormReqDb formReqDb)
@@ -102,7 +99,6 @@ namespace FormRequest.Controllers
 
             return View(formReqDb);
         }
-
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -126,8 +122,6 @@ namespace FormRequest.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-       
-
         //REGISTRY SECTION
         public IActionResult Registry()
         {
@@ -138,9 +132,6 @@ namespace FormRequest.Controllers
 
             return View(requests);
         }
-
-
-
         public IActionResult RegistryDetails(int id)
         {
             var formReq = _context.FormReqDb
@@ -192,9 +183,6 @@ namespace FormRequest.Controllers
          
             return RedirectToAction("RegistryDetails", new { id = model.Registry.FormReqDbId });
         }
-
-      
-
         public IActionResult OnSite()
         {
             var forms = _context.FormReqDb
@@ -212,9 +200,6 @@ namespace FormRequest.Controllers
                 .ToList();
             return View("IsInTransit", forms);
         }
-
-
-
         //Delete request after acknowlegdement
 
         [HttpPost]
@@ -232,10 +217,7 @@ namespace FormRequest.Controllers
             
             return RedirectToAction("OnSite");
         }
-
-
         //ITO PAGE
-
         public IActionResult Repaired() //loads repaired request 
         {
 
@@ -246,8 +228,6 @@ namespace FormRequest.Controllers
 
             return View("Repaired", repairedForms);
         }
-
-
         public IActionResult NewComponent()
         {
             var newComponents = _context.FormReqDb
@@ -267,10 +247,6 @@ namespace FormRequest.Controllers
 
             return View("NewComponent", viewModelList);
         }
-
-
-
-
         public IActionResult ThirdParty(SearchFilter filter, string? SortOrder)
         {
             var query = _context.FormReqDb
@@ -304,8 +280,6 @@ namespace FormRequest.Controllers
 
             return View(query.ToList());
         }
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitThirdPartyForm(ThirdParty model, IFormFile? Attachment) //IFormFile->optional attachment
@@ -346,6 +320,33 @@ namespace FormRequest.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction("ThirdParty");
+       
+        
+        }
+
+        public IActionResult Feedback()
+        {
+            var requests = _context.FormReqDb
+                .Where(r => !r.IsClosed) //hides closed requests
+                .ToList();
+
+            return View(requests);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SubmitFeedback(int id, string feedback, bool confirmRepaired)
+        {
+            var request = _context.FormReqDb.FirstOrDefault(r => r.Id == id);  //request by id
+            if (request != null)  //request found->save feedback+if checkbox ticked->IsClosed=True
+            {
+                request.UserFeedback = feedback;
+                request.IsClosed = confirmRepaired;
+                _context.Update(request);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Feedback");
         }
 
 
@@ -355,10 +356,6 @@ namespace FormRequest.Controllers
 
 
 
+
     }
-
-
-
-
-
 }

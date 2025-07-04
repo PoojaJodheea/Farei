@@ -4,6 +4,7 @@ using FormRequest.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormRequest.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250703061151_DraftForm")]
+    partial class DraftForm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +45,6 @@ namespace FormRequest.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDraft")
                         .HasColumnType("bit");
 
@@ -71,9 +71,6 @@ namespace FormRequest.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Technician")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserFeedback")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Verification")
