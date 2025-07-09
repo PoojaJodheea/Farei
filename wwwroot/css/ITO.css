@@ -1,0 +1,72 @@
+﻿/* ---- STATUS COLUMN COLORS (unchanged) ---- */
+td.table-accept {
+    background-color: #59b5ff !important;
+    color: black;
+}
+
+td.table-reject {
+    background-color: #DC143C !important;
+    color: white;
+}
+
+td.table-pending {
+    background-color: #D3D3D3 !important;
+    color: black;
+}
+
+td.table-transit {
+    background-color: #F3E5AB !important;
+    color: black;
+}
+
+/* ---- PURPLE UI THEME ---- */
+
+/* Page Title */
+.page-title {
+    color: #5E2B97;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Table Header */
+.purple-table-header th {
+    background-color: #6A0DAD;
+    color: white;
+}
+
+/* Details Button */
+.btn-purple {
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+}
+
+    .btn-purple:hover {
+        background-color: #732d91;
+        color: white;
+    }
+
+/* Navigation bar (if using Bootstrap Navbar) */
+.navbar {
+    background-color: #5E2B97 !important;
+}
+
+    .navbar a,
+    .navbar-brand {
+        color: white !important;
+    }
+
+        .navbar a:hover {
+            color: #d1c4e9 !important;
+        }
+
+/* Table striping */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f3e5f5;
+}
+
+/* Optional global background */
+body {
+    background-color: #f9f2ff;
+    font-family: 'Segoe UI', sans-serif;
+}

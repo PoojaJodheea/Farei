@@ -7,6 +7,7 @@
 <hr />
 
 <form asp-action="Create" asp-controller="FormReqDb" method="post">
+    @Html.AntiForgeryToken()
     <h4>Request Details</h4>
     <div class="row mb-3">
         <div class="col-md-3">
@@ -15,7 +16,19 @@
         </div>
         <div class="col-md-3">
             <label asp-for="Site">Site:</label>
-            <input asp-for="Site" class="form-control" />
+            <select asp-for="Site" class="form-control">
+                <option>-- Select Site --</option>
+                <option> St Pierre </option>
+                <option> Reduit </option>
+                <option>Curepipe</option>
+                <option>Mapou</option>
+                <option>Flacq</option>
+                <option>Riviere des anguilles</option>
+                <option>Plaisance</option>
+                <option>Vacoas</option>
+
+            </select>
+
         </div>
         <div class="col-md-3">
             <label asp-for="Department">Department:</label>
@@ -52,7 +65,17 @@
         </thead>
         <tbody>
             <tr>
-                <td><input asp-for="EquipmentType" class="form-control" /></td>
+                <td>
+                    <select asp-for="EquipmentType" class="form-control">
+                        <option value="">-- Select Equipment --</option>
+                        <option> CPU </option>
+                        <option> Monitor </option>
+                        <option>Mouse</option>
+                        <option>Key board</option>
+                        <option>printer</option>
+                        <option>Scanner</option>
+                    </select>
+                </td>
                <td>
                    <select asp-for="SerialNumber" class="form-control" id="SerialNumber">
                     <option value="">-- Select Serial Number --</option>

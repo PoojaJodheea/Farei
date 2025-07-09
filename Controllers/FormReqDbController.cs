@@ -83,6 +83,74 @@ namespace FormRequest.Controllers
 
             return Json(serials);
         }
+        // GET: Supervisor Form
+        public async Task<IActionResult> SupervisorForm()
+        {
+            var model = new RequestViewModel
+            {
+                FormReqDbs = await _context.FormReqDb
+                    .Where(r => r.status == null) // FIXED condition
+                    .ToListAsync()
+            };
+
+            return View(model);
+        }
+
+        // GET: Supervisor Form Details
+        public async Task<IActionResult> DetailsSupervisorForm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var formReqDb = await _context.FormReqDb
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new RequestViewModel
+            {
+               FormReqDb = formReqDb
+            };
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeStatus(int id, String Accepted)
+        {
+            var formReqDb = await _context.FormReqDb.FindAsync(id);
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+            formReqDb.status = Accepted;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FormReqDbExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(SupervisorForm));
+        }
+
+        private bool FormReqDbExists(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -246,6 +314,18 @@ namespace FormRequest.Controllers
             }).ToList();
 
             return View("NewComponent", viewModelList);
+
+        }
+
+        public IActionResult allrequest2() //loads all request 
+        {
+
+            var allrequest = _context.FormReqDb
+     
+     .ToList();
+
+
+            return View("allrequest2", allrequest);
         }
         public IActionResult ThirdParty(SearchFilter filter, string? SortOrder)
         {
@@ -348,7 +428,41 @@ namespace FormRequest.Controllers
 
             return RedirectToAction("Feedback");
         }
+        public async Task<IActionResult> RequestMovement()
+        {
+            var requests = await _context.FormReqDb
+                .Include(f => f.Registries)
+                .Where(f => f.status == "OnSite" || f.status == "InTransit")
+                .ToListAsync();
 
+            return View(requests);
+        }
+
+
+
+    
+        [HttpPost]
+        public async Task<IActionResult> UpdateMovementStatus(int id, string action, string currentStatus)
+        {
+            var request = await _context.FormReqDb
+                .Include(r => r.Registries) //remarks
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (request == null)
+                return NotFound();
+
+            if (action == "Approve")
+            {
+                request.status = currentStatus == "OnSite" ? "Approved" : "Transiting";
+            }
+            else if (action == "Reject")
+            {
+                request.status = currentStatus == "OnSite" ? "Rejected" : "Rejected";
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(RequestMovement));
+        }
 
 
 

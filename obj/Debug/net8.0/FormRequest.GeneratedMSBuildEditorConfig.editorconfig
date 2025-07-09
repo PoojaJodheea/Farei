@@ -36,6 +36,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURic1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Farei1/FormRequest/Views/FormReqDb/AllRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXEFsbFJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/allrequest2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXGFsbHJlcXVlc3QyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Farei1/FormRequest/Views/FormReqDb/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -46,6 +54,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Farei1/FormRequest/Views/FormReqDb/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/DetailsSupervisorForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXERldGFpbHNTdXBlcnZpc29yRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Farei1/FormRequest/Views/FormReqDb/Edit.cshtml]
@@ -84,6 +96,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFJlcGFpcmVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Farei1/FormRequest/Views/FormReqDb/RequestMovement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFJlcXVlc3RNb3ZlbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/SupervisorForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFN1cGVydmlzb3JGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Farei1/FormRequest/Views/FormReqDb/ThirdParty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFRoaXJkUGFydHkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -98,6 +118,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Farei1/FormRequest/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/Shared/ITOlayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXElUT2xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Farei1/FormRequest/Views/Shared/_LoginPartial.cshtml]

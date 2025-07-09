@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+
+@{
+    ViewData["Title"] = "All Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Requests</h2>
+
+
+<table class="table table-bordered table-striped">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Site</th>
+            <th>Department</th>
+            <th>Equipment</th>
+            <th>Problem</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var status = item.status?.Trim().ToLower();
+            string rowClass = "";
+
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                rowClass = "table-pending";
+            }
+            else if (status == "accepted")
+            {
+                rowClass = "table-accept";
+            }
+            else if (status == "reject")
+            {
+                rowClass = "table-reject";
+            }
+            else
+            {
+                rowClass = "table-pending";
+            }
+
+            <tr class="@rowClass">
+                <td>@item.RequestDate.ToShortDateString()</td>
+                <td>@item.Site</td>
+                <td>@item.Department</td>
+                <td>@item.EquipmentType</td>
+                <td>@item.ProblemDescription</td>
+                <td>@item.status</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    tr.table-accept td {
+        background-color: #86eeff !important;
+    }
+
+    tr.table-reject td {
+        background-color: #ff4e4e !important;
+        
+    }
+
+    tr.table-pending td {
+        background-color: #d9e0e1 !important;
+    }
+
+    tr.table-transit td {
+        background-color: #F3E5AB !important;
+    }
+</style>

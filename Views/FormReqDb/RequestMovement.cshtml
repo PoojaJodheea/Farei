@@ -1,0 +1,45 @@
+﻿@model List<FormRequest.Models.FormReqDb>
+
+@{
+    ViewData["Title"] = "Request Movement";
+}
+
+<h2>Request Movement</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+       
+            <th>Site</th>
+            <th>Department</th>
+            <th>Equipment</th>
+            <th>Status</th>
+            <th>Technician Remark</th>
+        
+            <th>Confirm Movement</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            var Registry = r.Registries?.OrderByDescending(r => r.MovementDate).FirstOrDefault();
+            <tr>
+               
+                <td>@r.Site</td>
+                <td>@r.Department</td>
+                <td>@r.EquipmentType</td>
+                <td>@r.status</td>
+                <td>@(Registry?.Remarks ?? "")</td>
+                
+                <td>
+                    <form asp-action="UpdateMovementStatus" method="post">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <input type="hidden" name="currentStatus" value="@r.status" />
+                        <button type="submit" name="action" value="Approve" class="btn btn-success btn-sm">Approve</button>
+                        <button type="submit" name="action" value="Reject" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

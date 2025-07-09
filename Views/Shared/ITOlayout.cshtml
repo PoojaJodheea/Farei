@@ -1,13 +1,12 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FormRequest</title>
+    <title>@ViewData["Title"] - ITO</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FormRequest.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ITO.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <header>
@@ -23,9 +22,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                       
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="FormReqDb" asp-action="AllRequest">All Requests</a>
+                            <a class="nav-link" asp-controller="FormReqDb" asp-action="allrequest2">All Requests</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="FormReqDb" asp-action="Repaired">Repaired</a>
@@ -36,6 +35,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="FormReqDb" asp-action="ThirdParty">Third Party</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="FormReqDb" asp-action="RequestMovement">Request Movement</a>
+                        </li
 
                     </ul>
                     <partial name="_LoginPartial" />

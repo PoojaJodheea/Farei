@@ -1,0 +1,62 @@
+﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+
+@{
+    ViewData["Title"] = "All Requests";
+    Layout = "~/Views/Shared/ITOlayout.cshtml";
+}
+
+<h2 class="page-title">All Requests</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="purple-table-header">
+        <tr>
+            <th>Date</th>
+            <th>Site</th>
+            <th>Department</th>
+            <th>Equipment</th>
+            <th>Problem</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var status = item.status?.Trim().ToLower();
+            string statusClass = "";
+
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                statusClass = "table-pending";
+            }
+            else if (status == "accepted")
+            {
+                statusClass = "table-accept";
+            }
+            else if (status == "reject")
+            {
+                statusClass = "table-reject";
+            }
+            else if (status == "transit")
+            {
+                statusClass = "table-transit";
+            }
+            else
+            {
+                statusClass = "table-pending";
+            }
+
+            <tr>
+                <td>@item.RequestDate.ToShortDateString()</td>
+                <td>@item.Site</td>
+                <td>@item.Department</td>
+                <td>@item.EquipmentType</td>
+                <td>@item.ProblemDescription</td>
+                <td class="@statusClass">@item.status</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
