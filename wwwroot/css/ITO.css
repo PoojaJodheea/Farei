@@ -1,4 +1,4 @@
-﻿/* ---- STATUS COLUMN COLORS (unchanged) ---- */
+﻿
 td.table-accept {
     background-color: #59b5ff !important;
     color: black;
@@ -19,9 +19,6 @@ td.table-transit {
     color: black;
 }
 
-/* ---- PURPLE UI THEME ---- */
-
-/* Page Title */
 .page-title {
     color: #5E2B97;
     font-weight: 600;
@@ -46,7 +43,7 @@ td.table-transit {
         color: white;
     }
 
-/* Navigation bar (if using Bootstrap Navbar) */
+
 .navbar {
     background-color: #5E2B97 !important;
 }
@@ -60,12 +57,11 @@ td.table-transit {
             color: #d1c4e9 !important;
         }
 
-/* Table striping */
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f3e5f5;
 }
 
-/* Optional global background */
+
 body {
     background-color: #f9f2ff;
     font-family: 'Segoe UI', sans-serif;
