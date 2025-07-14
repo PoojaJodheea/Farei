@@ -22,7 +22,7 @@
     <tbody>
         @foreach (var r in Model)
         {
-            var Registry = r.Registries?.OrderByDescending(r => r.MovementDate).FirstOrDefault();
+            var Registry = r.Registries?.OrderByDescending(r => r.DateReceived).FirstOrDefault();
             <tr>
                
                 <td>@r.Site</td>

@@ -7,7 +7,7 @@
 
 <h2 class="page-title">All Requests</h2>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" id="requestTable">
     <thead class="purple-table-header">
         <tr>
             <th>Date</th>
@@ -16,6 +16,7 @@
             <th>Equipment</th>
             <th>Problem</th>
             <th>Status</th>
+            <th>Confirm Movement Type</th>
             <th>Details</th>
         </tr>
     </thead>
@@ -23,36 +24,29 @@
         @foreach (var item in Model)
         {
             var status = item.status?.Trim().ToLower();
-            string statusClass = "";
+            string statusClass = status switch
+            {
+                "accepted" => "table-accept",
+                "reject" => "table-reject",
+                "transit" => "table-transit",
+                "onsite" => "table-onsite",
+                _ => "table-pending"
+            };
 
-            if (string.IsNullOrWhiteSpace(status))
-            {
-                statusClass = "table-pending";
-            }
-            else if (status == "accepted")
-            {
-                statusClass = "table-accept";
-            }
-            else if (status == "reject")
-            {
-                statusClass = "table-reject";
-            }
-            else if (status == "transit")
-            {
-                statusClass = "table-transit";
-            }
-            else
-            {
-                statusClass = "table-pending";
-            }
-
-            <tr>
+            <tr id="row-@item.Id">
                 <td>@item.RequestDate.ToShortDateString()</td>
                 <td>@item.Site</td>
                 <td>@item.Department</td>
                 <td>@item.EquipmentType</td>
                 <td>@item.ProblemDescription</td>
-                <td class="@statusClass">@item.status</td>
+                <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
+                <td>
+                    @if (status == "transit" || status == "onsite")
+                    {
+                        <button class="btn btn-sm btn-success action-btn" data-id="@item.Id" data-action="accept">Accept</button>
+                        <button class="btn btn-sm btn-danger action-btn" data-id="@item.Id" data-action="reject">Reject</button>
+                    }
+                </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
                 </td>
@@ -60,3 +54,37 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on("click", ".action-btn", function () {  //runs function after clicking button
+            var id = $(this).data("id");  //each buton has data id+ data action
+            var action = $(this).data("action");
+
+            $.ajax({
+                url: '@Url.Action("UpdateStatus", "FormReqDb")',
+                type: 'POST',
+                data: { id: id, actionType: action },
+                success: function (response) {
+                    if (response.success) {
+                        var statusCell = $(".status-cell[data-id='" + id + "']");
+                        statusCell.text(response.newStatus);
+                        statusCell.removeClass().addClass("status-cell table-updated").text(response.newStatus);
+
+                        // Optionally disable buttons after action
+                        $("#row-" + id + " .action-btn").prop("disabled", true);
+                    } else {
+                        alert("Something went wrong.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to update status.");
+                }
+            });
+        });
+    </script>
+}
+
+
+

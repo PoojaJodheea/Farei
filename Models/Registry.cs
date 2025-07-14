@@ -13,7 +13,7 @@ namespace FormRequest.Models
 
         
         [DataType(DataType.Date)]
-        public DateTime MovementDate { get; set; }
+        public DateTime DateReceived { get; set; }
 
         public string Remarks { get; set; }
 

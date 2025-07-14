@@ -191,32 +191,16 @@ namespace FormRequest.Controllers
             return RedirectToAction(nameof(Index));
         }
         //REGISTRY SECTION
-        public IActionResult Registry()
-        {
-            var requests = _context.FormReqDb
-                .Include(f => f.Registries)
-                .Where(f => !f.Registries.Any(r => r.IsValid && (r.IsOnSite || r.IsInTransit)))
-                .ToList();
 
-            return View(requests);
-        }
-        public IActionResult RegistryDetails(int id)
+        public async Task<IActionResult> Registry()
         {
-            var formReq = _context.FormReqDb
-                .Include(f => f.Registries)
-                .FirstOrDefault(x => x.Id == id);
-
-            if (formReq == null) return NotFound();
+            var requests = await _context.FormReqDb
+                .Where(f => f.status == "accept transit")
+                .ToListAsync();
 
             var viewModel = new RequestViewModel
             {
-                FormReqDb = formReq,
-                Registry = new Registry
-                {
-                    FormReqDbId = id,
-                    
-                },
-             RegistryList = formReq.Registries.ToList()
+                FormReqDbs = requests
             };
 
             return View(viewModel);
@@ -224,33 +208,33 @@ namespace FormRequest.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SubmitRegistry(RequestViewModel model)
+        public async Task<IActionResult> RegistryConfirmation(int formReqId, string driver, DateTime dateReceived)
         {
-            ModelState.Remove("Registry.FormReqDb");
+            var form = await _context.FormReqDb.FindAsync(formReqId);
+            if (form == null) return NotFound();
 
-            if (!ModelState.IsValid)
+            // Create registry entry
+            var registry = new Registry
             {
-                model.FormReqDb = _context.FormReqDb
+                FormReqDbId = formReqId,
+                Driver = driver,
+                DateReceived = dateReceived,
+                IsValid = true
+            };
 
-                    .Include(f => f.Registries)
-                    .FirstOrDefault(f => f.Id == model.Registry.FormReqDbId);
+            _context.Registry.Add(registry);
 
-                model.RegistryList = model.FormReqDb?.Registries.ToList();
-               
+            // Update form status
+            form.status = "TransitConfirmed";
+            _context.FormReqDb.Update(form);
 
-                return View("RegistryDetails", model);
-            }
-
-            //Adding registry
-            model.Registry.MovementDate = DateTime.Now.Date;//local date only
-            model.Registry.IsValid = true;
-          _context.Registry.Add(model.Registry);
-           
-          _context.SaveChanges();
-          
-         
-            return RedirectToAction("RegistryDetails", new { id = model.Registry.FormReqDbId });
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Registry));
         }
+
+
+
+
         public IActionResult OnSite()
         {
             var forms = _context.FormReqDb
@@ -308,7 +292,7 @@ namespace FormRequest.Controllers
                 FormReqDb = f,
                 Registry = f.Registries.FirstOrDefault() ?? new Registry()
                 {
-                    MovementDate = DateTime.Now.Date
+                    
                 }
 
             }).ToList();
@@ -440,29 +424,25 @@ namespace FormRequest.Controllers
 
 
 
-    
+
         [HttpPost]
-        public async Task<IActionResult> UpdateMovementStatus(int id, string action, string currentStatus)
+        public IActionResult UpdateStatus(int id, string actionType)
         {
-            var request = await _context.FormReqDb
-                .Include(r => r.Registries) //remarks
-                .FirstOrDefaultAsync(r => r.Id == id);
-
+            var request = _context.FormReqDb.FirstOrDefault(r => r.Id == id);
             if (request == null)
-                return NotFound();
+                return Json(new { success = false, message = "Request not found." });
 
-            if (action == "Approve")
-            {
-                request.status = currentStatus == "OnSite" ? "Approved" : "Transiting";
-            }
-            else if (action == "Reject")
-            {
-                request.status = currentStatus == "OnSite" ? "Rejected" : "Rejected";
-            }
+            if (request.status?.ToLower() == "transit")
+                request.status = actionType == "accept" ? "accept transit" : "reject transit";
+            else if (request.status?.ToLower() == "onsite")
+                request.status = actionType == "accept" ? "accept onsite" : "reject onsite";
+            else
+                return Json(new { success = false, message = "Invalid status for action." });
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(RequestMovement));
+            _context.SaveChanges();
+            return Json(new { success = true, newStatus = request.status });
         }
+
 
 
 

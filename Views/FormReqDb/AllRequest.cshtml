@@ -25,34 +25,31 @@
         @foreach (var item in Model)
         {
             var status = item.status?.Trim().ToLower();
-            string rowClass = "";
+            string statusClass = status switch
+            {
+                "accepted" => "table-accept",
+                "reject" => "table-reject",
+                "transit" => "table-transit",
+                "onsite" => "table-onsite",
+                _ => "table-pending"
+            };
 
-            if (string.IsNullOrWhiteSpace(status))
-            {
-                rowClass = "table-pending";
-            }
-            else if (status == "accepted")
-            {
-                rowClass = "table-accept";
-            }
-            else if (status == "reject")
-            {
-                rowClass = "table-reject";
-            }
-            else
-            {
-                rowClass = "table-pending";
-            }
-
-            <tr class="@rowClass">
+            <tr id="row-@item.Id" class="@statusClass">
                 <td>@item.RequestDate.ToShortDateString()</td>
                 <td>@item.Site</td>
                 <td>@item.Department</td>
                 <td>@item.EquipmentType</td>
                 <td>@item.ProblemDescription</td>
-                <td>@item.status</td>
+                <td class="status-cell" data-id="@item.Id">@item.status</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                    @if (status == "transit" || status == "onsite" || status == "accepted")
+                    {
+                        <button class="btn btn-sm btn-success action-btn" data-id="@item.Id" data-action="accept">Accept</button>
+                        <button class="btn btn-sm btn-danger action-btn" data-id="@item.Id" data-action="reject">Reject</button>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
                 </td>
             </tr>
         }
