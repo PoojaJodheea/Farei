@@ -432,9 +432,10 @@ namespace FormRequest.Controllers
             if (request == null)
                 return Json(new { success = false, message = "Request not found." });
 
-            if (request.status?.ToLower() == "transit")
+            string currentStatus = request.status?.ToLower();
+            if (currentStatus == "transit" || currentStatus == "accept transit" || currentStatus == "reject transit")
                 request.status = actionType == "accept" ? "accept transit" : "reject transit";
-            else if (request.status?.ToLower() == "onsite")
+            else if (currentStatus == "onsite" || currentStatus == "accept onsite" || currentStatus == "reject onsite")
                 request.status = actionType == "accept" ? "accept onsite" : "reject onsite";
             else
                 return Json(new { success = false, message = "Invalid status for action." });
@@ -442,7 +443,6 @@ namespace FormRequest.Controllers
             _context.SaveChanges();
             return Json(new { success = true, newStatus = request.status });
         }
-
 
 
 

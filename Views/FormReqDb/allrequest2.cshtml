@@ -30,6 +30,10 @@
                 "reject" => "table-reject",
                 "transit" => "table-transit",
                 "onsite" => "table-onsite",
+                "accept transit" => "table-accept-transit",
+                "reject transit" => "table-reject-transit",
+                "accept onsite" => "table-accept-onsite",
+                "reject onsite" => "table-reject-onsite",
                 _ => "table-pending"
             };
 
@@ -41,11 +45,12 @@
                 <td>@item.ProblemDescription</td>
                 <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
                 <td>
-                    @if (status == "transit" || status == "onsite")
+                    @if (status == "transit" || status == "onsite" || status == "accept transit" || status == "reject transit" || status == "accept onsite" || status == "reject onsite")
                     {
-                        <button class="btn btn-sm btn-success action-btn" data-id="@item.Id" data-action="accept">Accept</button>
-                        <button class="btn btn-sm btn-danger action-btn" data-id="@item.Id" data-action="reject">Reject</button>
+                        <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" @(status.Contains("accept") ? "disabled" : "")>Accept</button>
+                        <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject" @(status.Contains("reject") ? "disabled" : "")>Reject</button>
                     }
+
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
@@ -55,12 +60,16 @@
     </tbody>
 </table>
 
+
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).on("click", ".action-btn", function () {  //runs function after clicking button
-            var id = $(this).data("id");  //each buton has data id+ data action
+        $(document).on("click", ".action-btn", function () {
+            var id = $(this).data("id");
             var action = $(this).data("action");
+            var button = $(this);
+
+            if (!confirm("Are you sure you want to " + action + " this request?")) return;
 
             $.ajax({
                 url: '@Url.Action("UpdateStatus", "FormReqDb")',
@@ -69,13 +78,28 @@
                 success: function (response) {
                     if (response.success) {
                         var statusCell = $(".status-cell[data-id='" + id + "']");
-                        statusCell.text(response.newStatus);
-                        statusCell.removeClass().addClass("status-cell table-updated").text(response.newStatus);
+                        var newStatus = response.newStatus.toLowerCase().trim();
 
-                        // Optionally disable buttons after action
-                        $("#row-" + id + " .action-btn").prop("disabled", true);
+                        var statusClassMap = {
+                            "accepted": "table-accept",
+                            "reject": "table-reject",
+                            "transit": "table-transit",
+                            "onsite": "table-onsite",
+                            "accept transit": "table-accept-transit",
+                            "reject transit": "table-reject-transit",
+                            "accept onsite": "table-accept-onsite",
+                            "reject onsite": "table-reject-onsite"
+                        };
+
+                        var newClass = statusClassMap[newStatus] || "table-pending";
+
+                        statusCell.removeClass().addClass("status-cell " + newClass).text(response.newStatus);
+
+                        var row = $("#row-" + id);
+                        row.find(".accept-btn").prop("disabled", newStatus.includes("accept"));
+                        row.find(".reject-btn").prop("disabled", newStatus.includes("reject"));
                     } else {
-                        alert("Something went wrong.");
+                        alert(response.message || "Something went wrong.");
                     }
                 },
                 error: function () {
@@ -85,6 +109,3 @@
         });
     </script>
 }
-
-
-

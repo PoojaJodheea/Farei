@@ -1,42 +1,44 @@
-﻿tr.table-accept td {
+﻿.status-cell.table-accept {
     background-color: #59b5ff !important;
     color: black !important;
 }
 
-tr.table-reject td {
+.status-cell.table-reject {
     background-color: #DC143C !important;
     color: white !important;
 }
 
-tr.table-pending td {
+.status-cell.table-pending {
     background-color: #D3D3D3 !important;
     color: black !important;
 }
 
-tr.table-transit td, tr.table-onsite td {
+.status-cell.table-transit,
+.status-cell.table-onsite {
+    background-color: #c11c84 !important;
+    color: white !important;
+}
+
+.status-cell.table-accept-transit {
     background-color: #F3E5AB !important;
     color: black !important;
 }
 
-.table-accept-transit {
-    background-color: #cce5ff !important;
-    color: #004085 !important;
+.status-cell.table-reject-transit {
+    background-color: #DC143C !important;
+    color: white !important;
 }
 
-.table-reject-transit {
-    background-color: #f5c6cb !important;
-    color: #721c24 !important;
+.status-cell.table-accept-onsite {
+    background-color: #F3E5AB !important;
+    color: black !important;
 }
 
-.table-accept-onsite {
-    background-color: #e2f0d9 !important;
-    color: #2e7d32 !important;
+.status-cell.table-reject-onsite {
+    background-color: #DC143C !important;
+    color: white !important;
 }
 
-.table-reject-onsite {
-    background-color: #f5c6cb !important;
-    color: #721c24 !important;
-}
 
 .page-title {
     color: #5E2B97;
