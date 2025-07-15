@@ -28,12 +28,15 @@
             {
                 "accepted" => "table-accept",
                 "reject" => "table-reject",
-                "transit" => "table-transit",
-                "onsite" => "table-onsite",
+                "transit" => "table-pending",
+                "onsite" => "table-pending",
                 "accept transit" => "table-accept-transit",
                 "reject transit" => "table-reject-transit",
                 "accept onsite" => "table-accept-onsite",
                 "reject onsite" => "table-reject-onsite",
+                "complete" => "table-complete",
+                "repairing" => "table-repairing",
+                "send back" => "table-sendback",
                 _ => "table-pending"
             };
 
@@ -83,13 +86,17 @@
                         var statusClassMap = {
                             "accepted": "table-accept",
                             "reject": "table-reject",
-                            "transit": "table-transit",
-                            "onsite": "table-onsite",
+                            "transit": "table-pending",
+                            "onsite": "table-pending",
                             "accept transit": "table-accept-transit",
                             "reject transit": "table-reject-transit",
                             "accept onsite": "table-accept-onsite",
-                            "reject onsite": "table-reject-onsite"
+                            "reject onsite": "table-reject-onsite",
+                            "complete": "table-complete",
+                            "repairing": "table-repairing",
+                            "send back": "table-sendback"
                         };
+
 
                         var newClass = statusClassMap[newStatus] || "table-pending";
 

@@ -1,5 +1,5 @@
 ﻿.status-cell.table-accept {
-    background-color: #59b5ff !important;
+    background-color: #0BDA51 !important;
     color: black !important;
 }
 
@@ -39,8 +39,19 @@
     color: white !important;
 }
 
-
-.page-title {
+.status-cell.table-complete {
+    background-color: #0BDA51 !important;
+    color: black !important;
+}
+.status-cell.table-repairing {
+    background-color: #8FD9FB !important;
+    color: black !important;
+}
+.status-cell.table-sendback {
+    background-color: #DC143C !important;
+    color: white !important;
+}
+    .page-title {
     color: #5E2B97;
     font-weight: 600;
     margin-bottom: 20px;

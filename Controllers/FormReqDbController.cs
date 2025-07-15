@@ -195,7 +195,7 @@ namespace FormRequest.Controllers
         public async Task<IActionResult> Registry()
         {
             var requests = await _context.FormReqDb
-                .Where(f => f.status == "accept transit")
+                .Where(f => f.status == "accept transit"|| f.status == "send back" || f.status =="complete")
                 .ToListAsync();
 
             var viewModel = new RequestViewModel
@@ -205,7 +205,30 @@ namespace FormRequest.Controllers
 
             return View(viewModel);
         }
+        public async Task<IActionResult> RegistryDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var formReqDb = await _context.FormReqDb
+                .FirstOrDefaultAsync(m => m.Id == id);
+          
+
+            var viewModel = new RequestViewModel
+            {
+                FormReqDb = formReqDb,
+                Registry = new Registry(),
+             
+            };
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistryConfirmation(int formReqId, string driver, DateTime dateReceived)
@@ -230,6 +253,94 @@ namespace FormRequest.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Registry));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Arrived(int id)
+        {
+            var Registry = await _context.Registry.FindAsync(id);
+            var formReqDb = await _context.FormReqDb.FindAsync(Registry.FormReqDbId);
+            var checkRegistry = _context.Registry.Any(j => j.FormReqDbId == formReqDb.Id);
+            if (Registry == null)
+            {
+                return NotFound();
+            }
+            if (checkRegistry)
+            {
+                if (formReqDb.status == "Send back")
+                {
+                    formReqDb.status = "rejected";
+                }
+                else if (formReqDb.status == "Transitting")
+                {
+                    formReqDb.status = "Repairing";
+                    Registry.IsValid = true;
+                }
+            }
+            else
+            {
+                Registry.IsValid = true;
+                formReqDb.status = "Repairing";
+            }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FormReqDbExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("RegistryForm");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitRegistry(RequestViewModel model)
+        {
+
+            try
+            {
+                var formReqDb = await _context.FormReqDb.FindAsync(model.Registry?.FormReqDbId);
+                var existRegistry = _context.Registry.Any(k => k.FormReqDbId == formReqDb.Id);
+                var newform = model.Registry;
+                if (formReqDb == null)
+                {
+                    return NotFound();
+                }
+
+                await _context.SaveChangesAsync();
+                if (existRegistry)
+                {
+                    newform.To = formReqDb.Site;
+                    newform.From = "Reduit";
+                    _context.Registry.Add(newform);
+                    _context.SaveChanges();
+                    return RedirectToAction("RegistryForm");
+                }
+                else
+                {
+                    newform.From = formReqDb.Site;
+                    newform.To = "Reduit";
+                    _context.Registry.Add(newform);
+                    _context.SaveChanges();
+                    return RedirectToAction("RegistryForm");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DB error: " + ex.Message);
+            }
+
+            return RedirectToAction("RegistryForm");
         }
 
 
