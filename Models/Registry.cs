@@ -15,7 +15,7 @@ namespace FormRequest.Models
         [DataType(DataType.Date)]
         public DateTime DateReceived { get; set; }
 
-        public string Remarks { get; set; }
+        public string? Remarks { get; set; }
 
         public bool IsValid { get; set; }
 

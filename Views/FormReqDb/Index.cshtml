@@ -1,7 +1,10 @@
-﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+﻿@using FormRequest.Models
+
+@model IEnumerable<FormRequest.Models.FormReqDb>
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Repair / Servicing Requests</h1>
@@ -24,21 +27,25 @@
     <tbody>
         @foreach (var item in Model)
         {
+            var status = item.status?.Trim().ToLower();
+            var statusClass = StatusClass.GetStatusClass(item.status);
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>
                 <td>@Html.DisplayFor(modelItem => item.EquipmentType)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
-                <td>
+              
+                <td class="status-cell @statusClass" data-id="@item.Id">
                     @if (item.IsDraft)
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="badge bg-warning text-dark" title="Click to complete draft">Draft</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-warning">Draft</a>
                     }
                     else
                     {
-                        <span class="badge bg-success">Pending</span>
+                        @item.status
                     }
                 </td>
+
                 <td>
                     
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

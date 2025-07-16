@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FormRequest.Models.FormReqDb>
+﻿@using FormRequest.Models
+@model IEnumerable<FormRequest.Models.FormReqDb>
 
 @{
     ViewData["Title"] = "All Requests";
@@ -13,7 +14,8 @@
             <th>Date</th>
             <th>Site</th>
             <th>Department</th>
-            <th>Equipment</th>
+			<th>Equipment</th>
+			<a href="c:\farei1\formrequest\views\formreqdb\allrequest2.cshtml">c:\farei1\formrequest\views\formreqdb\allrequest2.cshtml</a>
             <th>Problem</th>
             <th>Status</th>
             <th>Confirm Movement Type</th>
@@ -24,21 +26,7 @@
         @foreach (var item in Model)
         {
             var status = item.status?.Trim().ToLower();
-            string statusClass = status switch
-            {
-                "accepted" => "table-accept",
-                "reject" => "table-reject",
-                "transit" => "table-pending",
-                "onsite" => "table-pending",
-                "accept transit" => "table-accept-transit",
-                "reject transit" => "table-reject-transit",
-                "accept onsite" => "table-accept-onsite",
-                "reject onsite" => "table-reject-onsite",
-                "complete" => "table-complete",
-                "repairing" => "table-repairing",
-                "send back" => "table-sendback",
-                _ => "table-pending"
-            };
+            var statusClass = StatusClass.GetStatusClass(item.status);
 
             <tr id="row-@item.Id">
                 <td>@item.RequestDate.ToShortDateString()</td>
@@ -53,7 +41,6 @@
                         <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" @(status.Contains("accept") ? "disabled" : "")>Accept</button>
                         <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject" @(status.Contains("reject") ? "disabled" : "")>Reject</button>
                     }
-
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
@@ -62,57 +49,3 @@
         }
     </tbody>
 </table>
-
-
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).on("click", ".action-btn", function () {
-            var id = $(this).data("id");
-            var action = $(this).data("action");
-            var button = $(this);
-
-            if (!confirm("Are you sure you want to " + action + " this request?")) return;
-
-            $.ajax({
-                url: '@Url.Action("UpdateStatus", "FormReqDb")',
-                type: 'POST',
-                data: { id: id, actionType: action },
-                success: function (response) {
-                    if (response.success) {
-                        var statusCell = $(".status-cell[data-id='" + id + "']");
-                        var newStatus = response.newStatus.toLowerCase().trim();
-
-                        var statusClassMap = {
-                            "accepted": "table-accept",
-                            "reject": "table-reject",
-                            "transit": "table-pending",
-                            "onsite": "table-pending",
-                            "accept transit": "table-accept-transit",
-                            "reject transit": "table-reject-transit",
-                            "accept onsite": "table-accept-onsite",
-                            "reject onsite": "table-reject-onsite",
-                            "complete": "table-complete",
-                            "repairing": "table-repairing",
-                            "send back": "table-sendback"
-                        };
-
-
-                        var newClass = statusClassMap[newStatus] || "table-pending";
-
-                        statusCell.removeClass().addClass("status-cell " + newClass).text(response.newStatus);
-
-                        var row = $("#row-" + id);
-                        row.find(".accept-btn").prop("disabled", newStatus.includes("accept"));
-                        row.find(".reject-btn").prop("disabled", newStatus.includes("reject"));
-                    } else {
-                        alert(response.message || "Something went wrong.");
-                    }
-                },
-                error: function () {
-                    alert("Failed to update status.");
-                }
-            });
-        });
-    </script>
-}

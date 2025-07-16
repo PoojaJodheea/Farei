@@ -1,0 +1,58 @@
+﻿@using FormRequest.ViewModel 
+@model RequestViewModel
+
+<h1>
+    Transit
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registry.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registry.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registry.DateReceived)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registry.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormReqDb.Department)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RegistryList)
+        {
+            <tr>
+>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.From)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateReceived)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormReqDb.Department)
+                </td>
+                <td>
+
+                    <a asp-action="DetailsTransiteForm" asp-route-id="@item.FormReqDbId">Details</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

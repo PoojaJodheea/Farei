@@ -1,45 +1,37 @@
 ﻿@model FormRequest.ViewModel.RequestViewModel
-
 @{
-    ViewData["Title"] = "Registry Dashboard";
+    ViewData["Title"] = "Requests";
+    Layout = "~/Views/Shared/Registrylayout.cshtml";
 }
+<h2>Registry - All Requests</h2>
 
-<h2>Registry</h2>
-
-<table class="table table-bordered">
-    <thead>
+<table class="table table-bordered table-striped">
+    <thead class="Brown-table-header">
         <tr>
             <th>Date</th>
-            <th>Site</th>
-            <th>Department</th>
+            <th>Officer</th>
             <th>Equipment</th>
             <th>Problem</th>
-            <th>Officer</th>
-            <th>Technician</th>
-            <th>Confirm Transit</th>
+            <th>Status</th>
+            <th></th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var req in Model.FormReqDbs)
         {
+            var status = req.status?.Trim().ToLower();
+            var statusClass = StatusClass.GetStatusClass(req.status);
             <tr>
                 <td>@req.RequestDate.ToShortDateString()</td>
-                <td>@req.Site</td>
-                <td>@req.Department</td>
+                <td>@req.ResponsibleOfficer</td>
                 <td>@req.EquipmentType</td>
                 <td>@req.ProblemDescription</td>
-                <td>@req.ResponsibleOfficer</td>
-                <td>@req.Technician</td>
+                <td class ="status-cell @statusClass" data-id="@req.Id">@req.status</td>
+
                 <td>
-                    <form asp-action="RegistryConfirmation" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="formReqId" value="@req.Id" />
-                        <div class="d-flex align-items-center gap-2">
-                            <input type="text" name="driver" class="form-control form-control-sm" placeholder="Driver" required />
-                            <input type="date" name="dateReceived" class="form-control form-control-sm" required />
-                            <button type="submit" class="btn btn-sm btn-success">Valid</button>
-                        </div>
-                    </form>
+                 
+                    <a asp-action="RegistryDetails" asp-route-id="@req.Id" class="btn btn-sm btn-H">Details</a>
                 </td>
             </tr>
         }

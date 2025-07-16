@@ -1,0 +1,45 @@
+﻿@using FormRequest.ViewModel
+@model RequestViewModel
+
+<div>
+    <h4>Registry</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Registry.From)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Registry.From)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Registry.DateReceived)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Registry.DateReceived)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Registry.Remarks)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Registry.Remarks)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Department)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Department)
+        </dd>
+    </dl>
+
+    <form asp-action="Arrived" method="post">
+        <input type="hidden" name="id" value="@Model.Registry.RegistryId" />
+
+        <input type="submit" value="Arrived" class="btn btn-secondary" />
+    </form>
+
+</div>
+<div>
+
+    <a asp-action="Transit">Back to List</a>
+</div>

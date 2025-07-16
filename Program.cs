@@ -37,7 +37,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=FormReqDb}/{action=allrequest2" + "}/{id?}");
+    pattern: "{controller=FormReqDb}/{action=Index" +
+    "" + "}/{id?}");
 app.MapRazorPages();
 
 app.Run();

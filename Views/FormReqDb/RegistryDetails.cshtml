@@ -1,160 +1,103 @@
 ﻿@using FormRequest.ViewModel
 @model RequestViewModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Requests";
+    Layout = "~/Views/Shared/Registrylayout.cshtml";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>FormReqDb</h4>
+    <h4>Registry Details</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.RequestDate)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.Site)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.Site)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.Department)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.Department)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.ContactPhone)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.EquipmentType)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.EquipmentType)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.ProblemDescription)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FormReqDb.SerialNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.Supervisor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.Supervisor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FormReqDb.status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FormReqDb.status)
         </dd>
     </dl>
 </div>
-
-<h2> Registry Section</h2>
-
-<form asp-action="SubmitRegistry" method="post">
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            <strong>Validation Errors:</strong>
-            <ul>
-                @foreach (var modelState in ViewData.ModelState)
-                {
-                    foreach (var error in modelState.Value.Errors)
-                    {
-                        <li><strong>@modelState.Key:</strong> @error.ErrorMessage</li>
-                    }
-                }
-            </ul>
-        </div>
-    }
-
-    @Html.AntiForgeryToken()
-
-    <input type="hidden" asp-for="Registry.FormReqDbId" value="@Model?.FormReqDb.Id" />
-
-    
-
-    <div>
-        <label asp-for="Registry.Remarks"></label>
-        <textarea asp-for="Registry.Remarks" class="form-control"></textarea>
-        <span asp-validation-for="Registry.Remarks" class="text-danger"></span>
-    </div>
-
-    
-
-    <div>
-        <input asp-for="Registry.IsOnSite" class="form-check-input" />
-        <label asp-for="Registry.IsOnSite" class="form-check-label"></label>
-    </div>
-
-
-    <div>
-        <input asp-for="Registry.IsInTransit" class="form-check-input" id="IsInTransit" />
-        <label asp-for="Registry.IsInTransit" class="form-check-label"></label>
-    </div>
-
-    <div id="transitFields" style="display:none;">
+<div>
+    <form asp-action="SubmitRegistry" method="post">
+        <input asp-for="Registry.FormReqDbId" value="@Model.FormReqDb.Id" type="hidden" />
         <div>
-            <label asp-for="Registry.Driver"></label>
-            <input asp-for="Registry.Driver" class="form-control" />
-            <span asp-validation-for="Registry.Driver" class="text-danger"></span>
+            <label asp-for="Registry.Remarks"></label>
+            <textarea asp-for="Registry.Remarks" class="R-textbox" class="form-control"></textarea>
+            <span asp-validation-for="Registry.Remarks" class="text-danger"></span>            
         </div>
-
         <div>
-            <label asp-for="Registry.From"></label>
-            <input asp-for="Registry.From" class="form-control" />
-           
+            <label>Time</label>
+            <input asp-for="Registry.DateReceived" class="R-textbox" class="form-control" />
         </div>
-
         <div>
-            <label asp-for="Registry.To"></label>
-            <input asp-for="Registry.To" class="form-control" />
-            
+            <label>Driver</label>
+            <input asp-for="Registry.Driver" class="R-textbox" class="form-control" />
         </div>
-    </div>
 
 
-
-    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-</form>
-
-
-<div class="mt-3">
-    <a asp-action="Registry" class="btn btn-secondary">Back to List</a>
+<button type="submit" class="btn btn-primary mt-3 btn-H">Submit</button>
+    </form>
+    <a asp-action="Registry">Back to List</a>
 </div>
-
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        function toggleTransitFields() {
-            const checkbox = document.getElementById("IsInTransit");
-            const fields = document.getElementById("transitFields");
-            fields.style.display = checkbox.checked ? "block" : "none";
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            toggleTransitFields(); // Show/hide on load
-            document.getElementById("IsInTransit").addEventListener("change", toggleTransitFields);
-        });
-    </script>
-
-
+    
+   
 }
-
-

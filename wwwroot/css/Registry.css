@@ -1,40 +1,40 @@
-﻿
-.page-title {
+﻿.page-title {
     color: #5E2B97;
     font-weight: 600;
     margin-bottom: 20px;
 }
 
 /* Table Header */
-.purple-table-header th {
-    background-color: #5E2B97;
+.Brown-table-header th {
+    background-color: #512902;
     color: white;
 }
 
 /* Details Button */
-.btn-purple {
-    background-color: #8e44ad;
+.btn-H {
+    background-color: #794E2B;
     color: white;
     border: none;
 }
 
-    .btn-purple:hover {
-        background-color: #732d91;
+    .btn-H:hover {
+        background-color: #B0884C;
         color: white;
     }
 
 
 .navbar {
-    background-color: #5E2B97 !important;
+    background-color: #512902 !important;
 }
 
     .navbar a,
-    .navbar-brand {
+    .navbar-brand 
+    {
         color: white !important;
     }
 
         .navbar a:hover {
-            color: #d1c4e9 !important;
+            color: #B0884C !important;
         }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -43,6 +43,13 @@
 
 
 body {
-    background-color: #f9f2ff;
+    background-color: #fff2da;
     font-family: 'Segoe UI', sans-serif;
+}
+
+.R-textbox {
+    border: 2px solid #B0884C;
+    
+    
+    
 }

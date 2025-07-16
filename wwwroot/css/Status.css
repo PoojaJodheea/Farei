@@ -1,0 +1,55 @@
+﻿.status-cell.table-accept {
+    background-color: #0BDA51 !important;
+    color: black !important;
+}
+
+.status-cell.table-reject {
+    background-color: #DC143C !important;
+    color: white !important;
+}
+
+.status-cell.table-pending {
+    background-color: #D3D3D3 !important;
+    color: black !important;
+}
+
+.status-cell.table-transit,
+.status-cell.table-onsite {
+    background-color: #c11c84 !important;
+    color: white !important;
+}
+
+.status-cell.table-accept-transit {
+    background-color: #F3E5AB !important;
+    color: black !important;
+}
+
+.status-cell.table-reject-transit {
+    background-color: #DC143C !important;
+    color: white !important;
+}
+
+.status-cell.table-accept-onsite {
+    background-color: #F3E5AB !important;
+    color: black !important;
+}
+
+.status-cell.table-reject-onsite {
+    background-color: #DC143C !important;
+    color: white !important;
+}
+
+.status-cell.table-complete {
+    background-color: #0BDA51 !important;
+    color: black !important;
+}
+
+.status-cell.table-repairing {
+    background-color: #8FD9FB !important;
+    color: black !important;
+}
+
+.status-cell.table-sendback {
+    background-color: #DC143C !important;
+    color: white !important;
+}

@@ -195,7 +195,7 @@ namespace FormRequest.Controllers
         public async Task<IActionResult> Registry()
         {
             var requests = await _context.FormReqDb
-                .Where(f => f.status == "accept transit"|| f.status == "send back" || f.status =="complete")
+                .Where(f => f.status == "accept transit"|| f.status == "send back" || f.status =="return")
                 .ToListAsync();
 
             var viewModel = new RequestViewModel
@@ -269,11 +269,11 @@ namespace FormRequest.Controllers
             }
             if (checkRegistry)
             {
-                if (formReqDb.status == "Send back")
+                if (formReqDb.status == "sendback")
                 {
-                    formReqDb.status = "rejected";
+                    formReqDb.status = "reject";
                 }
-                else if (formReqDb.status == "Transitting")
+                else if (formReqDb.status == "accept transit")
                 {
                     formReqDb.status = "Repairing";
                     Registry.IsValid = true;
@@ -299,7 +299,7 @@ namespace FormRequest.Controllers
                     throw;
                 }
             }
-            return RedirectToAction("RegistryForm");
+            return RedirectToAction("Registry");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -355,13 +355,49 @@ namespace FormRequest.Controllers
             return View("IsOnSite", forms);
         }
 
-        public IActionResult InTransit()
+    
+
+        public async Task<IActionResult> Transit()
         {
-            var forms = _context.FormReqDb
-                .Include(f => f.Registries)
-                .Where(f => f.Registries.Any(r => ( r.IsInTransit)))
-                .ToList();
-            return View("IsInTransit", forms);
+           
+
+            var model = new RequestViewModel
+            {
+                FormReqDbs = await _context.FormReqDb.ToListAsync(),
+                RegistryList = await _context.Registry
+                                    .Include(r => r.FormReqDb)
+                                   
+                                    .ToListAsync(),
+            };
+            return View(model);
+        }
+
+        public async Task<IActionResult> DetailsTransiteForm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var formReqDb = await _context.FormReqDb
+   .FirstOrDefaultAsync(m => m.Id == id);
+            var Registry = await _context.Registry
+               .Include(r => r.FormReqDb)
+               .FirstOrDefaultAsync(m => m.FormReqDbId == id);
+
+
+
+            var viewModel = new RequestViewModel
+            {
+                FormReqDb = formReqDb,
+                Registry = Registry,
+            
+            };
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
         }
         //Delete request after acknowlegdement
 
