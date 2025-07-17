@@ -2,11 +2,11 @@
 @model RequestViewModel
 @{
     ViewData["Title"] = "Requests";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/SupervisorLayout.cshtml";
 }
 <h1>Supervisor</h1>
 <table class="table">
-    <thead>
+    <thead class="B-table-header th">
         <tr>
             <th>RequestDate</th>
             <th>Responsible Officer</th>
@@ -19,7 +19,7 @@
     <tbody>
         @foreach (var item in Model.FormReqDbs)
         {
-            var status = item.status?.Trim().ToLower();
+
             var statusClass = StatusClass.GetStatusClass(item.status);
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
@@ -27,7 +27,7 @@
                 <td>@Html.DisplayFor(modelItem => item.EquipmentType)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
                 <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
-                <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id">Details</a></td>
+                <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a></td>
             </tr>
         }
     </tbody>

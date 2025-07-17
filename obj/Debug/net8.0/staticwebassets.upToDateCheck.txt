@@ -1,8 +1,11 @@
+wwwroot\css\Admin.css
 wwwroot\css\bootstrap.min.css
 wwwroot\css\ITO.css
 wwwroot\css\Registry.css
 wwwroot\css\site.css
 wwwroot\css\Status.css
+wwwroot\css\Supervisor.css
+wwwroot\css\User.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
 wwwroot\js\StatusSwitch.js
@@ -68,4 +71,4 @@ wwwroot\uploads\31923b71-71d7-4bc7-a18b-e019aab68421.pdf
 wwwroot\uploads\c5df0733-1c6c-4308-af52-45b16d4a7d2c.png
 wwwroot\uploads\e476b2fc-33b9-4aa6-aa65-b87e07fe73f0.pdf
 wwwroot\uploads\fa662f83-9b74-4702-9324-f8f595058de3.pdf
-wwwroot\css\User.css
+wwwroot\css\ITT.css

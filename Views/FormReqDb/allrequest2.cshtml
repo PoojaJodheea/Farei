@@ -2,50 +2,50 @@
 @model IEnumerable<FormRequest.Models.FormReqDb>
 
 @{
-    ViewData["Title"] = "All Requests";
-    Layout = "~/Views/Shared/ITOlayout.cshtml";
+	ViewData["Title"] = "All Requests";
+	Layout = "~/Views/Shared/ITOlayout.cshtml";
 }
 
 <h2 class="page-title">All Requests</h2>
 
 <table class="table table-bordered table-striped" id="requestTable">
-    <thead class="purple-table-header">
-        <tr>
-            <th>Date</th>
-            <th>Site</th>
-            <th>Department</th>
+	<thead class="purple-table-header">
+		<tr>
+			<th>Date</th>
+			<th>Site</th>
+			<th>Department</th>
 			<th>Equipment</th>
 		
-            <th>Problem</th>
-            <th>Status</th>
-            <th>Confirm Movement Type</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            var status = item.status?.Trim().ToLower();
-            var statusClass = StatusClass.GetStatusClass(item.status);
+			<th>Problem</th>
+			<th>Status</th>
+			<th>Confirm Movement Type</th>
+			<th>Details</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			var status = item.status?.Trim().ToLower();
+			var statusClass = StatusClass.GetStatusClass(item.status);
 
-            <tr id="row-@item.Id">
-                <td>@item.RequestDate.ToShortDateString()</td>
-                <td>@item.Site</td>
-                <td>@item.Department</td>
-                <td>@item.EquipmentType</td>
-                <td>@item.ProblemDescription</td>
-                <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
-                <td>
-                    @if (status == "transit" || status == "onsite" || status == "accept transit" || status == "reject transit" || status == "accept onsite" || status == "reject onsite")
-                    {
-                        <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" @(status.Contains("accept") ? "disabled" : "")>Accept</button>
-                        <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject" @(status.Contains("reject") ? "disabled" : "")>Reject</button>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+			<tr id="row-@item.Id">
+				<td>@item.RequestDate.ToShortDateString()</td>
+				<td>@item.Site</td>
+				<td>@item.Department</td>
+				<td>@item.EquipmentType</td>
+				<td>@item.ProblemDescription</td>
+				<td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
+				<td>
+					@if (status == "transit" || status == "onsite" || status == "accept transit" || status == "reject transit" || status == "accept onsite" || status == "reject onsite")
+					{
+						<button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" @(status.Contains("accept") ? "disabled" : "")>Accept</button>
+						<button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject" @(status.Contains("reject") ? "disabled" : "")>Reject</button>
+					}
+				</td>
+				<td>
+					<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-purple">Details</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

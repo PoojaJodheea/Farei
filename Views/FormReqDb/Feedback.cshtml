@@ -2,13 +2,13 @@
 
 @{
     ViewData["Title"] = "Request Feedback";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/User.cshtml";
 }
 
 <h2>Request Feedback</h2>
 
 <table class="table table-striped">
-    <thead>
+    <thead class ="table-header th">
         <tr>
             <th>Date</th>
             <th>Site</th>
@@ -21,12 +21,16 @@
     <tbody>
 @foreach (var item in Model)
 {
+            var status = item.status?.Trim().ToLower();
+            var statusClass = StatusClass.GetStatusClass(item.status);
     <tr>
         <td>@item.RequestDate.ToShortDateString()</td>
         <td>@item.Site</td>
         <td>@item.EquipmentType</td>
         <td>@item.ProblemDescription</td>
-        <td>@(item.IsClosed ? "Closed" : "Approved")</td>  <!--to show status repaired/closed-->
+        <td class="@statusClass">
+            @(status == "complete" ? "Accepted" : status?.First().ToString().ToUpper() + status?.Substring(1))
+        </td>  <!--to show status repaired/closed-->
         <td>
             @if (string.IsNullOrEmpty(item.UserFeedback))
             {

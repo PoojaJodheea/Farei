@@ -5,26 +5,26 @@
 }
 
 /* Table Header */
-.table-header th {
-    background-color: #666E51 ;
+.B-table-header th {
+    background-color: #1C2E4A;
     color: white;
 }
 
 /* Details Button */
-.btn-H {
-    background-color: #809276;
+.btn-B {
+    background-color: #52677D;
     color: white;
     border: none;
 }
 
-    .btn-H:hover {
-        background-color: #768886;
-        color: white;
+    .btn-B:hover {
+        background-color: #f8eabf;
+        color: black;
     }
 
 
 .navbar {
-    background-color: #10383A !important;
+    background-color: #0F1A2B !important;
 }
 
     .navbar a,
@@ -33,7 +33,7 @@
     }
 
         .navbar a:hover {
-            color: #768886 !important;
+            color: #f8eabf !important;
         }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -42,11 +42,8 @@
 
 
 body {
-    background-color: #cadcd7 !important;
+    background-color: #e3ebfd;
     font-family: 'Segoe UI', sans-serif;
-}
-.container {
-    background-color: transparent !important;
 }
 
 .R-textbox {
