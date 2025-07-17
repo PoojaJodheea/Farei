@@ -86,15 +86,21 @@ namespace FormRequest.Controllers
         // GET: Supervisor Form
         public async Task<IActionResult> SupervisorForm()
         {
-            var model = new RequestViewModel
+            var requests = await _context.FormReqDb
+                 .Where(f => f.status == "pending")
+                .ToListAsync();
+               
+               
+
+            var viewModel = new RequestViewModel
             {
-                FormReqDbs = await _context.FormReqDb
-                    .Where(r => r.status == null) // FIXED condition
-                    .ToListAsync()
+                FormReqDbs = requests
             };
 
-            return View(model);
+            return View(viewModel);
         }
+
+
 
         // GET: Supervisor Form Details
         public async Task<IActionResult> DetailsSupervisorForm(int? id)
@@ -584,8 +590,9 @@ namespace FormRequest.Controllers
                 request.status = actionType == "accept" ? "accept transit" : "reject transit";
             else if (currentStatus == "onsite" || currentStatus == "accept onsite" || currentStatus == "reject onsite")
                 request.status = actionType == "accept" ? "accept onsite" : "reject onsite";
-            else
-                return Json(new { success = false, message = "Invalid status for action." });
+            else if (currentStatus == "pending" || currentStatus == "accept" || currentStatus == "reject")
+                request.status = actionType == "accept" ? "accept" : "reject";
+            else return Json(new { success = false, message = "Invalid status for action." });
 
             _context.SaveChanges();
             return Json(new { success = true, newStatus = request.status });

@@ -19,7 +19,7 @@ window.getStatusClass = function (status) {   /// Global function to map status 
         default: return "table-pending";
     }
 };
-
+``
 // Global event handler for Accept/Reject actions
 $(document).on("click", ".action-btn", function () {
     var id = $(this).data("id");        //get data id+data action by click event

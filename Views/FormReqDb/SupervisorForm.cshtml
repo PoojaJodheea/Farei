@@ -1,5 +1,9 @@
 ﻿@using FormRequest.ViewModel
 @model RequestViewModel
+@{
+    ViewData["Title"] = "Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <h1>Supervisor</h1>
 <table class="table">
     <thead>
@@ -8,17 +12,21 @@
             <th>Responsible Officer</th>
             <th>Equipment Type</th>
             <th>ProblemDescription</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.FormReqDbs)
         {
+            var status = item.status?.Trim().ToLower();
+            var statusClass = StatusClass.GetStatusClass(item.status);
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
                 <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>
                 <td>@Html.DisplayFor(modelItem => item.EquipmentType)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
+                <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
                 <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id">Details</a></td>
             </tr>
         }

@@ -1,6 +1,10 @@
 ﻿﻿@using FormRequest.ViewModel
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model RequestViewModel
-
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <div>
     <h4>FormReqDb</h4>
     <hr />
@@ -27,18 +31,21 @@
 </div>
 <div class="form-group">
 
-    <form asp-action="ChangeStatus" method="post" class="btn btn-primary">
-        <input type="hidden" name="id" value="@Model.FormReqDb.Id" />
-        <input type="hidden" name="Accepted" value="Accepted"></input>
-        <input type="submit" value="Accept" class="btn btn-primary" />
-    </form>
+    @if (Model.FormReqDb.status == "pending" || Model.FormReqDb.status == "accept" || Model.FormReqDb.status == "reject")
+{
+    <button class="btn btn-sm btn-success action-btn accept-btn"
+            data-id="@Model.FormReqDb.Id"
+            data-action="accept"
+            @(Model.FormReqDb.status.Contains("accept") ? "disabled" : "")>Accept</button>
 
+    <button class="btn btn-sm btn-danger action-btn reject-btn"
+            data-id="@Model.FormReqDb.Id"
+            data-action="reject"
+            @(Model.FormReqDb.status.Contains("reject") ? "disabled" : "")>Reject</button>
+}
 
-    <form asp-action="ChangeStatus" method="post" class="btn btn-secondary">
-        <input type="hidden" name="id" value="@Model.FormReqDb.Id" />
-        <input type="hidden" name="Accepted" value="reject"></input>
-        <input type="submit" value="reject" class="btn btn-secondary" />
-    </form>
+   
+   
 
 
 </div>

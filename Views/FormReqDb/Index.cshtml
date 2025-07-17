@@ -4,7 +4,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/User.cshtml";
 }
 
 <h1>Repair / Servicing Requests</h1>
@@ -14,7 +14,7 @@
 </p>
 
 <table class="table table-striped">
-    <thead>
+    <thead class ="table-header th">
         <tr>
             <th>@Html.DisplayNameFor(model => model.RequestDate)</th>
             <th>@Html.DisplayNameFor(model => model.ResponsibleOfficer)</th>
@@ -47,9 +47,9 @@
                 </td>
 
                 <td>
-                    
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-H">>Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-H">>Delete</a>
                 </td>
             </tr>
         }
