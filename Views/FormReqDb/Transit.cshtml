@@ -1,11 +1,15 @@
 ﻿@using FormRequest.ViewModel 
 @model RequestViewModel
+@{
+    ViewData["Title"] = "Requests in transit";
+    Layout = "~/Views/Shared/Registrylayout.cshtml";
+}
 
 <h1>
     Transit
 </h1>
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped">
+    <thead class="Brown-table-header">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Registry.From)
@@ -49,7 +53,7 @@
                 </td>
                 <td>
 
-                    <a asp-action="DetailsTransiteForm" asp-route-id="@item.FormReqDbId">Details</a>
+                    <a asp-action="DetailsTransiteForm" asp-route-id="@item.FormReqDbId" class="btn btn-sm btn-H">Details</a>
 
                 </td>
             </tr>

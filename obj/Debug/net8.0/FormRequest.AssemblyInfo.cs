@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormRequest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc3360b678210ba1b7b9c55a2a261222ae328a11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00dbceebd5673a7ea74ac2d8634bf881e5bfc93c")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormRequest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormRequest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,9 @@
 ﻿@using FormRequest.ViewModel
 @model RequestViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/Registrylayout.cshtml";
+}
 
 <div>
     <h4>Registry</h4>
@@ -35,11 +39,11 @@
     <form asp-action="Arrived" method="post">
         <input type="hidden" name="id" value="@Model.Registry.RegistryId" />
 
-        <input type="submit" value="Arrived" class="btn btn-secondary" />
+        <input type="submit" value="Arrived" class="btn btn-sm primary btn-H">
     </form>
 
 </div>
 <div>
 
-    <a asp-action="Transit">Back to List</a>
+    <a asp-action="Transit" class="btn btn-sm secondary btn-H">Back to List</a>
 </div>

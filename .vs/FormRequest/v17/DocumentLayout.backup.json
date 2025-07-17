@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\Farei1\\FormRequest\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\wwwroot\\css\\itt.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:wwwroot\\css\\itt.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\wwwroot\\js\\statusswitch.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:wwwroot\\js\\statusswitch.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\ittlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\ittlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\detailstransiteform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\detailstransiteform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\registry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\registry.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\controllers\\formreqdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:controllers\\formreqdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\transit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\transit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\registrylayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\registrylayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\supervisorlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\supervisorlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\supervisorform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\supervisorform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\wwwroot\\css\\admin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:wwwroot\\css\\admin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -39,47 +47,84 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ITT.css",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\wwwroot\\css\\ITT.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\ITT.css",
-              "ToolTip": "C:\\Farei1\\FormRequest\\wwwroot\\css\\ITT.css*",
-              "RelativeToolTip": "wwwroot\\css\\ITT.css*",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAgwCMAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-07-17T08:09:49.519Z",
-              "IsPinned": true,
+              "Title": "StatusSwitch.js",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\wwwroot\\js\\StatusSwitch.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\StatusSwitch.js",
+              "ToolTip": "C:\\Farei1\\FormRequest\\wwwroot\\js\\StatusSwitch.js*",
+              "RelativeToolTip": "wwwroot\\js\\StatusSwitch.js*",
+              "ViewState": "AgIAABIAAAAAAAAAAAAIwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-17T10:12:27.74Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IttLayout.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\IttLayout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\IttLayout.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\IttLayout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\IttLayout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAqAAAAAAAAAA==",
+              "Title": "DetailsTransiteForm.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\DetailsTransiteForm.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\DetailsTransiteForm.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\DetailsTransiteForm.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\DetailsTransiteForm.cshtml",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAUwCIAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T08:11:23.127Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-07-17T10:05:20.612Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "SupervisorForm.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\SupervisorForm.cshtml",
-              "RelativeDocumentMoniker": "Views\\FormReqDb\\SupervisorForm.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\SupervisorForm.cshtml",
-              "RelativeToolTip": "Views\\FormReqDb\\SupervisorForm.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T09:14:24.665Z",
+              "Title": "FormReqDbController.cs",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Controllers\\FormReqDbController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FormReqDbController.cs",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Controllers\\FormReqDbController.cs",
+              "RelativeToolTip": "Controllers\\FormReqDbController.cs",
+              "ViewState": "AgIAAHoBAAAAAAAAAAAUwHkBAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T10:02:33.566Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Registry.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Registry.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\Registry.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Registry.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\Registry.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAAIwCEAAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T09:58:37.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Transit.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Transit.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\Transit.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Transit.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\Transit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T09:58:26.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Registrylayout.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\Registrylayout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\Registrylayout.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\Registrylayout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\Registrylayout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-17T09:58:02.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "SupervisorLayout.cshtml",
               "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\SupervisorLayout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\SupervisorLayout.cshtml",
@@ -92,7 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "AdminLayout.cshtml",
               "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\AdminLayout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\AdminLayout.cshtml",
@@ -100,21 +145,7 @@
               "RelativeToolTip": "Views\\Shared\\AdminLayout.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-17T07:23:34.022Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Admin.css",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\wwwroot\\css\\Admin.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\Admin.css",
-              "ToolTip": "C:\\Farei1\\FormRequest\\wwwroot\\css\\Admin.css",
-              "RelativeToolTip": "wwwroot\\css\\Admin.css",
-              "ViewState": "AgIAACAAAAAAAAAAAAAkwDMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-07-17T07:22:47.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-17T07:23:34.022Z"
             }
           ]
         }
