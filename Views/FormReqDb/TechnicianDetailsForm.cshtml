@@ -1,0 +1,101 @@
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/IttLayout.cshtml";
+}
+
+
+    <div>
+        <h4>Details</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.RequestDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.Site)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.Site)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.Department)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.Department)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.ContactPhone)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.ProblemDescription)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FormReqDb.SerialNumber)
+            </dd>
+
+        </dl>
+    </div>
+    <div>
+        @if (Model.FormReqDb.status == "onsite")
+        {
+
+            <form asp-action="Report" method="post">
+                <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
+                <input value="@Model.FormReqDb.SerialNumber" name="SerialNumber" type="hidden" />
+                <div class="mb-3">
+                    <input type="hidden" value="pending request"></input>
+                    <label asp-for="ITTreport.Report"></label>
+                    <textarea name="Remarks" class="form-control"></textarea>
+                    <span class="text-danger"></span>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        }
+        else if (Model.FormReqDb.status == "transit")
+        {
+            <form asp-action="Report" method="post">
+                <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
+
+                <div class="mb-3">
+                    <input type="hidden" value="pending request"></input>
+                    <label></label>
+                    <textarea name="Remarks" class="form-control"></textarea>
+                    <span class="text-danger"></span>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        }
+        else if (Model.FormReqDb.status == "accepted")
+        {
+            <div class="mb-3">
+                <form asp-action="ChangeStatus" method="post">
+                    <input type="hidden" name="id" value="@Model.FormReqDb.Id"></input>
+                    <input type="radio" class="form-check-input" name="Status" value="onsite"><label class="form-check-label"> Onsite</label><br>
+                    <input type="radio" class="form-check-input" name="Status" value="transit"><label class="form-check-label"> Transit</label><br>
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </form>
+            </div>
+        }
+    </div>
+    <a asp-action="Index">Back to List</a>

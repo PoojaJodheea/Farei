@@ -104,6 +104,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFN1cGVydmlzb3JGb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Farei1/FormRequest/Views/FormReqDb/TechnicianDetailsForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFRlY2huaWNpYW5EZXRhaWxzRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Farei1/FormRequest/Views/FormReqDb/TechnicianForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFRlY2huaWNpYW5Gb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Farei1/FormRequest/Views/FormReqDb/ThirdParty.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVJlcURiXFRoaXJkUGFydHkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

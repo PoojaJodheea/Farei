@@ -29,8 +29,11 @@
         <td>@item.EquipmentType</td>
         <td>@item.ProblemDescription</td>
         <td class="@statusClass">
-            @(status == "complete" ? "Accepted" : status?.First().ToString().ToUpper() + status?.Substring(1))
-        </td>  <!--to show status repaired/closed-->
+    @((status?.Length > 0) 
+        ? char.ToUpper(status[0]) + status.Substring(1) 
+        : "")
+</td>
+ <!--to show status repaired/closed-->
         <td>
             @if (string.IsNullOrEmpty(item.UserFeedback))
             {

@@ -5,7 +5,9 @@ window.getStatusClass = function (status) {   /// Global function to map status 
     status = status.trim().toLowerCase();//dicards whitespaces+makes strinsg case-insensitive
 
     switch (status) {   //status returning respective classes
-        case "accepted": return "table-accept";
+        case "accept":
+        case "accepted":
+            return "table-accept";
         case "reject": return "table-reject";
         case "transit": return "table-pending";
         case "onsite": return "table-pending";

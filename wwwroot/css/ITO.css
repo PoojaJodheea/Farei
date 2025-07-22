@@ -7,25 +7,25 @@
 
 /* Table Header */
 .purple-table-header th {
-    background-color: #5E2B97;
+    background-color: #402158 ;
     color: white;
 }
 
 /* Details Button */
 .btn-purple {
-    background-color: #8e44ad;
+    background-color: #7D5683;
     color: white;
     border: none;
 }
 
     .btn-purple:hover {
-        background-color: #732d91;
+        background-color: #C9BFB5;
         color: white;
     }
 
 
 .navbar {
-    background-color: #5E2B97 !important;
+    background-color: #140E36 !important;
 }
 
     .navbar a,
@@ -34,7 +34,7 @@
     }
 
         .navbar a:hover {
-            color: #d1c4e9 !important;
+            color: #C9BFB5 !important;
         }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -43,6 +43,6 @@
 
 
 body {
-    background-color: #f9f2ff;
+    background-color: #E2E9FF;
     font-family: 'Segoe UI', sans-serif;
 }

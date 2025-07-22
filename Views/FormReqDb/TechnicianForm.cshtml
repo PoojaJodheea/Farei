@@ -1,0 +1,69 @@
+﻿
+@using FormRequest.ViewModel
+@model RequestViewModel
+@{
+    ViewData["Title"] = "Requests";
+    Layout = "~/Views/Shared/IttLayout.cshtml";
+}
+
+
+    <h1>Technician</h1>
+<table class="table table-bordered table-striped">
+    <thead class="B-table-header th">
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Site)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FormReqDbs)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Site)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ResponsibleOfficer)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProblemDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SerialNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td>
+
+                    <a asp-action="TechnicianDetailsForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

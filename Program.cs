@@ -37,8 +37,16 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=FormReqDb}/{action=SupervisorForm" +
+    pattern: "{controller=FormReqDb}/{action=TechnicianForm" +
     "" + "}/{id?}");
 app.MapRazorPages();
 
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($" Application failed to start: {ex}");
+    throw;
+}
