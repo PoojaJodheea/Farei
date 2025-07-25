@@ -1,81 +1,72 @@
 ﻿@page
 @model RegisterModel
-
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/login.cshtml";
 }
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="FormReqDbs" asp-action="Index">FAREI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
-                <partial name="_LoginPartial" />
-            </div>
-        </div>
-    </nav>
-</header>
-<h1 class="text-center"> @ViewData["Title"]</h1>
-
-<div class="center">
-    <div class="col-md-4 mx-auto">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2 class="text-center">Create a new account.</h2>
- 
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Type" class="form-control" autocomplete="new-Type" aria-required="true" asp-items="Model.Types" placeholder="Type">
-                    <option value="">
-
-                    </option>
-                    </select>
-                <label asp-for="Input.Type">Confirm Role</label>
-                <span asp-validation-for="Input.Type" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Site" class="form-control" autocomplete="new-Site" aria-required="true" asp-items="Model.Sites" placeholder="Sites">
-                    <option value="">
-
-                    </option>
-                </select>
-                <label asp-for="Input.Site">Confirm Site</label>
-                <span asp-validation-for="Input.Site" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Supervisor" class="form-control" autocomplete="new-Supervisor" aria-required="true" asp-items="Model.Supervisor" placeholder="Supervisor">
-                    <option value="">
-
-                    </option>
-                </select>
-                <label asp-for="Input.Supervisor">Confirm Supervisor</label>
-                <span asp-validation-for="Input.Supervisor" class="text-danger"></span>
-            </div>
-       
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
+<div class="auth-page">
+    <!-- Left Panel -->
+    <div class="auth-left">
+        <h1>Create Account</h1>
+        <p>Join FAREI to get started.</p>
     </div>
 
+    <!-- Right Panel (Form) -->
+    <div class="auth-right">
+        <div class="auth-card">
+            <h2>Register</h2>
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="Email" />
+                    <label asp-for="Input.Email">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Password" />
+                    <label asp-for="Input.Password">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="Confirm Password" />
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.Type" class="form-control" asp-items="Model.Types">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Input.Type">Role</label>
+                    <span asp-validation-for="Input.Type" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.Site" class="form-control" asp-items="Model.Sites">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Input.Site">Site</label>
+                    <span asp-validation-for="Input.Site" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.Supervisor" class="form-control" asp-items="Model.Supervisor">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Input.Supervisor">Supervisor</label>
+                    <span asp-validation-for="Input.Supervisor" class="text-danger"></span>
+                </div>
+
+                <button id="registerSubmit" type="submit" class="btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+}
 }

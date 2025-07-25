@@ -12,6 +12,11 @@ namespace FormRequest.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
         public DbSet<FormReqDb> FormReqDb { get; set; }
         public DbSet<Registry> Registry { get; set; } = default!;
         public DbSet<ThirdParty> ThirdParties{ get; set; }
