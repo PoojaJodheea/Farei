@@ -38,6 +38,9 @@
         <tbody>
             @foreach (var item in Model.FormReqDbs)
             {
+            var status = item.status?.Trim().ToLower();
+            var statusClass = StatusClass.GetStatusClass(item.status);
+
                 <tr>
 
                     <td>
@@ -56,9 +59,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SerialNumber)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.status)
-                    </td>
+                <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
                     <td>
 
                     <a asp-action="TechnicianDetailsForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a>

@@ -12,7 +12,6 @@ namespace FormRequest.ViewModel
         public List<Registry> RegistryList { get; set; } = new List<Registry>();
         public ThirdParty? ThirdParty { get; set; }
         public ITTreport? ITTreport { get; set; }
-
-
+        public List<ApplicationUser> AllUsers { get; internal set; }
     }
 }

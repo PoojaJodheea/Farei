@@ -38,5 +38,10 @@ namespace FormRequest.Models
         public String? remarks { get; set; }
 
         public List<Registry> Registries { get; set; } = new List<Registry>();
+
+        public static implicit operator FormReqDb(List<FormReqDb> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

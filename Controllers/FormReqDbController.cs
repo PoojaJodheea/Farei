@@ -1,4 +1,4 @@
-﻿using AspNetCoreGeneratedDocument;
+﻿
 using FormRequest.Data;
 using FormRequest.Models;
 using FormRequest.ViewModel;
@@ -16,7 +16,7 @@ namespace FormRequest.Controllers
         {
             _context = context;
         }
-
+       
         public async Task<IActionResult> Index()
         {
             var forms = await _context.FormReqDb.ToListAsync();
@@ -78,7 +78,7 @@ namespace FormRequest.Controllers
         [ValidateAntiForgeryToken]
 
 
-     
+
         public async Task<IActionResult> Create(FormReqDb model)
         {
             if (ModelState.IsValid)
@@ -86,11 +86,15 @@ namespace FormRequest.Controllers
                 try
                 {
                     model.RequestDate = DateTime.Now.Date;
+
+                    model.status = "pending";
+                
+
                     _context.FormReqDb.Add(model);
                     await _context.SaveChangesAsync();
+
                     TempData["SuccessMessage"] = "Form submitted successfully.";
-                    model.status = "pending";
-                    return RedirectToAction("Create"); 
+                    return RedirectToAction("Create");
                 }
                 catch (Exception)
                 {
@@ -101,10 +105,9 @@ namespace FormRequest.Controllers
             {
                 TempData["ErrorMessage"] = "Please fill in all required fields correctly.";
             }
-                
-            return View(model); 
-        }
 
+            return View(model);
+        }
 
 
 
@@ -122,13 +125,16 @@ namespace FormRequest.Controllers
         public IActionResult Feedback()
         {
             var requests = _context.FormReqDb
-                .Where(r => r.status != null
-                            && r.status.ToLower() == "complete"
-                            && !r.IsClosed)
+                .Where(r =>
+                    !r.IsClosed &&
+                    (r.status != null &&
+                     (r.status.ToLower() == "complete" || r.status.ToLower() == "return"))
+                )
                 .ToList();
 
             return View(requests);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -278,7 +284,7 @@ namespace FormRequest.Controllers
         public async Task<IActionResult> Registry()
         {
             var requests = await _context.FormReqDb
-                .Where(f => f.status == "accept transit"|| f.status == "send back" || f.status =="return")
+                .Where(f => f.status == "transitting"|| f.status == "send back" || f.status =="return")
                 .ToListAsync();
 
             var viewModel = new RequestViewModel
@@ -312,36 +318,45 @@ namespace FormRequest.Controllers
 
             return View(viewModel);
         }
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Arrived(int id)
+        public async Task<IActionResult> Arrived(int id, string Remarks)
         {
             var Registry = await _context.Registry.FindAsync(id);
-            var formReqDb = await _context.FormReqDb.FindAsync(Registry.FormReqDbId);
-            var checkRegistry = _context.Registry.Any(j => j.FormReqDbId == formReqDb.Id);
             if (Registry == null)
             {
                 return NotFound();
             }
-            if (checkRegistry)
+
+            var formReqDb = await _context.FormReqDb.FindAsync(Registry.FormReqDbId);
+            if (formReqDb == null)
             {
-                if (formReqDb.status == "sendback")
-                {
-                    formReqDb.status = "reject";
-                }
-                else if (formReqDb.status == "accept transit")
-                {
-                    formReqDb.status = "Repairing";
-                    Registry.IsValid = true;
-                }
+                return NotFound();
             }
-            else
+
+            if (formReqDb.Pointer == 0)
             {
-                Registry.IsValid = true;
+                formReqDb.status = "rejected";
+                Registry.Remarks = Remarks;
+            }
+            else if (formReqDb.Pointer == 2)
+            {
                 formReqDb.status = "Repairing";
+                Registry.IsValid = true;
+                Registry.Remarks = Remarks;
+                formReqDb.Pointer += 1;//3
             }
+            else if (formReqDb.Pointer == 5)
+            {
+                formReqDb.status = "Complete";
+                formReqDb.RequestDate = DateTime.Now;
+                Registry.IsValid = !Registry.IsValid;
+                Registry.Remarks = Remarks;
+            }
+
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -381,7 +396,7 @@ namespace FormRequest.Controllers
                     newform.From = "Reduit";
                     _context.Registry.Add(newform);
                     _context.SaveChanges();
-                    return RedirectToAction("RegistryForm");
+                    return RedirectToAction("Registry");
                 }
                 else
                 {
@@ -389,7 +404,7 @@ namespace FormRequest.Controllers
                     newform.To = "Reduit";
                     _context.Registry.Add(newform);
                     _context.SaveChanges();
-                    return RedirectToAction("RegistryForm");
+                    return RedirectToAction("Registry");
                 }
 
             }
@@ -398,7 +413,7 @@ namespace FormRequest.Controllers
                 Console.WriteLine("DB error: " + ex.Message);
             }
 
-            return RedirectToAction("RegistryForm");
+            return RedirectToAction("Registry");
         }
 
         //Delete request after acknowlegdement
@@ -507,16 +522,19 @@ namespace FormRequest.Controllers
 
         }
 
-        public IActionResult allrequest2() //loads all request 
+        public IActionResult allrequest2()
         {
+            var requests = _context.FormReqDb.ToList();
 
-            var allrequest = _context.FormReqDb
-     
-     .ToList();
+            var viewModels = requests.Select(req => new RequestViewModel
+            {
+                FormReqDb = req,
+                ITTreport = _context.ITTreport.FirstOrDefault(r => r.FormReqDb == req.Id)
+            }).ToList();
 
-
-            return View("allrequest2", allrequest);
+            return View("allrequest2", viewModels);
         }
+
         public IActionResult ThirdParty(SearchFilter filter, string? SortOrder)
         {
             var query = _context.FormReqDb
@@ -594,6 +612,71 @@ namespace FormRequest.Controllers
         
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ITOstatus(int id, String Status, String Remarks)
+        {
+            var formReqDb = await _context.FormReqDb.FindAsync(id);
+            var registry = _context.Registry.Any(k => k.FormReqDbId == id);
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+            if (Status == "rejects")
+            {
+                if (registry)
+                {
+                    formReqDb.status = "send back";
+                    formReqDb.remarks = Remarks;
+                    formReqDb.Pointer = 0;
+                }
+                else
+                {
+                    formReqDb.status = Status;
+                    formReqDb.remarks = Remarks;
+                }
+            }
+            else if (formReqDb.Pointer == 2)
+            {
+                formReqDb.status = "Transitting";
+            }
+            else if (formReqDb.Pointer == 1)
+            {
+                formReqDb.status = "Repairing";
+                formReqDb.Pointer += 2;
+            }
+            else if (formReqDb.Pointer == 4)
+            {
+                formReqDb.status = "Start repairing";
+            }
+            else if (formReqDb.Pointer == 5)
+            {
+                if (registry)
+                {
+                    formReqDb.status = "Return";
+                }
+                else
+                {
+                    formReqDb.status = "Complete";
+                }
+            }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FormReqDbExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("allrequest2");
+        }
 
 
 
@@ -733,7 +816,7 @@ namespace FormRequest.Controllers
             {
                 formReqDb.status = "Pending request";
                 formReqDb.remarks = Remarks;
-               /// Equipment.Remarks += " " + Remarks;
+              
             }
 
             try
@@ -754,6 +837,46 @@ namespace FormRequest.Controllers
             return RedirectToAction("TechnicianForm");
         }
 
+        public async Task<IActionResult> TechnicianDetailsForm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var formReqDb = await _context.FormReqDb?.FirstOrDefaultAsync(m => m.Id == id);
+            var allUsers = _context.Users.ToList();
+            var viewModel = new RequestViewModel
+            {
+                FormReqDb = formReqDb,
+             
+            };
+            if (formReqDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(viewModel);
+        }
+        public async Task<IActionResult> Movement()
+        {
+            var model = new RequestViewModel
+            {
+                FormReqDbs = await _context.FormReqDb.Where(j => j.status == "Accepted").ToListAsync(),
+                RegistryList = await _context.Registry.ToListAsync(),
+               
+            };
+            return View(model);
+        }
+        public async Task<IActionResult> MovementConfirmation()
+        {
+            var model = new RequestViewModel
+            {
+                FormReqDbs = await _context.FormReqDb.Where(j => j.status == "Accepted").ToListAsync(),
+                RegistryList = await _context.Registry.ToListAsync(),
+
+            };
+            return View(model);
+        }
     }
 }

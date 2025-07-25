@@ -1,101 +1,90 @@
-﻿﻿@using FormRequest.ViewModel
+﻿@using FormRequest.ViewModel
 @model RequestViewModel
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/IttLayout.cshtml";
 }
 
+<div>
+    <h4>Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.RequestDate)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.RequestDate)</dd>
 
-    <div>
-        <h4>Details</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.RequestDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.Site)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.Site)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.Department)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.Department)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.ContactPhone)
-            </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.Site)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.Site)</dd>
 
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.ProblemDescription)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FormReqDb.SerialNumber)
-            </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.Department)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.Department)</dd>
 
-        </dl>
-    </div>
-    <div>
-        @if (Model.FormReqDb.status == "onsite")
-        {
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.ResponsibleOfficer)</dd>
 
-            <form asp-action="Report" method="post">
-                <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
-                <input value="@Model.FormReqDb.SerialNumber" name="SerialNumber" type="hidden" />
-                <div class="mb-3">
-                    <input type="hidden" value="pending request"></input>
-                    <label asp-for="ITTreport.Report"></label>
-                    <textarea name="Remarks" class="form-control"></textarea>
-                    <span class="text-danger"></span>
-                </div>
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </form>
-        }
-        else if (Model.FormReqDb.status == "transit")
-        {
-            <form asp-action="Report" method="post">
-                <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.ContactPhone)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.ContactPhone)</dd>
 
-                <div class="mb-3">
-                    <input type="hidden" value="pending request"></input>
-                    <label></label>
-                    <textarea name="Remarks" class="form-control"></textarea>
-                    <span class="text-danger"></span>
-                </div>
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </form>
-        }
-        else if (Model.FormReqDb.status == "accepted")
-        {
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.ProblemDescription)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.SerialNumber)</dd>
+    </dl>
+</div>
+
+<div>
+    
+    @if (Model.FormReqDb.Pointer == 3)
+    {
+
+        <form asp-action="Report" method="post">
+            <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
+            <input value="@Model.FormReqDb.SerialNumber" name="SerialNumber" type="hidden" />
             <div class="mb-3">
-                <form asp-action="ChangeStatus" method="post">
-                    <input type="hidden" name="id" value="@Model.FormReqDb.Id"></input>
-                    <input type="radio" class="form-check-input" name="Status" value="onsite"><label class="form-check-label"> Onsite</label><br>
-                    <input type="radio" class="form-check-input" name="Status" value="transit"><label class="form-check-label"> Transit</label><br>
-                    <input type="submit" value="Submit" class="btn btn-primary" />
-                </form>
+                <input type="hidden" value="pending request"></input>
+                <label asp-for="ITTreport.Report"></label>
+                <textarea name="Remarks" class="form-control"></textarea>
+                <span class="text-danger"></span>
             </div>
-        }
-    </div>
-    <a asp-action="Index">Back to List</a>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
+    }
+
+    @* Pointer == 4: IT Tech submits final report *@
+    else if (Model.FormReqDb.Pointer == 4)
+    {
+        <form asp-action="Report" method="post">
+            <input value="@Model.FormReqDb.Id" name="id" type="hidden" />
+
+            <div class="mb-3">
+                <input type="hidden" value="pending request"></input>
+                <label></label>
+                <textarea name="Remarks" class="form-control"></textarea>
+                <span class="text-danger"></span>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </form>
+    }
+
+    @* Pointer == 1: IT Tech chooses between Onsite or Transit *@
+    else if (Model.FormReqDb.Pointer == 1)
+    {
+        <form asp-action="ChangeStatus" method="post">
+            <input type="hidden" name="id" value="@Model.FormReqDb.Id" />
+
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="onsite" name="Status" value="3" />
+                <label class="form-check-label" for="onsite">Onsite</label>
+            </div>
+
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="transit" name="Status" value="4" />
+                <label class="form-check-label" for="transit">Transit</label>
+            </div>
+
+            <input type="submit" value="Submit" class="btn btn-primary mt-2" />
+        </form>
+    }
+</div>
+
+<a asp-action="Index">Back to List</a>
