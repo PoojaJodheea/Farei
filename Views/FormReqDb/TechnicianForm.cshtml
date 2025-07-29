@@ -1,70 +1,54 @@
-﻿
-@using FormRequest.ViewModel
+﻿@using FormRequest.ViewModel
 @model RequestViewModel
 @{
     ViewData["Title"] = "Requests";
     Layout = "~/Views/Shared/IttLayout.cshtml";
 }
 
-
-    <h1>Technician</h1>
+<h1>Technician</h1>
 <table class="table table-bordered table-striped">
-    <thead class="B-table-header th">
-            <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.Site)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.Department)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.SerialNumber)
-                </th>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.FormReqDb.status)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.FormReqDbs)
-            {
-            var status = item.status?.Trim().ToLower();
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.Site)</th>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.Department)</th>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.ResponsibleOfficer)</th>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.ProblemDescription)</th>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.SerialNumber)</th>
+            <th>@Html.DisplayNameFor(m => m.FormReqDb.status)</th>
+            <th>Movement Type</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FormReqDbs)
+        {
             var statusClass = StatusClass.GetStatusClass(item.status);
-
-                <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Site)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Department)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ResponsibleOfficer)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProblemDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SerialNumber)
-                    </td>
+            <tr>
+                <td>@item.Site</td>
+                <td>@item.Department</td>
+                <td>@item.ResponsibleOfficer</td>
+                <td>@item.ProblemDescription</td>
+                <td>@item.SerialNumber</td>
                 <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
-                    <td>
-
+                <td>
+                    @if (item.Pointer == 1)
+                    {
+                        <form asp-action="ChangeStatus" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="Status" value="3" />
+                            <button type="submit" class="btn btn-sm btn-secondary">Onsite</button>
+                        </form>
+                        <form asp-action="ChangeStatus" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="Status" value="4" />
+                            <button type="submit" class="btn btn-sm btn-warning">Transit</button>
+                        </form>
+                    }
+                </td>
+                <td>
                     <a asp-action="TechnicianDetailsForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

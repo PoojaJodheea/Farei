@@ -1,27 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
+using FormRequest.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using FormRequest.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace FormRequest.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -64,6 +58,9 @@ namespace FormRequest.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public List<SelectListItem> Types { get; set; }
+        public List<SelectListItem> Sites { get; set; }
+        public List<SelectListItem> Supervisor { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -98,6 +95,18 @@ namespace FormRequest.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Type { get; set; }
+
+            [Required]
+            [Display(Name = "Site")]
+            public string Site { get; set; }
+
+            [Display(Name = "Supervisor")]
+            public string Supervisor { get; set; }
+
         }
 
 
@@ -105,18 +114,73 @@ namespace FormRequest.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Types = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "User", Text = "User" },
+                new SelectListItem { Value = "Supervisor", Text = "Supervisor" },
+                new SelectListItem { Value = "Registry", Text = "Registry" },
+                new SelectListItem { Value = "Technician", Text = "Technician" },
+                new SelectListItem { Value = "ITO", Text = "ITO" },
+                new SelectListItem { Value = "Admin", Text = "Admin" }
+            };
+            Sites = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "St Pierre", Text = "St Pierre" },
+                new SelectListItem { Value = "Reduit", Text = "Reduit" },
+                new SelectListItem { Value = "Curepipe", Text = "Curepipe" },
+                new SelectListItem { Value = "Mapou", Text = "Mapou" },
+                new SelectListItem { Value = "Flacq", Text = "Flacq" },
+                new SelectListItem { Value = "riviere des anguilles", Text = "riviere des anguilles" },
+                new SelectListItem { Value = "Plaisance", Text = "Plaisance" },
+                new SelectListItem { Value = "Vacoas", Text = "Vacoas" },
+            };
+            Supervisor = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "KEVISH1@gmail.com", Text = "KEVISH1@gmail.com" },
+
+            };
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            Types = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "User", Text = "User" },
+                new SelectListItem { Value = "Supervisor", Text = "Supervisor" },
+                new SelectListItem { Value = "Registry", Text = "Registry" },
+                new SelectListItem { Value = "Technician", Text = "Technician" },
+                new SelectListItem { Value = "Admin", Text = "Admin" }
+            };
+            Sites = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "St Pierre", Text = "St Pierre" },
+                new SelectListItem { Value = "Reduit", Text = "Reduit" },
+                new SelectListItem { Value = "Curepipe", Text = "Curepipe" },
+                new SelectListItem { Value = "Mapou", Text = "Mapou" },
+                new SelectListItem { Value = "Flacq", Text = "Flacq" },
+                new SelectListItem { Value = "riviere des anguilles", Text = "riviere des anguilles" },
+                new SelectListItem { Value = "Plaisance", Text = "Plaisance" },
+                new SelectListItem { Value = "Vacoas", Text = "Vacoas" },
+            };
+            Supervisor = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "KEVISH1@gmail.com", Text = "KEVISH1@gmail.com" },
+
+            };
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Type = Input.Type;
+                user.Site = Input.Site;
+                user.Supervisor = Input.Supervisor;
+
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -125,6 +189,7 @@ namespace FormRequest.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

@@ -29,11 +29,19 @@
                 <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
                 <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
                 <td>
-                    <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" : "">Accept</button>
-                    <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject" : "">Reject</button>
+                    @if (item.status?.Trim().ToLower() == "pending")
+                    {
+                        <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept">Accept</button>
+                        <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject">Reject</button>
+                    }
                 </td>
                 <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a></td>
             </tr>
         }
     </tbody>
 </table>
+
+
+@section Scripts {
+    <script src="~/js/StatusSwitch.js"></script>
+}

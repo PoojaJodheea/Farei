@@ -27,22 +27,26 @@
         <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.SerialNumber)</dd>
         <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.status)</dt>
         <dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.status)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FormReqDb.remarks)</dt>
+<dd class="col-sm-10">@Html.DisplayFor(model => model.FormReqDb.remarks)</dd>
+
     </dl>
 </div>
 <div class="form-group">
+    <form asp-action="SubmitRemarks" method="post" class="mt-4">
+    <input type="hidden" name="id" value="@Model.FormReqDb.Id" />
 
+    <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <textarea name="remarks" id="remarks" class="form-control" rows="3">@Model.FormReqDb.remarks</textarea>
+    </div>
 
-    @if (Model.FormReqDb.status == "pending" || Model.FormReqDb.status == "accept" || Model.FormReqDb.status == "reject")
-{
-    <button class="btn btn-sm btn-success action-btn accept-btn"
-            data-id="@Model.FormReqDb.Id"
-            data-action="accept"
-            @(Model.FormReqDb.status.Contains("accept") ? "disabled" : "")>Accept</button>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>
 
-    <button class="btn btn-sm btn-danger action-btn reject-btn"
-            data-id="@Model.FormReqDb.Id"
-            data-action="reject"
-            @(Model.FormReqDb.status.Contains("reject") ? "disabled" : "")>Reject</button>
-}
+  
 
 </div>
+@section Scripts {
+    <script src="~/js/statusSwitch.js"></script>
+}

@@ -166,7 +166,7 @@ namespace FormRequest.Controllers
         public async Task<IActionResult> SupervisorForm()
         {
             var requests = await _context.FormReqDb
-                 .Where(f => f.status == "pending")
+                 
                 .ToListAsync();
                
                
@@ -202,7 +202,24 @@ namespace FormRequest.Controllers
             return View(viewModel);
         }
 
-       
+        [HttpPost]
+        public async Task<IActionResult> SubmitRemarks(int id, string remarks)
+        {
+            var request = await _context.FormReqDb.FindAsync(id);
+            if (request == null)
+            {
+                return NotFound();
+            }
+
+            request.remarks = remarks;
+            request.RequestDate = DateTime.Now; 
+
+            await _context.SaveChangesAsync();
+
+            // Redirect back to the same details page
+            return RedirectToAction(nameof(DetailsSupervisorForm), new { id = id });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeStatus(int id, int Status)
@@ -766,7 +783,7 @@ namespace FormRequest.Controllers
         }
 
 
-        //IT TECHNICIAN
+                                                                      //IT TECHNICIAN
 
         public async Task<IActionResult> TechnicianForm()
         {

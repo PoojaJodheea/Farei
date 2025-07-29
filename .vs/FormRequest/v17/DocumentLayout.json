@@ -3,36 +3,16 @@
   "WorkspaceRootPath": "C:\\Farei1\\FormRequest\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\controllers\\formreqdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:controllers\\formreqdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\wwwroot\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:wwwroot\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\technicianform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\technicianform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\techniciandetailsform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\techniciandetailsform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,110 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Navbar.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\Navbar.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\Navbar.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\Navbar.cshtml",
-              "RelativeToolTip": "Views\\Shared\\Navbar.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T07:00:23.501Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_LoginPartial.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_LoginPartial.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAIwBEAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T06:53:51.111Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "login.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\login.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\login.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\login.cshtml",
-              "RelativeToolTip": "Views\\Shared\\login.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T05:45:32.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Register.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T05:31:50.675Z",
+              "Title": "FormReqDbController.cs",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Controllers\\FormReqDbController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FormReqDbController.cs",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Controllers\\FormReqDbController.cs",
+              "RelativeToolTip": "Controllers\\FormReqDbController.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAmwPQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T08:04:17.026Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
+              "Title": "TechnicianDetailsForm.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEQAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T05:31:09.426Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Login.cshtml.cs",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
-              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
-              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-25T05:31:00.876Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-25T05:17:36.977Z",
+              "WhenOpened": "2025-07-29T08:03:22.638Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "login.css",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\wwwroot\\css\\login.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\login.css",
-              "ToolTip": "C:\\Farei1\\FormRequest\\wwwroot\\css\\login.css",
-              "RelativeToolTip": "wwwroot\\css\\login.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-07-25T04:47:37.711Z",
+              "Title": "TechnicianForm.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianForm.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\TechnicianForm.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianForm.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\TechnicianForm.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAuwDAAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-29T07:41:55.582Z",
               "EditorCaption": ""
             }
           ]

@@ -41,7 +41,13 @@ namespace FormRequest.Models
 
         public static implicit operator FormReqDb(List<FormReqDb> v)
         {
-            throw new NotImplementedException();
+            return v?.FirstOrDefault(); 
         }
+
+
+        // public static implicit operator FormReqDb(List<FormReqDb> v)
+        // {
+        // throw new NotImplementedException();
+        //}
     }
 }

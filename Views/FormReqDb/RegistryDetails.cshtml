@@ -57,7 +57,9 @@
         </div>
         <div>
             <label>Time</label>
-            <input asp-for="Registry.DateReceived" class="R-textbox" class="form-control" />
+            <input asp-for="Registry.DateReceived" class="R-textbox" class="form-control" 
+            max="@DateTime.Now.ToString("yyyy-MM-dd")"
+                   value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
         <div>
             <label>Driver</label>
