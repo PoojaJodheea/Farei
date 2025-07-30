@@ -7,12 +7,20 @@
       "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:controllers\\formreqdbcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\technicianform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\technicianform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\techniciandetailsform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\techniciandetailsform.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\models\\usersettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:models\\usersettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|c:\\farei1\\formrequest\\views\\formreqdb\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6A1CC1E-8568-4AFE-9E9B-BDAD08B8D275}|FormRequest.csproj|solutionrelative:views\\formreqdb\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +30,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\Index.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Index.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\Index.cshtml",
+              "ViewState": "AgIAACkAAAAAAAAAAAAYwEAAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-30T07:00:14.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAADwvxgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T06:55:56.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserSettings.cs",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Models\\UserSettings.cs",
+              "RelativeDocumentMoniker": "Models\\UserSettings.cs",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Models\\UserSettings.cs",
+              "RelativeToolTip": "Models\\UserSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-30T06:45:36.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\FormReqDb\\Create.cshtml",
+              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\Create.cshtml",
+              "RelativeToolTip": "Views\\FormReqDb\\Create.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-30T06:39:06.04Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,35 +92,9 @@
               "RelativeDocumentMoniker": "Controllers\\FormReqDbController.cs",
               "ToolTip": "C:\\Farei1\\FormRequest\\Controllers\\FormReqDbController.cs",
               "RelativeToolTip": "Controllers\\FormReqDbController.cs",
-              "ViewState": "AgIAAPoAAAAAAAAAAAAmwPQAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAowIkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-29T08:04:17.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TechnicianDetailsForm.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
-              "RelativeDocumentMoniker": "Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
-              "RelativeToolTip": "Views\\FormReqDb\\TechnicianDetailsForm.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEQAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-29T08:03:22.638Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TechnicianForm.cshtml",
-              "DocumentMoniker": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianForm.cshtml",
-              "RelativeDocumentMoniker": "Views\\FormReqDb\\TechnicianForm.cshtml",
-              "ToolTip": "C:\\Farei1\\FormRequest\\Views\\FormReqDb\\TechnicianForm.cshtml",
-              "RelativeToolTip": "Views\\FormReqDb\\TechnicianForm.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAuwDAAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-29T07:41:55.582Z",
               "EditorCaption": ""
             }
           ]

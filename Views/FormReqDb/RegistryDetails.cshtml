@@ -58,7 +58,7 @@
         <div>
             <label>Time</label>
             <input asp-for="Registry.DateReceived" class="R-textbox" class="form-control" 
-            max="@DateTime.Now.ToString("yyyy-MM-dd")"
+             min="@DateTime.Now.ToString("yyyy-MM-dd")"
                    value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
         <div>

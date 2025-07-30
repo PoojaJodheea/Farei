@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormRequest.Models
 {
@@ -36,6 +37,7 @@ namespace FormRequest.Models
         public bool IsClosed { get; set; } = false;
         public string? UserFeedback { get; set; }
         public String? remarks { get; set; }
+       
 
         public List<Registry> Registries { get; set; } = new List<Registry>();
 
@@ -44,7 +46,10 @@ namespace FormRequest.Models
             return v?.FirstOrDefault(); 
         }
 
-
+        [ForeignKey("EquipmentID")]
+        public EquipmentInventory? Equipments { get; set; }
+        public ITTreport? ITTReports { get; set; }
+        public FormReqDb() { }
         // public static implicit operator FormReqDb(List<FormReqDb> v)
         // {
         // throw new NotImplementedException();

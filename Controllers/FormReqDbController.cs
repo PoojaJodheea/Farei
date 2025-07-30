@@ -122,17 +122,33 @@ namespace FormRequest.Controllers
 
             return Json(serials);
         }
-        public IActionResult Feedback()
+   
+       
+        public async Task<IActionResult> Feedback()
         {
-            var requests = _context.FormReqDb
-                .Where(r =>
-                    !r.IsClosed &&
-                    (r.status != null &&
-                     (r.status.ToLower() == "complete" || r.status.ToLower() == "return"))
-                )
-                .ToList();
+            
+            var limit = _context.UserSettings.FirstOrDefault()?.FeedbackLimitDays;
 
-            return View(requests);
+            
+            var formDBReq = await _context.FormReqDb
+                .Where(j => (j.status.ToLower() == "complete" || j.status.ToLower() == "return") && !j.IsClosed)
+                .ToListAsync();
+
+            foreach (var request in formDBReq)
+            {
+                var duration = (DateTime.Now - request.RequestDate).Days;
+
+                if (duration > limit)
+                {
+                    request.status = "Closed";
+                    request.IsClosed = true;
+                }
+            }
+
+            
+            await _context.SaveChangesAsync();
+
+            return View(formDBReq);
         }
 
 
@@ -145,11 +161,41 @@ namespace FormRequest.Controllers
             {
                 request.UserFeedback = feedback;
                 request.IsClosed = confirmRepaired;
-                _context.Update(request);
+                
                 _context.SaveChanges();
             }
 
             return RedirectToAction("Feedback");
+        }
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SetFeedbackLimit(int days)
+        {
+            var setting = _context.UserSettings.FirstOrDefault();
+
+            if (setting == null)             //if empty creates a new record else updates existing ones
+            {
+                setting = new UserSettings
+                {
+                    FeedbackLimitDays = days,
+                    LastUpdated = DateTime.Now
+                };
+                _context.UserSettings.Add(setting);
+            }
+            else
+            {
+                setting.FeedbackLimitDays = days;
+                setting.LastUpdated = DateTime.Now;
+               
+            }
+
+            _context.SaveChanges();
+
+            TempData["Message"] = "Feedback day limit updated successfully.";
+
+           
+            return RedirectToAction("Index"); // Change 
         }
         public async Task<IActionResult> RequestMovement()
         {
@@ -161,8 +207,7 @@ namespace FormRequest.Controllers
             return View(requests);
         }
 
-
-                                                                //SUPERVISOR
+        //SUPERVISOR
         public async Task<IActionResult> SupervisorForm()
         {
             var requests = await _context.FormReqDb
@@ -242,11 +287,15 @@ namespace FormRequest.Controllers
             else if (Status == 3)
             {
                 formReqDb.status = "Onsite request";
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(TechnicianForm));
             }
             else if (Status == 4)
             {
                 formReqDb.status = "Transit request";
                 formReqDb.Pointer += 1;//2
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(TechnicianForm));
             }
 
 
@@ -352,7 +401,7 @@ namespace FormRequest.Controllers
             {
                 return NotFound();
             }
-
+            
             if (formReqDb.Pointer == 0)
             {
                 formReqDb.status = "rejected";

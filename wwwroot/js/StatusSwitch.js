@@ -39,30 +39,24 @@ window.getStatusClass = function (status) {
 };
 
 // Global Accept/Reject handler
-$(document).off("click", ".action-btn").on("click", ".action-btn", function () {
+$(document).off("click", ".action-btn").on("click", ".action-btn", function (e) {
     e.preventDefault();
-    var button = $(this);
-    var id = button.data("id");
-    var action = button.data("action");
+    const button = $(this);
+    const id = button.data("id");
+    const action = button.data("action");
 
-    var confirmed = confirm("Are you sure you want to " + action + " this request?");
-    if (!confirmed) {
-        // User clicked Cancel: do NOT proceed with AJAX, do NOT disable button
-        return;  // EXIT here early!
-        button.prop("disabled", false);
+    if (!confirm(`Are you sure you want to ${action} this request?`)) {
+        // If clicked Cancel, do nothing — button stays enabled
+        return;
     }
 
-    // User clicked OK - proceed with AJAX
     $.ajax({
         url: "/FormReqDb/UpdateStatus",
         type: "POST",
-        data: { id: id, actionType: action },
+        data: { id, actionType: action },
         success: function (response) {
             if (response.success) {
-                // Only disable button here, after success
                 button.prop("disabled", true);
-
-                // Update status text if needed
                 $(".status-cell[data-id='" + id + "']")
                     .text(response.newStatus)
                     .removeClass()
@@ -72,7 +66,7 @@ $(document).off("click", ".action-btn").on("click", ".action-btn", function () {
             }
         },
         error: function () {
-            alert("A server error occurred.");
+            alert("Server error updating status.");
         }
     });
 });
