@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int FeedbackLimitDays { get; set; }
-        public DateTime LastUpdated { get; set; }
+    
     }
 
 }

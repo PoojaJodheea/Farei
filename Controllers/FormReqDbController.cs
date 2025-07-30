@@ -126,26 +126,26 @@ namespace FormRequest.Controllers
        
         public async Task<IActionResult> Feedback()
         {
-            
+
             var limit = _context.UserSettings.FirstOrDefault()?.FeedbackLimitDays;
 
-            
+
             var formDBReq = await _context.FormReqDb
                 .Where(j => (j.status.ToLower() == "complete" || j.status.ToLower() == "return") && !j.IsClosed)
                 .ToListAsync();
 
             foreach (var request in formDBReq)
             {
-                var duration = (DateTime.Now - request.RequestDate).Days;
+                var duration = (DateTime.Now.Date - request.RequestDate.Date).Days;
 
                 if (duration > limit)
                 {
-                    request.status = "Closed";
+                    request.status = "closed";
                     request.IsClosed = true;
                 }
             }
 
-            
+
             await _context.SaveChangesAsync();
 
             return View(formDBReq);
@@ -161,40 +161,40 @@ namespace FormRequest.Controllers
             {
                 request.UserFeedback = feedback;
                 request.IsClosed = confirmRepaired;
-                
+                _context.Update(request);
                 _context.SaveChanges();
             }
 
             return RedirectToAction("Feedback");
         }
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult SetFeedbackLimit(int days)
         {
             var setting = _context.UserSettings.FirstOrDefault();
 
-            if (setting == null)             //if empty creates a new record else updates existing ones
+            if (setting == null)            
             {
                 setting = new UserSettings
                 {
                     FeedbackLimitDays = days,
-                    LastUpdated = DateTime.Now
+                   
                 };
                 _context.UserSettings.Add(setting);
             }
             else
             {
                 setting.FeedbackLimitDays = days;
-                setting.LastUpdated = DateTime.Now;
-               
+              
+                _context.UserSettings.Update(setting);
             }
 
             _context.SaveChanges();
 
             TempData["Message"] = "Feedback day limit updated successfully.";
 
-           
+
             return RedirectToAction("Index"); // Change 
         }
         public async Task<IActionResult> RequestMovement()
