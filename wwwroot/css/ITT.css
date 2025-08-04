@@ -41,6 +41,17 @@
 }
 
 
+table.alternating-col tbody tr td:nth-child(even) {
+    background-color: #f2f2f2 !important; /* Light grey for even columns */
+}
+
+table.alternating-col tbody tr td:nth-child(odd) {
+    background-color: #ffffff !important; /* White for odd columns */
+}
+
+
+
+
 body {
     background-color: #F1EFEC !important;
     font-family: 'Segoe UI', sans-serif;

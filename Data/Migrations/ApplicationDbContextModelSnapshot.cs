@@ -34,6 +34,9 @@ namespace FormRequest.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Dept")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -129,7 +132,7 @@ namespace FormRequest.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EquipmentInventory");
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("FormRequest.Models.FormReqDb", b =>
@@ -195,6 +198,9 @@ namespace FormRequest.Data.Migrations
                     b.Property<string>("UserFeedback")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool?>("Verification")
                         .HasColumnType("bit");
 
@@ -209,6 +215,8 @@ namespace FormRequest.Data.Migrations
                     b.HasIndex("EquipmentID");
 
                     b.HasIndex("ITTReportsID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FormReqDb");
                 });
@@ -235,6 +243,37 @@ namespace FormRequest.Data.Migrations
                     b.ToTable("ITTreport");
                 });
 
+            modelBuilder.Entity("FormRequest.Models.Notifications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("FormRequest.Models.Registry", b =>
                 {
                     b.Property<int>("RegistryId")
@@ -248,6 +287,9 @@ namespace FormRequest.Data.Migrations
 
                     b.Property<string>("Driver")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EquipmentID")
+                        .HasColumnType("int");
 
                     b.Property<int>("FormReqDbId")
                         .HasColumnType("int");
@@ -271,6 +313,8 @@ namespace FormRequest.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RegistryId");
+
+                    b.HasIndex("EquipmentID");
 
                     b.HasIndex("FormReqDbId");
 
@@ -476,18 +520,30 @@ namespace FormRequest.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ITTReportsID");
 
+                    b.HasOne("FormRequest.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Equipments");
 
                     b.Navigation("ITTReports");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FormRequest.Models.Registry", b =>
                 {
+                    b.HasOne("FormRequest.Models.EquipmentInventory", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentID");
+
                     b.HasOne("FormRequest.Models.FormReqDb", "FormReqDb")
                         .WithMany("Registries")
                         .HasForeignKey("FormReqDbId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Equipment");
 
                     b.Navigation("FormReqDb");
                 });

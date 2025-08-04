@@ -32,7 +32,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
+                        <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -61,6 +61,7 @@ else if (Type.Equals("Supervisor"))
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="SReportForm">Report</a>
                         </li>
                     </ul>
+                        <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -87,12 +88,13 @@ else if (Type.Equals("User"))
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="MyRequestForm"> My request</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDbs" asp-action="Feedback"> Feedback</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="Feedback"> Feedback</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="SReportForm">Report</a>
                         </li>
                     </ul>
+                        <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -122,6 +124,7 @@ else if (Type.Equals("Registry"))
                         </li>
 
                     </ul>
+                        <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -149,6 +152,7 @@ else if (Type.Equals("Technician"))
                         </li>
 
                     </ul>
+                        <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -174,7 +178,7 @@ else if (Type.Equals("Admin"))
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="UserForm">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="RegistryForm">Registry</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="Registry">Registry</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="Index">equipment</a>
@@ -182,7 +186,12 @@ else if (Type.Equals("Admin"))
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="SReportForm">Report</a>
                         </li>
+
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="AdminLimitDay">Feedback settings</a>
+                        </li
                     </ul>
+                    <partial name="_Notification" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -202,15 +211,17 @@ else if (Type.Equals("ITO"))
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="allrequest2">All requests</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="ITOform">All requests</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="SReportForm">Report</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+                        <partial name="_Notification" />
+                <partial name="_LoginPartial" />
             </div>
-        </nav>
-    </header>
-}
+        </div>
+    </nav>
+</header>
+
+  }

@@ -32,6 +32,7 @@ window.getStatusClass = function (status) {
             return "table-sendback";
         case "return":
         case "complete":
+        case "closed":
             return "table-complete";
         default:
             return "table-pending";

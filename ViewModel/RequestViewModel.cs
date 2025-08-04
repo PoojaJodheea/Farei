@@ -13,5 +13,8 @@ namespace FormRequest.ViewModel
         public ThirdParty? ThirdParty { get; set; }
         public ITTreport? ITTreport { get; set; }
         public List<ApplicationUser> AllUsers { get; internal set; }
+        public ApplicationUser? User { get; set; }
+
+        public EquipmentInventory? Inventory { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 ﻿﻿@using FormRequest.ViewModel
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model RequestViewModel
-@{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/SupervisorLayout.cshtml";
-}
-<div>
+<head>
+ <link rel="stylesheet" href="~/css/Supervisor.css" />
+</head>
+<partial name="Navbar"></partial>
+
+<div class="container">
+
+
     <h4>Request Details</h4>
     <hr />
     <dl class="row">

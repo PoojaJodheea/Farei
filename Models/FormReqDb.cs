@@ -50,6 +50,11 @@ namespace FormRequest.Models
         public EquipmentInventory? Equipments { get; set; }
         public ITTreport? ITTReports { get; set; }
         public FormReqDb() { }
+
+        public string? UserId { get; set; }
+
+[ForeignKey("UserId")]
+public ApplicationUser? User { get; set; }
         // public static implicit operator FormReqDb(List<FormReqDb> v)
         // {
         // throw new NotImplementedException();

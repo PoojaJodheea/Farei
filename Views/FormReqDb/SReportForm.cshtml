@@ -1,0 +1,79 @@
+﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/ITT.css" />
+</head>
+<partial name="Navbar" />
+<div class="container">
+    <div class="row mb-3">
+        <form asp-action="FilterByDate" method="post">
+            <input type="date" name="Date" class="col-md-3" />
+            <input type="submit" class="col-md-2" />
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Supervisor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Equipments.EquipmentName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Equipments.EquipmentType)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FormReqDb.Equipments.SerialNumber)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FormReqDbs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.RequestDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ResponsibleOfficer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Supervisor)
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(model => item.Equipments.EquipmentName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => item.Equipments.EquipmentType)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => item.Equipments.SerialNumber)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @{
+        Html.BeginForm("CreatePDFDocument", "Home", FormMethod.Get);
+        {
+            <div>
+                <input type="submit" value="Generate PDF Document" style="width:150px;height:27px" />
+            </div>
+        }
+        Html.EndForm();
+    }
+</div>

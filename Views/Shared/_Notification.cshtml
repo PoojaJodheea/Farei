@@ -1,0 +1,22 @@
+﻿@{
+    var notifications = ViewBag.Notifications as List<FormRequest.Models.Notifications> ?? new List<FormRequest.Models.Notifications>();
+}
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" id="notifBell" href="#" data-bs-toggle="dropdown">
+        🔔 <span class="badge bg-danger">@notifications.Count</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifBell">
+        @if (notifications.Any())
+        {
+            foreach (var notif in notifications)
+            {
+                <li class="dropdown-item @(notif.IsRead ? "" : "fw-bold")">@notif.Message</li>
+            }
+        }
+        else
+        {
+            <li class="dropdown-item text-muted">No notifications</li>
+        }
+    </ul>
+</li>

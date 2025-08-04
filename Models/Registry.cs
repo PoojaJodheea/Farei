@@ -28,6 +28,7 @@ namespace FormRequest.Models
         public string? Driver { get; set; }
 
         public FormReqDb FormReqDb { get; set; }
+        public EquipmentInventory? Equipment { get; set; }
     }
 
    

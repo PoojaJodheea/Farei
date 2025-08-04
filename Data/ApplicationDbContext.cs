@@ -22,10 +22,14 @@ namespace FormRequest.Data
         public DbSet<Registry> Registry { get; set; } = default!;
         public DbSet<ThirdParty> ThirdParties{ get; set; }
         public DbSet<ITTreport> ITTreport { get; set; } = default!;
+        public DbSet<ApplicationUser> Alluser { get; set; }
+        public DbSet<EquipmentInventory> Equipment { get; set; } = default!;
+        public DbSet<Notifications> Notifications { get; set; }
+
 
 
 
     }
 
-    
+
 }

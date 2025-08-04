@@ -1,0 +1,54 @@
+﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/User.css" />
+</head>
+<partial name="Navbar"></partial>
+<div class="container">
+    <h1>User info</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Role
+                </th>
+                <th>
+                    Site
+                </th>
+                <th>
+                    supervisor
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllUsers)
+            {
+                <tr>
+
+                    <td>
+                        @item.UserName
+                    </td>
+
+                    <td>
+                        @item.Type
+                    </td>
+
+                    <td>
+                        @item.Site
+                    </td>
+
+                    <td>
+                        @item.Supervisor
+                    </td>
+
+                    <td><a asp-action="EditUser" asp-route-id="@item.UserName">Details</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

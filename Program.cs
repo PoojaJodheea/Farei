@@ -2,6 +2,7 @@ using FormRequest.Data;
 using FormRequest.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
               .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddSignalR();//notification
+builder.Services.AddSingleton<IUserIdProvider, UserProvider>();
 
 //calls the EmailSender class
 builder.Services.AddTransient<IEmailSender, EmailSender>();
@@ -39,6 +42,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+app.MapHub<NotificationSetting>("/notificationHub");
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,61 +1,77 @@
-﻿@model FormRequest.Models.FormReqDb
+﻿
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    @if (Model.User.Type=="Supervisor") {
+        <link rel="stylesheet" href="~/css/Supervisor.css" />
+    }
+    else 
+    {
+         <link rel="stylesheet" href="~/css/User.css" />
+    }
+</head>
+
 @{
-    ViewData["Title"] = "Repair/Servicing Request Form";
-    Layout = "~/Views/Shared/User.cshtml";
+    ViewData["Title"] = "Index";
 }
 
+<partial name="Navbar"></partial>
+<div class="container">
+    @using (Html.BeginForm()){
 <h2>Repair/Servicing Request Form</h2>
-<hr />
 
 
-
-
-<form asp-action="Create" asp-controller="FormReqDb" method="post">
+<form asp-action="Create" method="post">
     @Html.AntiForgeryToken()
     <h4>Request Details</h4>
     <div class="row mb-3">
-       
+
         <div class="col-md-3">
-            <label asp-for="Site">Site:</label>
-            <select asp-for="Site" class="form-control" id="Site">
-                <option value="">-- Select Site --</option>
-                <option>St Pierre</option>
-                <option>Reduit</option>
+            <label >Site:</label>
+            @*
+                <select asp-for="FormReqDbs.Site" class="form-control" id="Site" required>
+                <option value="">-- Select site --</option>
+                <option> St Pierre </option>
+                <option> Reduit </option>
                 <option>Curepipe</option>
                 <option>Mapou</option>
                 <option>Flacq</option>
-                <option>Riviere des anguilles</option>
+                <option>riviere des anguilles</option>
                 <option>Plaisance</option>
                 <option>Vacoas</option>
             </select>
-            <span asp-validation-for="Site" class="text-danger"></span>
+            *@
+            <input asp-for="FormReqDb.Site" class="form-control" id="Site" value="@Model.User.Site" style="background-color:lightgray" readonly/>
+            </div>
+        <div class="col-md-3">
+            <label >Department:</label>
+            <input asp-for="FormReqDb.Department" class="form-control" id="Dept" value="@Model.User.Dept" style="background-color:lightgray" readonly/>
         </div>
         <div class="col-md-3">
-            <label asp-for="Department">Department:</label>
-            <select asp-for="Department" class="form-control" id="Department">
-                <option value="">Select Department</option>
-                <option>IT Dept</option>
-                <option>Finance Dept</option>
-                <option>HR Dept</option>
-            </select>
-            <span asp-validation-for="Department" class="text-danger"></span>
+            <label asp-for="FormReqDb.ResponsibleOfficer">Responsible Officer:</label>
+                <input asp-for="FormReqDb.ResponsibleOfficer" value="@Model.User.UserName" class="form-control" style="background-color:lightgray" readonly />
         </div>
+        @if(Model.User.Type=="User"){
         <div class="col-md-3">
-            <label asp-for="ResponsibleOfficer">Responsible Officer:</label>
-            <input asp-for="ResponsibleOfficer" class="form-control" />
-            <span asp-validation-for="ResponsibleOfficer" class="text-danger"></span>
+            <label asp-for="FormReqDb.Supervisor">Supervisor:</label>
+        <input asp-for="FormReqDb.Supervisor" class="form-control" value="@Model.User.Supervisor" style="background-color:lightgray" readonly/>
         </div>
+        }
+        <input asp-for="FormReqDb.status" type="hidden" value="pending"/>
+        <input asp-for="FormReqDb.Pointer" type="hidden" value=0/>
+
+        
     </div>
     <div class="form-group mb-4">
-        <label asp-for="ContactPhone">Contact Phone:</label>
-        <input asp-for="ContactPhone" class="form-control" />
-        <span asp-validation-for="ContactPhone" class="text-danger"></span>
+        <label asp-for="FormReqDb.ContactPhone">Contact Phone:</label>
+            
+        <input type="number" asp-for="FormReqDb.ContactPhone" class="form-control" placeholder="example: 52011431" value=null required/>     
+            <span asp-validation-for="FormReqDb.ContactPhone" class="text-danger"></span>
     </div>
-    
 
     <h4>Equipment Section</h4>
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-light">
             <tr>
                 <th>Equipment Type</th>
                 <th>Serial Number</th>
@@ -65,99 +81,82 @@
         <tbody>
             <tr>
                 <td>
-                    <select asp-for="EquipmentType" class="form-control" id="EquipmentType">
-                        <option value=""> Select Equipment </option>
-                        <option>CPU</option>
-                        <option>Monitor</option>
+                        <select class="form-control" id="Type" required>
+                        <option disabled selected>-- Select Equipment --</option>
+                        <option> CPU </option>
+                        <option> Monitor </option>
                         <option>Mouse</option>
                         <option>Key board</option>
-                        <option>Printer</option>
+                        <option>printer</option>
                         <option>Scanner</option>
-                    </select>
-                    <span asp-validation-for="EquipmentType" class="text-danger"></span>
+                        <option>laptop</option>
+                        </select>       
+                        <span asp-validation-for="FormReqDb.Equipments" class="text-danger"></span>
                 </td>
                 <td>
-                    <select asp-for="SerialNumber" class="form-control" id="SerialNumber">
-                        <option value="">-- Select Serial Number --</option>
-                    </select>
-                    <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                    <input asp-for="FormReqDb.SerialNumber" class="form-control" id="SerialNumber" required>
+                   <span asp-validation-for="FormReqDb.SerialNumber" class="text-danger"></span>
                 </td>
-                <td>
-                    <input asp-for="ProblemDescription" class="form-control" />
-                    <span asp-validation-for="ProblemDescription" class="text-danger"></span>
-                </td>
+                    <td>                        
+                        <input asp-for="FormReqDb.ProblemDescription" class="form-control" required/>
+                        <span asp-validation-for="FormReqDb.ProblemDescription" class="text-danger"></span>
+                    </td>
             </tr>
-
-            <div aria-live="polite" aria-atomic="true" style="position: relative; z-index: 9999;">
-                <div class="toast-container position-fixed top-0 end-0 p-3">
-                    @if (TempData["SuccessMessage"] != null)
-                    {
-                        <div class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="d-flex">
-                                <div class="toast-body">
-                                    @TempData["SuccessMessage"]
-                                </div>
-                                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                        </div>
-                    }
-                    @if (TempData["ErrorMessage"] != null)
-                    {
-                        <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="d-flex">
-                                <div class="toast-body">
-                                    @TempData["ErrorMessage"]
-                                </div>
-                                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-
         </tbody>
     </table>
 
-    <input type="hidden" id="IsDraft" name="IsDraft" value="false" />
-
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-H">Submit</button>
-        <input type="reset" value="Cancel" class="btn btn-outline-secondary btn-H" />
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input type="reset" value="Cancel" class="btn btn-outline-secondary" />
     </div>
 </form>
+}
+</div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function fetchSerialNumbers() {
-            var site = $('#Site').val();
-            var department = $('#Department').val();
-            var equipmentType = $('#EquipmentType').val();
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+       
+    }
 
-            if (site && department && equipmentType) {
-                $.ajax({
-                    url: '@Url.Action("GetSerialNumbers", "FormReqDb")',
-                    data: {
-                        site: site,
-                        department: department,
-                        equipmentType: equipmentType
-                    },
-                    success: function (data) {
-                        var serialDropdown = $('#SerialNumber');
-                        serialDropdown.empty();
-                        serialDropdown.append($('<option>', { value: '', text: '-- Select Serial Number --' }));
-                        $.each(data, function (i, val) {
-                            serialDropdown.append($('<option>', { value: val, text: val }));
-                        });
-                    }
+<script>
+
+    const Type = document.getElementById("Type");
+    const SerialNumber = document.getElementById("SerialNumber");
+
+    let SiteVariable = null;
+    let DepartmentVariable = null;
+    let TypeVariable = null;
+
+
+
+
+    Type.addEventListener('change', async function () {
+        TypeVariable = Type.value;
+        DepartmentVariable=document.getElementById("Dept").value;
+        SiteVariable = document.getElementById("Site").value;
+        await tryFetchData();
+    });
+
+    async function tryFetchData() {
+        if (SiteVariable && DepartmentVariable && TypeVariable) {
+            try {
+                const response = await fetch('/FormReqDbs/GetFormRequests?' +
+                    `site=${encodeURIComponent(SiteVariable)}` +
+                    `&department=${encodeURIComponent(DepartmentVariable)}` +
+                    `&type=${encodeURIComponent(TypeVariable)}`);
+                if (!response.ok) throw new Error("Server error");
+                const data = await response.json();
+                console.log(data);
+                SerialNumber.innerHTML = "";
+                data.forEach(item => {
+                    SerialNumber.innerHTML += `<option>${item.serialNumber}</option>`;
                 });
+            } catch (err) {
+                console.error("Error loading data", err);
             }
         }
-
-        $('#Site, #Department, #EquipmentType').on('change', function () {
-            fetchSerialNumbers();
-        });
-    </script>
+    }
+</script>
 }

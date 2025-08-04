@@ -1,71 +1,100 @@
-﻿@using FormRequest.Models
+﻿﻿@using FormRequest.ViewModel
+@using FormRequest.Models
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/User.css" />
+</head>
+@{
 
-@model IEnumerable<FormRequest.Models.FormReqDb>
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/User.cshtml";
-}
+    var username = User.Identity.Name;
+    var Type = "default";
 
-<h1>Repair / Servicing Requests</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-H">Create New</a>
-</p>
-
-<table class="table table-striped">
-    <thead class ="table-header th">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.RequestDate)</th>
-            <th>@Html.DisplayNameFor(model => model.ResponsibleOfficer)</th>
-            <th>@Html.DisplayNameFor(model => model.EquipmentType)</th>
-            <th>@Html.DisplayNameFor(model => model.ProblemDescription)</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+    @if (username == null)
+    {
+        Type = "default";
+    }
+    else
+    {
+        @foreach (var User in Model.AllUsers)
         {
-            var status = item.status?.Trim().ToLower();
-            var statusClass = StatusClass.GetStatusClass(item.status);
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>
-                <td>@Html.DisplayFor(modelItem => item.EquipmentType)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
-              
-                <td class="status-cell @statusClass" data-id="@item.Id">
-                    @if (item.IsDraft)
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-warning">Draft</a>
-                    }
-                    else
-                    {
-                        @item.status
-                    }
-                </td>
-
-                <td>
-
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-H">Details</a> 
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-H">Delete</a>
-                </td>
-            </tr>
+            if (username.Equals(User.UserName))
+            {
+                Type = User.Type;
+                break;
+            }
         }
-    </tbody>
-</table>
-
-<form asp-action="SetFeedbackLimit" method="post">
-    <div class="form-group">
-        <label>Enter Number of Days Limit to submit Feedback:</label>
-        <input type="number" name="days" class="form-control" min="1" value="@Model" required />
-    </div>
-    <button type="submit" class="btn btn-primary mt-2">Save Limit</button>
-</form>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success mt-2">@TempData["Message"]</div>
+    }
 }
+@if (Type.Equals("default"))
+{
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="FormReqDb" asp-action="Index">FAREI</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>
+            <a asp-area="Identity" asp-page="/Account/Login">
+                Please login first.
+            </a>
+        </p>
+    </div>
+}
+else
+{
+    <partial name="Navbar"></partial>
+    <div class="container">
+        <h1 class="mt-0">User</h1>
+
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <div class="TableMargin">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>RequestDate</th>
+                        <th>ResponsibleOfficer</th>
+                        <th>Status</th>
+                        <th>Serial number</th>
+                        <th>Equipment type</th>
+                        <th>ProblemDescription</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.FormReqDbs)
+                    {
+                        var statusClass = StatusClass.GetStatusClass(item.status);
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>
+                            <td class="@statusClass status-cell" data-id="@item.Id">@Html.DisplayFor(modelItem => item.status)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SerialNumber)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Equipments.EquipmentType)
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
+                            <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

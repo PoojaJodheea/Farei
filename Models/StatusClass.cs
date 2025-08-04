@@ -33,6 +33,7 @@
                 "complete" => "table-complete",
                 "send back" => "table-sendback",
                 "return" => "table-complete",
+                "closed" => "table-complete",
 
                 _ => "table-pending"
             };

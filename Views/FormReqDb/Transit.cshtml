@@ -1,70 +1,83 @@
-﻿@using FormRequest.ViewModel 
+﻿﻿@using FormRequest.ViewModel
 @model RequestViewModel
-@{
-    ViewData["Title"] = "Requests in transit";
-    Layout = "~/Views/Shared/Registrylayout.cshtml";
-}
-
-<h1>
-    Offsite
-</h1>
-<table class="table table-bordered table-striped">
-    <thead class="Brown-table-header">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Registry.From)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registry.To)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registry.DateReceived)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registry.Remarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FormReqDb.Department)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FormReqDb.status)
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.RegistryList)
-        {
+<head>
+    <link rel="stylesheet" href="~/css/Registry.css" />
+</head>
+<partial name="Navbar"></partial>
+<div class="container">
+    <h1>
+        Transit
+    </h1>
+    <table class="table">
+        <thead>
             <tr>
->
-                <td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory.SerialNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory.EquipmentType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory.EquipmentName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registry.From)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registry.To)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registry.DateReceived)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Registry.Remarks)
+                </th>
 
-                    @Html.DisplayFor(modelItem => item.From)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.To)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateReceived)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Remarks)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FormReqDb.Department)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FormReqDb.status 
-                    
-)
-                </td>
-                <td>
+                <th>
+                    Arrived
+                </th>
 
-                    <a asp-action="DetailsTransiteForm" asp-route-id="@item.FormReqDbId" class="btn btn-sm btn-H">Details</a>
 
-                </td>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RegistryList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Equipment.SerialNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Equipment.EquipmentType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.From)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.To)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateReceived)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsValid)
+                    </td>
+
+                    <td>
+
+                        <a asp-action="DetailsTransiteForm" asp-route-id="@item.RegistryId">Details</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,54 @@
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/User.css" />
+</head>
+<partial name="Navbar"></partial>
+<div class="container">
+    <h1> @Html.DisplayFor(model => model.User.UserName) detail</h1>
+    <form asp-action="editUser" method="post">
+        <div class="row mb-3">
+
+
+            <div class="col-md-3">
+                <label>Username:</label>
+                <input asp-for="User.UserName" class="form-control" value="@Model.User.UserName" name="userName" style="background-color:lightgray" readonly />
+            </div>
+            <div class="col-md-3">
+                <label>Site:</label>
+                <select asp-for="User.Site" class="form-control" id="Site" name="Site" required>
+                    <option>@Model.User.Site</option>
+                    <option> St Pierre </option>
+                    <option> Reduit </option>
+                    <option>Curepipe</option>
+                    <option>Mapou</option>
+                    <option>Flacq</option>
+                    <option>riviere des anguilles</option>
+                    <option>Plaisance</option>
+                    <option>Vacoas</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Supervisor:</label>
+                <input asp-for="User.Supervisor" class="form-control" id="Supervisor" name="Supervisor" />
+            </div>
+            <div class="col-md-3">
+                <label>Dept:</label>
+                <select asp-for="User.Dept" class="form-control" id="dept" name="dept" required>
+                    <option disabled selected>@Model.User.Dept</option>
+                    <option> Livestock Research </option>
+                    <option> Crop Research </option>
+                    <option>Extension and training</option>
+                    <option>Technical Support</option>
+                    <option>Administrative section</option>
+                    <option>Internal Audit</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+            <input type="reset" value="Cancel" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+
+</div>

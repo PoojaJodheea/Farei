@@ -1,11 +1,14 @@
-﻿@model FormRequest.ViewModel.RequestViewModel
-@{
-    ViewData["Title"] = "Requests";
-    Layout = "~/Views/Shared/Registrylayout.cshtml";
-}
-<h2>Registry - All Requests</h2>
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Registry.css" />
+</head>
+<partial name="Navbar"></partial>
 
-<table class="table table-bordered table-striped">
+<div class="container">
+ <h2>Registry - All Requests</h2>
+
+ <table class="table table-bordered table-striped">
     <thead class="Brown-table-header">
         <tr>
             <th>Date</th>
@@ -37,3 +40,4 @@
         }
     </tbody>
 </table>
+</div>

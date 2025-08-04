@@ -1,0 +1,22 @@
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+<head>
+    <link rel="stylesheet" href="~/css/Admin.css" />
+</head>
+<partial name="Navbar"></partial>
+
+<div class="container">
+    <form asp-action="SetFeedbackLimit" method="post">
+    <div class="form-group">
+        <label>Enter Number of Days Limit to submit Feedback:</label>
+        <input type="number" name="days" class="form-control" min="1" value="@Model" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Save Limit</button>
+</form>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success mt-2">@TempData["Message"]</div>
+}
+
+</div>

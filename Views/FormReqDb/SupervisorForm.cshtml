@@ -1,11 +1,14 @@
-﻿@using FormRequest.ViewModel
+﻿﻿@using FormRequest.ViewModel
+@using FormRequest.Models
 @model RequestViewModel
-@{
-    ViewData["Title"] = "Requests";
-    Layout = "~/Views/Shared/SupervisorLayout.cshtml";
-}
+
+<head>
+    <link rel="stylesheet" href="~/css/Supervisor.css" />
+</head>
+<partial name="Navbar" />
+
 <h1>Supervisor</h1>
-<table class="table">
+<table class="alternating-rows">
     <thead class="B-table-header th">
         <tr>
             <th>RequestDate</th>
@@ -40,6 +43,16 @@
         }
     </tbody>
 </table>
+
+<style>
+    table.alternating-rows tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray for even rows */
+    }
+
+    table.alternating-rows tr:nth-child(odd) {
+        background-color: #ffffff; /* White for odd rows (optional, as it's default) */
+    }
+</style>
 
 
 

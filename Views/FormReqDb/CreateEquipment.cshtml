@@ -1,0 +1,71 @@
+﻿﻿@using FormRequest.ViewModel
+@model RequestViewModel
+
+<h4>EquipmentInventory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateEquipment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Inventory.EquipmentName" class="control-label"></label>
+                <input asp-for="Inventory.EquipmentName" class="form-control" />
+                <span asp-validation-for="Inventory.EquipmentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory.SerialNumber" class="control-label"></label>
+                <input asp-for="Inventory.SerialNumber" class="form-control" />
+                <span asp-validation-for="Inventory.SerialNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory.EquipmentType" class="control-label"></label>
+                <select asp-for="Inventory.EquipmentType" class="form-control" >
+                    <option> CPU </option>
+                    <option> Monitor </option>
+                    <option>Mouse</option>
+                    <option>Key board</option>
+                    <option>printer</option>
+                    <option>Scanner</option>
+                    <option>Laptop</option>
+                </select>
+                <span asp-validation-for="Inventory.EquipmentType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory.Site" class="control-label"></label>
+                <select asp-for="Inventory.Site" class="form-control" >
+                    <option> St Pierre </option>
+                    <option> Reduit </option>
+                    <option>Curepipe</option>
+                    <option>Mapou</option>
+                    <option>Flacq</option>
+                    <option>riviere des anguilles</option>
+                    <option>Plaisance</option>
+                    <option>Vacoas</option>
+                </select>
+                <span asp-validation-for="Inventory.Site" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inventory.Department" class="control-label"></label>
+                <select asp-for="Inventory.Department" class="form-control" >
+                    <option> IT Dept </option>
+                    <option> Finance Dept </option>
+                    <option>HR Dept </option>
+                </select>
+                <span asp-validation-for="Inventory.Department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="TechnicianForm">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

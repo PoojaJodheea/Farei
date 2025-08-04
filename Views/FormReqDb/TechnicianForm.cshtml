@@ -1,54 +1,68 @@
-﻿@using FormRequest.ViewModel
+﻿﻿@using FormRequest.ViewModel
+@using FormRequest.Models
 @model RequestViewModel
-@{
-    ViewData["Title"] = "Requests";
-    Layout = "~/Views/Shared/IttLayout.cshtml";
-}
+<head>
+    <link rel="stylesheet" href="~/css/ITT.css" />
+</head>
+<partial name="Navbar"></partial>
+<div class="container">
 
 <h1>Technician</h1>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.Site)</th>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.Department)</th>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.ResponsibleOfficer)</th>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.ProblemDescription)</th>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.SerialNumber)</th>
-            <th>@Html.DisplayNameFor(m => m.FormReqDb.status)</th>
-            <th>Movement Type</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.FormReqDbs)
-        {
-            var statusClass = StatusClass.GetStatusClass(item.status);
+    <table class="table table alternating-col"> 
+        <thead>
             <tr>
-                <td>@item.Site</td>
-                <td>@item.Department</td>
-                <td>@item.ResponsibleOfficer</td>
-                <td>@item.ProblemDescription</td>
-                <td>@item.SerialNumber</td>
-                <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
-                <td>
-                    @if (item.Pointer == 1)
-                    {
-                        <form asp-action="ChangeStatus" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <input type="hidden" name="Status" value="3" />
-                            <button type="submit" class="btn btn-sm btn-secondary">Onsite</button>
-                        </form>
-                        <form asp-action="ChangeStatus" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <input type="hidden" name="Status" value="4" />
-                            <button type="submit" class="btn btn-sm btn-warning">Transit</button>
-                        </form>
-                    }
-                </td>
-                <td>
-                    <a asp-action="TechnicianDetailsForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a>
-                </td>
+                <th>Site</th>      
+                <th>Department</th>
+                <th>Officer</th>
+                <th>Description</th>
+                <th>Serial Number</th>
+                <th>Status</th>
+                <th>Movement Type</th>
+                <th>Details</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FormReqDbs)
+            {
+                var statusClass = StatusClass.GetStatusClass(item.status);
+                <tr>
+                    <td>@item.Site</td>
+                    <td>@item.Department</td>
+                    <td>@item.ResponsibleOfficer</td>
+                    <td>@item.ProblemDescription</td>
+                    <td>@item.SerialNumber</td>
+                    <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
+                    <td>
+                        @if (item.Pointer == 1)
+                        {
+                            <form asp-action="ChangeStatus" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="Status" value="3" />
+                                <button type="submit" class="btn btn-sm btn-secondary">Onsite</button>
+                            </form>
+                            <form asp-action="ChangeStatus" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="Status" value="4" />
+                                <button type="submit" class="btn btn-sm btn-warning">Transit</button>
+                            </form>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="TechnicianDetailsForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <style>  
+
+    table.alternating-col tbody tr td:nth-child(even) {
+    background-color: #f2f2f2; /* Light grey for even columns */
+    }
+
+    table.alternating-col tbody tr td:nth-child(odd) {
+    background-color: #ffffff; /* White for odd columns */
+    }
+
+</style>
