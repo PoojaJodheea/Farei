@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace FormRequest.Controllers
 {
     public class FormReqDbController : Controller
@@ -34,27 +34,30 @@ namespace FormRequest.Controllers
          
         }
 
+    
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        base.OnActionExecuting(context);
+
+        if (User?.Identity?.IsAuthenticated == true)
         {
-            base.OnActionExecuting(context);
+            var notifications = _context.FormReqDb
+                .OrderByDescending(m => m.RequestDate)
+                .Take(20) // Limit to last 20 requests
+                .ToList();
 
-            if (User?.Identity?.IsAuthenticated == true)
+            ViewData["NotificationsModel"] = new RequestViewModel
             {
-                var user = _userManager.GetUserAsync(User).Result;
-                if (user != null)
-                {
-                    ViewBag.Notifications = _context.Notifications
-                        .Where(n => n.UserId == user.Id)
-                        .OrderByDescending(n => n.CreatedAt)
-                        .Take(10)
-                        .ToList();
-                }
-            }
+                FormReqDbs = notifications
+            };
         }
-        public async Task<IActionResult> Index()
+    }
+
+
+    public async Task<IActionResult> Index()
         {
-            var model = new RequestViewModel
+            var model = new RequestViewModel  
             {
                 FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Include(m => m.ITTReports).ToListAsync(),
                 AllUsers = _userManager.Users.ToList()
@@ -65,7 +68,7 @@ namespace FormRequest.Controllers
                 return View(model);
             }
             var user = await _userManager.FindByEmailAsync(username);
-            var type = user.Type;
+            string? type = user.Type;
             if (type.Equals("Supervisor"))
             {
                 return RedirectToAction("SupervisorForm");
@@ -88,7 +91,6 @@ namespace FormRequest.Controllers
             }
             return View(model);
         }
-
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -149,8 +151,8 @@ namespace FormRequest.Controllers
         }                                                  //USER//
         public async Task<IActionResult> Create()
         {
-            var userName = User.Identity.Name;
-            if (userName == null)
+            var userName = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userName))
                 return RedirectToAction("Index");
 
             var currentUser = await _context.Alluser.FirstOrDefaultAsync(m => m.UserName == userName);
@@ -176,8 +178,8 @@ namespace FormRequest.Controllers
                 return View(model);
             }
 
-            var userName = User.Identity.Name;
-            if (userName == null)
+            var userName = User.Identity?.Name;
+            if (string.IsNullOrEmpty(userName))
                 return RedirectToAction("Index");
 
             var user = await _context.Alluser.FirstOrDefaultAsync(m => m.UserName == userName);
@@ -189,9 +191,10 @@ namespace FormRequest.Controllers
 
             newForm.RequestDate = DateTime.Now;
             newForm.Equipments = equipment;
-            newForm.UserId = user.Id;  // Make sure your model has this property
-            newForm.ResponsibleOfficer = userName; // optional, keep username if you want
+            newForm.UserId = user.Id;
+            newForm.ResponsibleOfficer = userName;
 
+            // ✅ Set pointer based on user type
             if (user.Type == "User")
             {
                 newForm.Pointer = 0;
@@ -204,14 +207,13 @@ namespace FormRequest.Controllers
             }
             else
             {
-                // Default or other user types logic here
                 newForm.Pointer = 0;
                 newForm.status = "Pending";
             }
 
             _context.FormReqDb.Add(newForm);
-            await GenerateNotifications(newForm);
             await _context.SaveChangesAsync();
+            await GenerateNotifications(newForm);
 
             return RedirectToAction("Index");
         }
@@ -367,7 +369,7 @@ namespace FormRequest.Controllers
 
             return View(requests);
         }
-        
+
 
         //SUPERVISOR
 
@@ -375,11 +377,15 @@ namespace FormRequest.Controllers
         {
             var model = new RequestViewModel
             {
+
                 FormReqDbs = await _context.FormReqDb.Where(j => j.Supervisor.Contains(User.Identity.Name) && j.status == "pending").ToListAsync(),
                 AllUsers = _userManager.Users.ToList()
             };
             return View(model);
         }
+
+
+
         public async Task<IActionResult> DetailsSupervisorForm(int? id)
         {
             if (id == null)
@@ -437,7 +443,7 @@ namespace FormRequest.Controllers
             return RedirectToAction(nameof(DetailsSupervisorForm), new { id = id });
         }
 
-  
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -449,34 +455,34 @@ namespace FormRequest.Controllers
                 return NotFound();
             }
 
-            if (Status == 1)
+            switch (Status)
             {
-                formReqDb.status = "Accepted";
-                formReqDb.Pointer += 1;//1
-            }
-            else if (Status == 2)
-            {
-                formReqDb.status = "Rejected";
-                formReqDb.Pointer = 0;
-            }
-            else if (Status == 3)
-            {
-                formReqDb.status = "Onsite request";
-                formReqDb.Pointer += 2;//3
-                formReqDb.remarks = Remarks ?? "";
-                await GenerateNotifications(formReqDb);
-                return RedirectToAction(nameof(TechnicianForm));
-            }
-            else if (Status == 4)
-            {
-                formReqDb.status = "Transit request";
-                formReqDb.Pointer += 1;//2
-                formReqDb.remarks = Remarks ?? "";
-                await _context.SaveChangesAsync();
-                await GenerateNotifications(formReqDb);
-                return RedirectToAction(nameof(TechnicianForm));
-            }
+                case 1:
+                    formReqDb.status = "Accepted";
+                    formReqDb.Pointer = 1;
+                    break;
 
+                case 2:
+                    formReqDb.status = "Rejected";
+                    formReqDb.Pointer = 0;
+                    break;
+
+                case 3:
+                    formReqDb.status = "Onsite request";
+                    formReqDb.Pointer = 3;
+                    formReqDb.remarks = Remarks ?? "";
+                    await _context.SaveChangesAsync();
+                    await GenerateNotifications(formReqDb);
+                    return RedirectToAction(nameof(TechnicianForm));
+
+                case 4:
+                    formReqDb.status = "Transit request";
+                    formReqDb.Pointer = 2;
+                    formReqDb.remarks = Remarks ?? "";
+                    await _context.SaveChangesAsync();
+                    await GenerateNotifications(formReqDb);
+                    return RedirectToAction(nameof(TechnicianForm));
+            }
 
             try
             {
@@ -494,8 +500,10 @@ namespace FormRequest.Controllers
                     throw;
                 }
             }
+
             return RedirectToAction(nameof(SupervisorForm));
         }
+
 
         private bool FormReqDbExists(int id)
         {
@@ -1189,123 +1197,146 @@ namespace FormRequest.Controllers
 
         public async Task<IActionResult> SReportForm()
         {
-
             var name = User.Identity.Name;
-            if (name == null)
+            if (string.IsNullOrEmpty(name))
             {
                 return RedirectToAction("Index");
             }
+
             var user = await _context.Alluser.FirstOrDefaultAsync(m => m.UserName == name);
+            if (user == null)
+            {
+                return View(new RequestViewModel
+                {
+                    FormReqDbs = new List<FormReqDb>(),
+                    RegistryList = new List<Registry>(),
+                    AllUsers = _userManager.Users.ToList()
+                });
+            }
+
+            RequestViewModel model;
+
             if (user.Type == "User")
             {
-                var User = new RequestViewModel
+                model = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(j => j.ResponsibleOfficer == name).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
+                                .Where(j => j.ResponsibleOfficer == name).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
-                return View(User);
             }
             else if (user.Type == "Supervisor")
             {
-                var Supervisor = new RequestViewModel
+                model = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(j => j.Supervisor == name).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
+                                .Where(j => j.Supervisor == name).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
-                return View(Supervisor);
             }
-            else if (user.Type == "Technician" || user.Type == "ITO" || user.Type=="Admin")
+            else if (user.Type == "Technician" || user.Type == "ITO" || user.Type == "Admin")
             {
-                var model = new RequestViewModel
+                model = new RequestViewModel
                 {
                     FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
-                return View(model);
             }
             else if (user.Type == "Registry")
             {
-                var Registry = new RequestViewModel
+                model = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(m => m.Site == user.Site).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
+                                .Where(m => m.Site == user.Site).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
-                return View(Registry);
             }
-            return View();
+            else
+            {
+                model = new RequestViewModel
+                {
+                    FormReqDbs = new List<FormReqDb>(),
+                    RegistryList = new List<Registry>(),
+                    AllUsers = _userManager.Users.ToList()
+                };
+            }
+
+            return View(model);
         }
 
         private async Task GenerateNotifications(FormReqDb request)
         {
-            if (request == null) return;
+            List<Notifications> newNotifications = new();
 
-            int pointer = request.Pointer;
-
-         
-            if (pointer == 0)
+            if (request.Pointer == 0)
             {
-                var supervisors = _context.Users
+                // Notify supervisors
+                var supervisors = await _context.Alluser
                     .Where(u => u.Type == "Supervisor" && u.Site == request.Site && u.Dept == request.Department)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var sup in supervisors)
                 {
-                    if (!string.IsNullOrEmpty(sup.Id))
+                    newNotifications.Add(new Notifications
                     {
-                        _context.Notifications.Add(new Notifications
-                        {
-                            UserId = sup.Id,
-                            Message = $"📩 New request #{request.Id} submitted by {request.ResponsibleOfficer}"
-                        });
-                    }
+                        UserId = sup.Id,
+                        Message = $"📩 New request #{request.Id} submitted by {request.ResponsibleOfficer}"
+                    });
                 }
             }
-           
-            else if (pointer == 1)
+            else if (request.Pointer == 1)
             {
-                var techs = _context.Users
+                // Notify technician
+                var techs = await _context.Alluser
                     .Where(u => u.Type == "Technician" && u.Site == request.Site && u.Dept == request.Department)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var tech in techs)
                 {
-                    if (!string.IsNullOrEmpty(tech.Id))
+                    newNotifications.Add(new Notifications
                     {
-                        _context.Notifications.Add(new Notifications
-                        {
-                            UserId = tech.Id,
-                            Message = $" Supervisor accepted request #{request.Id}."
-                        });
-                    }
+                        UserId = tech.Id,
+                        Message = $"✅ Supervisor accepted request #{request.Id}."
+                    });
                 }
             }
-          
-            else if (pointer == 9)
+            else if (request.Pointer == 9)
             {
-                var user = _context.Users
-                    .FirstOrDefault(u => u.UserName == request.ResponsibleOfficer);
-
+                // Notify user
+                var user = await _context.Alluser.FirstOrDefaultAsync(u => u.Id == request.UserId);
                 if (user != null)
                 {
-                    _context.Notifications.Add(new Notifications
+                    newNotifications.Add(new Notifications
                     {
                         UserId = user.Id,
-                        Message = $"Your request #{request.Id} has been closed."
+                        Message = $"✔ Your request #{request.Id} has been closed."
                     });
                 }
             }
 
-          
-
-            await _context.SaveChangesAsync();
+            if (newNotifications.Any())
+            {
+                _context.Notifications.AddRange(newNotifications);
+                await _context.SaveChangesAsync();
+            }
         }
 
 
+        private async Task<List<Notifications>> LoadNotifications()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return new List<Notifications>();
 
+            return await _context.Notifications
+                .Where(n => n.UserId == currentUser.Id)
+                .OrderByDescending(n => n.CreatedAt)
+                .Take(10)
+                .ToListAsync();
+        }
 
 
     }

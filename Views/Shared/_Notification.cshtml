@@ -1,17 +1,81 @@
-﻿@{
-    var notifications = ViewBag.Notifications as List<FormRequest.Models.Notifications> ?? new List<FormRequest.Models.Notifications>();
+﻿
+
+        @using FormRequest.ViewModel
+@model RequestViewModel
+
+@{
+  
+    var testUserRole = "Technician";  
+    var testUserEmail = "jodheearitika@gmail.com";
+
+    var allRequests = Model?.FormReqDbs ?? new List<FormRequest.Models.FormReqDb>();
+    var requestList = new List<FormRequest.Models.FormReqDb>();
+
+    switch (testUserRole)
+    {
+        case "User":
+            requestList = allRequests
+                .Where(m => m.ResponsibleOfficer == testUserEmail &&
+                           (m.status == "send back" ||
+                            m.status == "accepted" ||
+                            m.status == "rejected" ||
+                             m.status == "return" ||
+                            m.status == "complete"))
+                .ToList();
+            break;
+
+        case "Supervisor":
+            requestList = allRequests
+                .Where(m => m.Supervisor == testUserEmail &&
+                            m.status == "pending")
+                .ToList();
+            break;
+
+        case "Technician":
+            requestList = allRequests
+                .Where(m => m.Technician == testUserEmail &&
+                           (m.status == "accepted" ||
+                            m.status == "closed" ||
+                            m.status == "rejected" ||
+                          m.status == "repairing" ||
+                            m.status == "complete"))
+                .ToList();
+            break;
+
+        case "ITO":
+            requestList = allRequests
+                .Where(m => m.status == "accepted" ||
+                            m.status == "closed" ||
+                            m.status == "repairing" ||
+                            m.status == "start repairing" ||
+                           m.status == "send back" ||
+                            m.status == "final request")
+                .ToList();
+            break;
+
+        case "Registry":
+            requestList = allRequests
+                .Where(m => m.status == "send back" ||
+                       m.status == "repairing" ||
+                            m.status == "transitting")
+
+                .ToList();
+            break;
+    }
 }
 
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" id="notifBell" href="#" data-bs-toggle="dropdown">
-        🔔 <span class="badge bg-danger">@notifications.Count</span>
+        🔔 <span class="badge bg-danger">@requestList.Count</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifBell">
-        @if (notifications.Any())
+        @if (requestList.Any())
         {
-            foreach (var notif in notifications)
+            foreach (var notif in requestList)
             {
-                <li class="dropdown-item @(notif.IsRead ? "" : "fw-bold")">@notif.Message</li>
+                <li class="dropdown-item">
+                    Request by: @notif.ResponsibleOfficer - Status: @notif.status
+                </li>
             }
         }
         else

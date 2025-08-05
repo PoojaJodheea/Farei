@@ -16,5 +16,7 @@ namespace FormRequest.ViewModel
         public ApplicationUser? User { get; set; }
 
         public EquipmentInventory? Inventory { get; set; }
+
+        public List<Notifications>? Notifications { get; set; } = new List<Notifications>();
     }
 }
