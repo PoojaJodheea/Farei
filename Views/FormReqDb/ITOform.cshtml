@@ -1,56 +1,95 @@
-﻿@using FormRequest.ViewModel
-@model IEnumerable<FormRequest.ViewModel.RequestViewModel>
-
+﻿﻿@using FormRequest.ViewModel
+@using FormRequest.Models
+@model RequestViewModel
 
 @{
-	ViewData["Title"] = "All Requests";
 
 }
-<link rel="stylesheet" href="~/css/ITO.css" />
+<head>
+    <link rel="stylesheet" href="~/css/ITO.css" />
+</head>
+<partial name="Navbar"></partial>
+<div class="container">
+<h1>ITO</h1>
+<table class="table" >
+    <thead>
+        <tr>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.FormReqDb.Site)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormReqDb.ResponsibleOfficer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormReqDb.ProblemDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormReqDb.remarks)
+            </th>                
+            <th>            
+                @Html.DisplayNameFor(Model => Model.Inventory.EquipmentType)               
+            </th>
+            <th>                    
+                @Html.DisplayNameFor(Model => Model.ITTreport.Report)            
+            </th>
+            <th>                   
+                @Html.DisplayNameFor(Model => Model.FormReqDb.status)                
+            </th>
+            <th>confirmation</th>
+            <th>Details</th>
 
-<h2 class="page-title">All Requests</h2>
 
-<table class="table table-bordered table-striped" id="requestTable">
-	<thead class="purple-table-header">
-		<tr>
-			<th>Date</th>
-			<th>Site</th>
-			<th>Department</th>
-			<th>Equipment</th>
-		
-			<th>Problem</th>
-			<th>Technician Remark</th>
-			<th>Status</th>
-			<th>Confirm Movement Type</th>
-			<th>Details</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
-		{
-			var status = item.FormReqDb.status?.Trim().ToLower();
-			var statusClass = StatusClass.GetStatusClass(item.FormReqDb.status);
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FormReqDbs) {
+        
+            var statusClass = StatusClass.GetStatusClass(item.status);
+            var status = item.status?.Trim().ToLower();
+        <tr id="row-@item.Id">
 
-			<tr id="row-@item.FormReqDb.Id">
-				<td>@item.FormReqDb.RequestDate.ToShortDateString()</td>
-				<td>@item.FormReqDb.Site</td>
-				<td>@item.FormReqDb.Department</td>
-				<td>@item.FormReqDb.EquipmentType</td>
-				<td>@item.FormReqDb.ProblemDescription</td>
-				<td>@(item.ITTreport?.Report ?? item.FormReqDb?.remarks)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponsibleOfficer)
+            </td> 
+            <td>
+                @Html.DisplayFor(modelItem => item.ProblemDescription)
+            </td>
 
-				<td class="@statusClass status-cell" data-id="@item.FormReqDb.Id">@item.FormReqDb.status</td>
-				<td>
-					@if (status == "transit request" || status == "final request" || status == "onsite request" || status == "transitting" || status == "reject" || status == "accept onsite" || status == "reject onsite" || status == "pending request")
-					{
-						<button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.FormReqDb.Id" data-action="accept" @(status.Contains("accept") ? "disabled" : "")>Accept</button>
-						<button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.FormReqDb.Id" data-action="reject" @(status.Contains("reject") ? "disabled" : "")>Reject</button>
-					}
-				</td>
-				<td>
-					<a asp-action="Details" asp-route-id="@item.FormReqDb.Id" class="btn btn-sm btn-purple">Details</a>
-				</td>
-			</tr>
-		}
-	</tbody>
+            <td>
+                @Html.DisplayFor(modelItem => item.remarks)                
+            </td>
+
+            <td>                        
+                @Html.DisplayFor(modelItem => item.Equipments.EquipmentType)        
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ITTReports.Report)
+            </td>
+
+            <td class="@statusClass status-cell" data-id="@item.Id">
+                @item.status
+            </td>
+                    @if ( item.Pointer==2 || item.Pointer==3 || item.Pointer==6 || item.Pointer==8  ) {
+                        <td>                    
+                            <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept">Accept</button>                    
+                            <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject">Reject</button>
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td>No request</td>
+                    }
+                    <td>
+                <a asp-action="repairedDetail" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
 </table>
+</div>

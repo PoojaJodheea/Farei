@@ -1,120 +1,62 @@
-﻿/* Full viewport height + split screen */
-.auth-page {
-    display: flex;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    background: #f0fdf4;
+﻿
+body {
+    background: #f6f5f7 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
 }
 
-/* Left info panel */
-.auth-left {
-    flex: 1;
-    background: #1b5e20;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 2rem;
+.login-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 90vh !important;
 }
 
-    .auth-left h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+.login-container {
+    background: #fff !important;
+    padding: 30px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    width: 100% !important;
+    max-width: 400px !important;
+}
+
+.navbar {
+    background-color: bisque !important;
+    color: black !important;
+}
+
+    .navbar a,
+    .navbar-brand {
+        color: white !important;
     }
 
-    .auth-left p {
-        font-size: 1.1rem;
-        max-width: 300px;
-        text-align: center;
+.login-form input {
+    background-color: #f1f1f1 !important;
+    border: none !important !important;
+    padding: 12px !important !important;
+    border-radius: 5px !important !important;
+}
+
+    .login-form input:focus {
+        outline: none !important;
+        box-shadow: 0 0 5px #007bff !important;
     }
 
-/* Right login/register panel */
-.auth-right {
-    flex: 1;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+button {
+    border-radius: 5px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    background-color: #FF4B2B !important;
+    color: #FFFFFF !important;
 }
 
-.auth-card {
-    width: 100%;
-    max-width: 420px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+a {
+    color: #007bff !important;
+    text-decoration: none !important;
 }
 
-    .auth-card h2 {
-        text-align: center;
-        color: #2e7d32;
-        margin-bottom: 1.5rem;
+    a:hover {
+        text-decoration: underline !important;
     }
-
-.form-control {
-    margin-bottom: 1rem;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    width: 100%;
-}
-
-.btn-primary {
-    background-color: #2e7d32;
-    border: none;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    width: 100%;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-    .btn-primary:hover {
-        background-color: #1b5e20;
-    }
-
-.toggle-link {
-    display: block;
-    margin-top: 1rem;
-    text-align: center;
-    color: #2e7d32;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-    .toggle-link:hover {
-        color: #1b5e20;
-        text-decoration: none;
-    }
-
-/* Validation styling */
-.text-danger {
-    font-size: 0.9rem;
-    margin-top: -0.5rem;
-    margin-bottom: 1rem;
-    display: block;
-    color: #c62828;
-}
-
-/* Optional: Animate card on load */
-.auth-card {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-

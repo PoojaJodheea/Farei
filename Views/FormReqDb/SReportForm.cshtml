@@ -1,20 +1,45 @@
-﻿@using FormRequest.ViewModel
+﻿﻿@using FormRequest.ViewModel
 @model RequestViewModel
 <head>
     <link rel="stylesheet" href="~/css/ITT.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+    <!-- jQuery (required by DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+    <!-- JSZip for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 </head>
 <partial name="Navbar" />
 <div class="container">
     <div class="row mb-3">
-        <form asp-action="FilterByDate" method="post">
-            <input type="date" name="Date" class="col-md-3" />
-            <input type="submit" class="col-md-2" />
-        </form>
+        @*
+@using (Html.BeginForm("GeneratePdf", "FormReqDbs", FormMethod.Post, new { target = "_blank" }))
+
+{
+    <div class="form-group">
+        <label for="date">Enter date:</label>
+        <input type="date" name="date" id="date" class="form-control" required />
     </div>
-    <table class="table">
+    <div>
+    <input type="submit" value="Generate PDF" class="btn btn-primary" />
+    </div>
+}
+*@
+    </div>
+    <table class="table" id="dataTable">
         <thead>
             <tr>
-                <th>
+               <th>
                     @Html.DisplayNameFor(model => model.FormReqDb.RequestDate)
                 </th>
                 <th>
@@ -34,6 +59,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.FormReqDb.Equipments.SerialNumber)
                 </th>
+                <th></th>
 
             </tr>
         </thead>
@@ -49,7 +75,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(model => item.Supervisor)
-                    </td> 
+                    </td>
                     <td>
                         @Html.DisplayFor(model => item.Equipments.EquipmentName)
                     </td>
@@ -61,19 +87,18 @@
                     <td>
                         @Html.DisplayFor(model => item.Equipments.SerialNumber)
                     </td>
+                    <td>
+                        <a asp-action="ReportDetails" asp-route-id="@item.Id">Details</a>
+                    </td>
                 </tr>
             }
 
         </tbody>
     </table>
 
-    @{
-        Html.BeginForm("CreatePDFDocument", "Home", FormMethod.Get);
-        {
-            <div>
-                <input type="submit" value="Generate PDF Document" style="width:150px;height:27px" />
-            </div>
-        }
-        Html.EndForm();
-    }
+
+
+
+
+
 </div>

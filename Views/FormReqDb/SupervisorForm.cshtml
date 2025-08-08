@@ -5,44 +5,47 @@
 <head>
     <link rel="stylesheet" href="~/css/Supervisor.css" />
 </head>
-<partial name="Navbar" />
-
+<partial name="Navbar"/>
+<div class="container">
 <h1>Supervisor</h1>
-<table class="alternating-rows">
-    <thead class="B-table-header th">
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+<table class="table">
+    <thead>
         <tr>
-            <th>RequestDate</th>
-            <th>Responsible Officer</th>
-            <th>Equipment Type</th>
-            <th>ProblemDescription</th>
+            <th>RequestDate</th>         
+            <th>Responsible Officer</th>          
+            <th>ProblemDescription</th>   
             <th>Status</th>
             <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.FormReqDbs)
-        {
-
+@foreach (var item in Model.FormReqDbs) {
+        
             var statusClass = StatusClass.GetStatusClass(item.status);
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>
-                <td>@Html.DisplayFor(modelItem => item.EquipmentType)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
+            var status = item.status?.Trim().ToLower();
+                <tr id="row-@item.Id">
+            <td>@Html.DisplayFor(modelItem => item.RequestDate)</td>           
+            <td>@Html.DisplayFor(modelItem => item.ResponsibleOfficer)</td>           
+ 
+            <td>@Html.DisplayFor(modelItem => item.ProblemDescription)</td>
+            
                 <td class="@statusClass status-cell" data-id="@item.Id">@item.status</td>
+         
                 <td>
-                    @if (item.status?.Trim().ToLower() == "pending")
-                    {
-                        <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept">Accept</button>
-                        <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject">Reject</button>
-                    }
+                            <button class="btn btn-sm btn-success action-btn accept-btn" data-id="@item.Id" data-action="accept" >Accept</button>
+                        <button class="btn btn-sm btn-danger action-btn reject-btn" data-id="@item.Id" data-action="reject"> Reject</button>
                 </td>
-                <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id" class="btn btn-sm btn-B">Details</a></td>
-            </tr>
-        }
+            
+            <td><a asp-action="DetailsSupervisorForm" asp-route-id="@item.Id">Details</a></td>
+        </tr>
+}
     </tbody>
 </table>
+</div>
 
 <style>
     table.alternating-rows tr:nth-child(even) {

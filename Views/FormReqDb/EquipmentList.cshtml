@@ -1,0 +1,55 @@
+﻿@model FormRequest.ViewModel.RequestViewModel
+
+@{
+    ViewData["Title"] = "Equipment List";
+}
+<head>
+    <link rel="stylesheet" href="~/css/Admin.css" />
+</head>
+
+<div class="container">
+
+<h2>Equipment Inventory</h2>
+
+<a asp-action="CreateEquipment" class="btn btn-primary mb-3">+ Create New Equipment</a>
+
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+      
+            <th>Serial Number</th>
+            <th>Equipment Name</th>
+            <th>Equipment Type</th>
+            <th>Site</th>
+            <th>Department</th>
+            <th>User</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Inventories != null && Model.Inventories.Any())
+        {
+            foreach (var item in Model.Inventories)
+            {
+                <tr>
+                    <td>@item.SerialNumber</td>
+                    <td>@item.EquipmentName</td>
+         
+                    <td>@item.EquipmentType</td>
+                    <td>@item.Site</td>
+                    <td>@item.Department</td>
+                  
+                    <td>@item.User</td>
+                  
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="28">No equipment found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

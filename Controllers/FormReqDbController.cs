@@ -3,12 +3,29 @@ using Azure.Core;
 using FormRequest.Data;
 using FormRequest.Models;
 using FormRequest.ViewModel;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Win32;
+//using MigraDoc.Rendering;
+using Mono.TextTemplating;
+using Newtonsoft.Json.Linq;
+//using SelectPdf;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace FormRequest.Controllers
 {
     public class FormReqDbController : Controller
@@ -218,30 +235,49 @@ public override void OnActionExecuting(ActionExecutingContext context)
             return RedirectToAction("Index");
         }
 
-        // POST: Create new equipment
+
+        public async Task<IActionResult> EquipmentList()
+        {
+            var model = new RequestViewModel
+            {
+                Inventories = await _context.Equipment.ToListAsync()
+            };
+
+            return View("EquipmentList", model);
+        }
+
+    
+
+
+        public IActionResult CreateEquipment()
+        {
+            var viewModel = new RequestViewModel
+            {
+                FormReqDb = new FormReqDb()
+            };
+            return View(viewModel);
+        }
+
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateEquipment(RequestViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                model.AllUsers = await _context.Users.ToListAsync();
-                return View(model);
+                _context.Equipment.Add(model.Inventory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("EquipmentList");
             }
 
-            var newEquipment = model.Inventory;
-            if (newEquipment == null)
-            {
-                ModelState.AddModelError("", "Invalid equipment data.");
-                model.AllUsers = await _context.Users.ToListAsync();
-                return View(model);
-            }
-
-            _context.Equipment.Add(newEquipment);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("CreateEquipment");
+           
+            return View(model);
         }
+
+
+
+
+
 
         // GET: List all forms (Admin or general view)
         public async Task<IActionResult> UserForm()
@@ -569,7 +605,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
             var viewModel = new RequestViewModel
             {
                 FormReqDb = formReqDb,
-                Registry = new Registry(),
+                Registry = new Models.Registry(),
                 AllUsers = AllUsers
             };
             if (formReqDb == null)
@@ -774,7 +810,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
             var viewModelList = newComponents.Select(f => new RequestViewModel
             {
                 FormReqDb = f,
-                Registry = f.Registries.FirstOrDefault() ?? new Registry()
+                Registry = f.Registries.FirstOrDefault() ?? new Models.Registry()
                 {
                     
                 }
@@ -785,17 +821,16 @@ public override void OnActionExecuting(ActionExecutingContext context)
 
         }
 
- 
+
         public async Task<IActionResult> ITOform()
         {
             var model = new RequestViewModel
             {
-                FormReqDb = await _context.FormReqDb.Include(m => m.Equipments).Include(m => m.ITTReports).ToListAsync(),
+                FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Include(m => m.ITTReports).ToListAsync(),
                 AllUsers = _userManager.Users.ToList()
             };
             return View(model);
         }
-
         public IActionResult ThirdParty(SearchFilter filter, string? SortOrder)
         {
             var query = _context.FormReqDb
@@ -875,7 +910,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ITOstatus(int id, String Status, String Remarks)
+        public async Task<IActionResult> ITOstatus(int id, string Status, string Remarks)
         {
             var formReqDb = await _context.FormReqDb.FindAsync(id);
             var registry = _context.Registry.Any(k => k.FormReqDbId == id);
@@ -1039,7 +1074,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Report(int id, String SerialNumber, String Status, String Remarks, RequestViewModel model)
+        public async Task<IActionResult> Report(int id, string SerialNumber, string Status, string Remarks, RequestViewModel model)
         {
             var formReqDb = await _context.FormReqDb.FindAsync(id);
             if (formReqDb == null)
@@ -1149,7 +1184,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
 
 
         [HttpGet("FormReqDbs/EditUser/{UserName}")]
-        public async Task<IActionResult> EditUser(String? UserName)
+        public async Task<IActionResult> EditUser(string? UserName)
         {
             if (UserName == null)
             {
@@ -1172,7 +1207,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> editUser(String userName, String Supervisor, String Site, String dept)
+        public async Task<IActionResult> editUser(string userName, string Supervisor, string Site, string dept)
         {
             Console.WriteLine($"Searching for username: {userName}");
             var Alluser = await _context.Alluser.FirstOrDefaultAsync(m => m.UserName == userName);
@@ -1194,79 +1229,135 @@ public override void OnActionExecuting(ActionExecutingContext context)
             };
             return View("SReportForm", view);
         }
-
+                     
         public async Task<IActionResult> SReportForm()
         {
+
             var name = User.Identity.Name;
-            if (string.IsNullOrEmpty(name))
+            if (name == null)
             {
                 return RedirectToAction("Index");
             }
-
             var user = await _context.Alluser.FirstOrDefaultAsync(m => m.UserName == name);
-            if (user == null)
-            {
-                return View(new RequestViewModel
-                {
-                    FormReqDbs = new List<FormReqDb>(),
-                    RegistryList = new List<Registry>(),
-                    AllUsers = _userManager.Users.ToList()
-                });
-            }
-
-            RequestViewModel model;
-
             if (user.Type == "User")
             {
-                model = new RequestViewModel
+                var User = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
-                                .Where(j => j.ResponsibleOfficer == name).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(j => j.ResponsibleOfficer == name).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
+                return View(User);
             }
             else if (user.Type == "Supervisor")
             {
-                model = new RequestViewModel
+                var Supervisor = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
-                                .Where(j => j.Supervisor == name).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(j => j.Supervisor == name || j.ResponsibleOfficer == name).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
+                return View(Supervisor);
             }
             else if (user.Type == "Technician" || user.Type == "ITO" || user.Type == "Admin")
             {
-                model = new RequestViewModel
+                var model = new RequestViewModel
                 {
                     FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
+                return View(model);
             }
             else if (user.Type == "Registry")
             {
-                model = new RequestViewModel
+                var Registry = new RequestViewModel
                 {
-                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments)
-                                .Where(m => m.Site == user.Site).ToListAsync(),
+                    FormReqDbs = await _context.FormReqDb.Include(m => m.Equipments).Where(m => m.Site == user.Site).ToListAsync(),
                     RegistryList = await _context.Registry.ToListAsync(),
                     AllUsers = _userManager.Users.ToList()
                 };
+                return View(Registry);
             }
-            else
+            return View();
+        }
+
+
+        public async Task<IActionResult> ReportDetails(int? id)
+        {
+            if (id == null)
             {
-                model = new RequestViewModel
-                {
-                    FormReqDbs = new List<FormReqDb>(),
-                    RegistryList = new List<Registry>(),
-                    AllUsers = _userManager.Users.ToList()
-                };
+                return NotFound();
             }
 
-            return View(model);
+            var formReqDb = await _context.FormReqDb
+                .Include(m => m.Equipments)
+                .Include(m => m.Registries) 
+                .Where(m => m.Id == id)
+                .ToListAsync();
+
+            if (formReqDb == null || !formReqDb.Any())
+            {
+                return NotFound();
+            }
+
+            var allUsers = _userManager.Users.ToList();
+
+            var viewModel = new RequestViewModel
+            {
+                FormReqDbs = formReqDb,
+                AllUsers = allUsers
+            };
+
+            return View(viewModel);
         }
+
+
+
+
+        [HttpPost]
+        public async Task<ActionResult> GeneratePdfAsync(DateTime date)
+        {
+            var Request = await _context.FormReqDb.Where(m => m.RequestDate < date).Include(j => j.Equipments).ToListAsync();
+            using (var memoryStream = new MemoryStream())
+            {
+                var writer = new iText.Kernel.Pdf.PdfWriter(memoryStream);
+                var pdf = new iText.Kernel.Pdf.PdfDocument(writer);
+                var document = new iText.Layout.Document(pdf);
+
+                document.Add(new iText.Layout.Element.Paragraph("Product List")
+                    .SetFontSize(16)
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                // Create table with 3 columns
+                var table = new iText.Layout.Element.Table(6, true);
+
+                // Header row
+                table.AddHeaderCell("Request date");
+                table.AddHeaderCell("Responsible Officer");
+                table.AddHeaderCell("Supervisor");
+                table.AddHeaderCell("Equipment Name");
+                table.AddHeaderCell("Equipment type");
+                table.AddHeaderCell("Serial number");
+
+                foreach (var item in Request)
+                {
+
+                    table.AddCell(item.RequestDate.ToString());
+                    table.AddCell(item.ResponsibleOfficer);
+                    table.AddCell(item?.Supervisor ?? "");
+                    table.AddCell(item.Equipments.EquipmentName);
+                    table.AddCell(item.Equipments.EquipmentType);
+                    table.AddCell(item.Equipments.SerialNumber);
+                }
+                // Add table to document
+                document.Add(table);
+                document.Close();
+
+                return File(memoryStream.ToArray(), "application/pdf", "static-table.pdf");
+            }
+        }
+
 
         private async Task GenerateNotifications(FormReqDb request)
         {
@@ -1326,17 +1417,7 @@ public override void OnActionExecuting(ActionExecutingContext context)
         }
 
 
-        private async Task<List<Notifications>> LoadNotifications()
-        {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser == null) return new List<Notifications>();
-
-            return await _context.Notifications
-                .Where(n => n.UserId == currentUser.Id)
-                .OrderByDescending(n => n.CreatedAt)
-                .Take(10)
-                .ToListAsync();
-        }
+      
 
 
     }

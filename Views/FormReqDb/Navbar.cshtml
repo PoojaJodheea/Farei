@@ -15,7 +15,7 @@
         {
             if (username.Equals(User.UserName))
             {
-                Type = User.Type;
+                Type = User.Type;                                     
                 break;
             }
         }
@@ -181,7 +181,7 @@ else if (Type.Equals("Admin"))
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="Registry">Registry</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="Index">equipment</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="EquipmentList">Equipments</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="FormReqDb" asp-action="SReportForm">Report</a>
